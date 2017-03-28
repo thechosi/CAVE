@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<node type="master" name="vgn" id="120" nodes="6">
+	<server ip="10.84.56.60" port="25000"/>	
+	<screen stereo="false" eye="">
+		<pa x="-8" y="-5" z="0" />
+		<pb x="8" y="-5"  z="0" />
+		<pc x="-8" y="5" z="0" />
+		<pe x="0"  y="0"  z="5" />
+	</screen>
+</node>
