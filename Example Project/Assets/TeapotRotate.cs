@@ -1,12 +1,15 @@
 ﻿using UnityEngine;
 using UnityClusterPackage;
+using UnityEngine.Networking;
 
 public class TeapotRotate : MonoBehaviour {
 
     // Use this for initialization
     void Start() {
-        if ( NodeInformation.type.Equals("slave") ) {
-            enabled = false;                                                                 
+        GetComponent<NetworkTransform>().sendInterval = 0.01f;
+        if (NodeInformation.type.Equals("slave"))
+        {
+            enabled = false;
         }
     }
 

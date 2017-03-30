@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.Networking;
 
 public class FlyCamera : MonoBehaviour {
 
@@ -8,8 +9,8 @@ public class FlyCamera : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        NetworkView nView = GetComponent<NetworkView>();
-        if (!nView.isMine) {
+        NetworkIdentity nView = GetComponent<NetworkIdentity>();
+        if (!nView.hasAuthority) {
             enabled = false;
         }
     }
