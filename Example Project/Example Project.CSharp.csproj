@@ -81,7 +81,10 @@
     <Compile Include="Assets\Unity Cluster Package\Scripts\Node\InstantiateNode.cs" />
     <Compile Include="Assets\Unity Cluster Package\Scripts\Node\NodeInformation.cs" />
     <Compile Include="Assets\Unity Cluster Package\Scripts\Node\OffAxisPerspective.cs" />
+    <Compile Include="Assets\Unity Cluster Package\Scripts\Node\RigidBodySynchronization.cs" />
     <Compile Include="Assets\Unity Cluster Package\Scripts\Node\Statistics.cs" />
+    <Compile Include="Assets\Unity Cluster Package\Scripts\clickSpawn.cs" />
+    <Compile Include="Assets\Unity Cluster Package\Scripts\spawnObject.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\StreamingAssets\node-config.xml" />
