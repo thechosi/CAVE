@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
 public class spawnObject : MonoBehaviour
 {
@@ -24,6 +25,7 @@ public class spawnObject : MonoBehaviour
     {
         Vector3 spawnPosition = new Vector3(Random.Range(-spawnValues.x, spawnValues.y), Random.Range(-spawnValues.x, spawnValues.y), Random.Range(-spawnValues.x, spawnValues.y));
         objectnr = Random.Range(0, 3); 
-        Instantiate(objects[objectnr], spawnPosition + transform.TransformPoint(0, 0, 0), gameObject.transform.rotation);
+        GameObject newObject = (GameObject) Instantiate(objects[objectnr], spawnPosition + transform.TransformPoint(0, 0, 0), gameObject.transform.rotation);
+        NetworkServer.Spawn(newObject);
     }
 }
