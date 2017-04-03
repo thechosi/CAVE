@@ -8,7 +8,6 @@ public class spawnObject : MonoBehaviour
 
     public GameObject[] objects;
     public Vector3 spawnValues;
-    public int objectnr = 0;
 
     // Use this for initialization
     void Start()
@@ -24,7 +23,7 @@ public class spawnObject : MonoBehaviour
     public void CreateObject()
     {
         Vector3 spawnPosition = new Vector3(Random.Range(-spawnValues.x, spawnValues.y), Random.Range(-spawnValues.x, spawnValues.y), Random.Range(-spawnValues.x, spawnValues.y));
-        objectnr = Random.Range(0, 3); 
+        int objectnr = Random.Range(0, objects.Length); 
         GameObject newObject = (GameObject) Instantiate(objects[objectnr], spawnPosition + transform.TransformPoint(0, 0, 0), gameObject.transform.rotation);
         NetworkServer.Spawn(newObject);
     }
