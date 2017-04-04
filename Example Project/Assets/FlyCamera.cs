@@ -15,6 +15,7 @@ public class FlyCamera : MonoBehaviour {
         }
     }
 	
+	// Update is called once per frame
 	void Update () {
         directionVector = new Vector3(-1.0f*Input.GetAxis("Vertical"), 0, Input.GetAxis("Horizontal"));
         transform.position += directionVector * translateVelocity;
