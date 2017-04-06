@@ -5,13 +5,15 @@ using UnityEngine.Networking;
 
 namespace UnityClusterPackage {
 	
-	public class InstantiateNode : MonoBehaviour {
+	public class InstantiateNode : NetworkBehaviour
+    {
 		
 		public GameObject MultiProjectionCamera;
-        
-		void Start ()
+
+
+        void Start ()
 		{
-		    NetworkManager networkManager = GetComponent<NetworkManager>();
+            NetworkManager networkManager = GetComponent<NetworkManager>();
             networkManager.networkAddress = NodeInformation.serverIp;
             networkManager.networkPort = NodeInformation.serverPort;
             if ( NodeInformation.type.Equals("master") )
@@ -26,5 +28,9 @@ namespace UnityClusterPackage {
                 networkManager.StartClient();
 			}
 		}
-	}
+
+        void Update()
+        {
+        }
+    }
 }
