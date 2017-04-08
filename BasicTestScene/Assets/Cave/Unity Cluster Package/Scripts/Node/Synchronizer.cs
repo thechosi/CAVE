@@ -21,14 +21,14 @@ namespace UnityClusterPackage
     public class SynchroMessage : MessageBase
     {
         public SynchroMessageType type;
-        public float data;
+        public double data;
 
         public SynchroMessage()
         {
 
         }
 
-        public SynchroMessage(SynchroMessageType type, float data)
+        public SynchroMessage(SynchroMessageType type, double data)
         {
             this.type = type;
             this.data = data;
@@ -48,14 +48,21 @@ namespace UnityClusterPackage
         private bool started;
         private static float axisHorizontal;
         private static float axisVertical;
+
+        byte[] recBuffer;
+        NetworkReader networkReader;
+
         void Start()
         {
+            recBuffer = new byte[1024];
+            networkReader = new NetworkReader(recBuffer);
             enableTimeout = true;
             started = false;
-            NetworkTransport.Init();
+            GlobalConfig gConfig = new GlobalConfig();
+            NetworkTransport.Init(gConfig);
 
             ConnectionConfig config = new ConnectionConfig();
-            reliableChannelId = config.AddChannel(QosType.ReliableSequenced);
+            reliableChannelId = config.AddChannel(QosType.Unreliable);
             HostTopology topology = new HostTopology(config, 10);
             hostId = NetworkTransport.AddHost(topology, 8888 + (NodeInformation.type.Equals("slave") ? 1 : 0));
 
@@ -101,7 +108,6 @@ namespace UnityClusterPackage
             SynchroMessage message = null;
             int connectionId;
             int channelId;
-            byte[] recBuffer = new byte[1024];
             int bufferSize = 1024;
             int dataSize;
             byte error;
@@ -123,8 +129,8 @@ namespace UnityClusterPackage
                         message = ReceiveNextMessage(skipConnectingEvents);
                     break;
                 case NetworkEventType.DataEvent:
-                    NetworkReader networkReader = new NetworkReader(recBuffer);
                     message = new SynchroMessage();
+                    networkReader.SeekZero();
                     message.Deserialize(networkReader);
                     break;
                 case NetworkEventType.DisconnectEvent:
@@ -212,6 +218,7 @@ namespace UnityClusterPackage
             }
             if (doClientInitialization)
                 InitializeSelf();
+
         }
 
         void SynchronizeTime()
@@ -222,6 +229,12 @@ namespace UnityClusterPackage
                 BroadcastMessage(new SynchroMessage(SynchroMessageType.SetTime, Time.time));
                 deltaTime = Time.deltaTime;
                 time = Time.time;
+
+                NetworkTransform[] networkTransforms = FindObjectsOfType(typeof(NetworkTransform)) as NetworkTransform[];
+                foreach (NetworkTransform networkTransform in networkTransforms)
+                {
+                    networkTransform.SetDirtyBit(1);
+                }
             }
             else
             {
@@ -239,6 +252,14 @@ namespace UnityClusterPackage
                         throw new Exception("Received unexpected message.");
 
                 } while (time == -1 || deltaTime == -1);
+
+                NetworkTransform[] networkTransforms = FindObjectsOfType(typeof(NetworkTransform)) as NetworkTransform[];
+                foreach (NetworkTransform networkTransform in networkTransforms)
+                {
+                    Rigidbody rigidBody = networkTransform.GetComponentInParent<Rigidbody>();
+                    if (rigidBody != null)
+                        rigidBody.useGravity = false;
+                }
             }
         }
 
@@ -274,7 +295,7 @@ namespace UnityClusterPackage
         void Update()
         {
             CheckConnection();
-
+            
             SynchronizeTime();
             SynchronizeInput();
 

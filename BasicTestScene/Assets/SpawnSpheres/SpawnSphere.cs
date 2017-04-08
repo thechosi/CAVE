@@ -1,11 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
 public class SpawnSphere : MonoBehaviour {
 
     [Tooltip("Defines which prefab object should be spawned.")]
-    public Transform obj;
+    public GameObject obj;
     [Tooltip("Defines after which ammount of passed frames the object will spawn. Use an value over 1. Can be changed dynamically ingame with w or q.")]
     public int spawnSpeed = 60;
     [Tooltip("Multiplies the ammount of spawned objects by the defined value. Use an value over one. Can be changed dynamically ingame with s or a.")]
@@ -66,8 +67,8 @@ public class SpawnSphere : MonoBehaviour {
                 {
 
                     // Spawns the object at the appropriate location with an random offset between 0 and 1 multiplied by an offset.
-                    Instantiate(obj, new Vector3(transform.position.x + Random.value * 30, transform.position.y + Random.value * 8, transform.position.z + Random.value * 28), Quaternion.identity);
-
+                    GameObject spawnedGameObject = (GameObject)Instantiate(obj, new Vector3(transform.position.x + Random.value * 30, transform.position.y + Random.value * 8, transform.position.z + Random.value * 28), Quaternion.identity);
+                    NetworkServer.Spawn(spawnedGameObject);
                 }
 
             }
