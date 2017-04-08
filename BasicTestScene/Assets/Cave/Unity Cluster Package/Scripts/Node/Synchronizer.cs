@@ -2,6 +2,7 @@
 using System.Collections;
 using System;
 using System.Collections.Generic;
+using System.Net.NetworkInformation;
 using System.Text;
 using UnityEngine.Networking;
 
@@ -11,7 +12,10 @@ namespace UnityClusterPackage
     {
         SetDeltaTime,
         SetTime,
-        FinishedRendering
+        FinishedRendering,
+        SetParticleSeed,
+        SetHorizontalAxis,
+        SetVerticalAxis
     }
 
     public class SynchroMessage : MessageBase
@@ -35,13 +39,19 @@ namespace UnityClusterPackage
     {
         public static float deltaTime;
         public static float time;
-        public bool enableTimeout = false;
+
+        public bool enableTimeout;
         private int reliableChannelId;
         private int hostId;
         private List<int> connections;
+        private bool doClientInitialization;
+        private bool started;
+        private static float axisHorizontal;
+        private static float axisVertical;
         void Start()
         {
-            // Initializing the Transport Layer with no arguments (default settings)
+            enableTimeout = true;
+            started = false;
             NetworkTransport.Init();
 
             ConnectionConfig config = new ConnectionConfig();
@@ -53,11 +63,38 @@ namespace UnityClusterPackage
 
             if (NodeInformation.type.Equals("slave"))
             {
+                QualitySettings.vSyncCount = 0;
                 byte error;
                 int connectionId = NetworkTransport.Connect(hostId, NodeInformation.serverIp, 8888, 0, out error);
             }
         }
 
+        void InitializeClient(int connectionId)
+        {
+            ParticleSystem[] particleSystems = FindObjectsOfType(typeof(ParticleSystem)) as ParticleSystem[];
+            foreach (ParticleSystem particleSystem in particleSystems)
+            {
+                SendMessage(new SynchroMessage(SynchroMessageType.SetParticleSeed, particleSystem.randomSeed), connectionId);
+                particleSystem.Stop();
+                particleSystem.useAutoRandomSeed = false;
+                particleSystem.Clear();
+                particleSystem.Play();
+            }
+        }
+
+        void InitializeSelf()
+        {
+            ParticleSystem[] particleSystems = FindObjectsOfType(typeof(ParticleSystem)) as ParticleSystem[];
+            foreach (ParticleSystem particleSystem in particleSystems)
+            {
+                SynchroMessage message = WaitForNextMessage();
+                particleSystem.Stop();
+                particleSystem.randomSeed = (uint)message.data;
+                particleSystem.Clear();
+                particleSystem.Play();
+            }
+            doClientInitialization = false;
+        }
 
         SynchroMessage ReceiveNextMessage(bool skipConnectingEvents)
         {
@@ -69,12 +106,19 @@ namespace UnityClusterPackage
             int dataSize;
             byte error;
             NetworkEventType recData = NetworkTransport.ReceiveFromHost(hostId, out connectionId, out channelId, recBuffer, bufferSize, out dataSize, out error);
+            if (error > 0)
+                throw new NetworkInformationException(error);
             switch (recData)
             {
                 case NetworkEventType.Nothing:
                     break;
                 case NetworkEventType.ConnectEvent:
                     connections.Add(connectionId);
+                    if (NodeInformation.type.Equals("master"))
+                        InitializeClient(connectionId);
+                    else
+                        doClientInitialization = true;
+
                     if (skipConnectingEvents)
                         message = ReceiveNextMessage(skipConnectingEvents);
                     break;
@@ -82,7 +126,6 @@ namespace UnityClusterPackage
                     NetworkReader networkReader = new NetworkReader(recBuffer);
                     message = new SynchroMessage();
                     message.Deserialize(networkReader);
-                    //Debug.Log(message.type.ToString() + ": " + message.data);
                     break;
                 case NetworkEventType.DisconnectEvent:
                     connections.Remove(connectionId);
@@ -97,16 +140,13 @@ namespace UnityClusterPackage
         {
             if (connections.Count > 0)
             {
-                var watch = System.Diagnostics.Stopwatch.StartNew();
                 SynchroMessage message;
                 do
                 {
+                    if (connections.Count == 0)
+                        return null;
                     message = ReceiveNextMessage(true);
-                } while (message == null && (!enableTimeout || watch.ElapsedMilliseconds < 1000));
-                if (message == null)
-                {
-                    throw new TimeoutException("Waiting unsuccessfully for the next message which ");
-                }
+                } while (message == null || connections.Count == 0);
                 return message;
             }
             else
@@ -117,9 +157,15 @@ namespace UnityClusterPackage
 
         void WaitForConnections(int targetNumber)
         {
-            while (connections.Count < targetNumber)
+            var watch = System.Diagnostics.Stopwatch.StartNew();
+            while (connections.Count < targetNumber && watch.ElapsedMilliseconds < 5000)
             {
                 ReceiveNextMessage(false);
+            }
+            if (watch.ElapsedMilliseconds >= 5000)
+            {
+                Debug.Log("Waiting unsuccessfully for the next connection.");
+                Application.Quit();
             }
         }
 
@@ -130,14 +176,48 @@ namespace UnityClusterPackage
             message.Serialize(networkWriter);
 
             foreach (int connectionId in connections)
+            {
                 NetworkTransport.Send(hostId, connectionId, reliableChannelId, networkWriter.AsArray(), networkWriter.Position, out error);
+                if (error > 0)
+                    throw new NetworkInformationException(error);
+            }
         }
 
-        void Update()
+        void SendMessage(SynchroMessage message, int connectionId)
+        {
+            byte error;
+            NetworkWriter networkWriter = new NetworkWriter();
+            message.Serialize(networkWriter);
+
+            NetworkTransport.Send(hostId, connectionId, reliableChannelId, networkWriter.AsArray(), networkWriter.Position, out error);
+        }
+
+        void CheckConnection()
+        {
+            if (!started)
+            {
+                WaitForConnections(1);
+                started = true;
+            }
+            else
+            {
+                if (connections.Count == 0)
+                {
+#if UNITY_EDITOR
+                    UnityEditor.EditorApplication.isPlaying = false;
+#else
+                        Application.Quit();
+#endif
+                }
+            }
+            if (doClientInitialization)
+                InitializeSelf();
+        }
+
+        void SynchronizeTime()
         {
             if (NodeInformation.type.Equals("master"))
             {
-                WaitForConnections(1);
                 BroadcastMessage(new SynchroMessage(SynchroMessageType.SetDeltaTime, Time.deltaTime));
                 BroadcastMessage(new SynchroMessage(SynchroMessageType.SetTime, Time.time));
                 deltaTime = Time.deltaTime;
@@ -145,7 +225,6 @@ namespace UnityClusterPackage
             }
             else
             {
-                WaitForConnections(1);
                 deltaTime = -1;
                 time = -1;
                 do
@@ -153,9 +232,9 @@ namespace UnityClusterPackage
                     SynchroMessage message = WaitForNextMessage();
 
                     if (message.type == SynchroMessageType.SetDeltaTime)
-                        deltaTime = message.data;
+                        deltaTime = (float)message.data;
                     else if (message.type == SynchroMessageType.SetTime)
-                        time = message.data;
+                        time = (float)message.data;
                     else
                         throw new Exception("Received unexpected message.");
 
@@ -163,8 +242,61 @@ namespace UnityClusterPackage
             }
         }
 
-        void OnPostRender()
+
+        void SynchronizeInput()
         {
+            if (NodeInformation.type.Equals("master"))
+            {
+                BroadcastMessage(new SynchroMessage(SynchroMessageType.SetHorizontalAxis, Input.GetAxis("Horizontal")));
+                BroadcastMessage(new SynchroMessage(SynchroMessageType.SetVerticalAxis, Input.GetAxis("Vertical")));
+                axisHorizontal = Input.GetAxis("Horizontal");
+                axisVertical = Input.GetAxis("Vertical");
+            }
+            else
+            {
+                axisHorizontal = -2;
+                axisVertical = -2;
+                do
+                {
+                    SynchroMessage message = WaitForNextMessage();
+
+                    if (message.type == SynchroMessageType.SetHorizontalAxis)
+                        axisHorizontal = (float)message.data;
+                    else if (message.type == SynchroMessageType.SetVerticalAxis)
+                        axisVertical = (float)message.data;
+                    else
+                        throw new Exception("Received unexpected message.");
+
+                } while (axisHorizontal == -2 || axisVertical == -2);
+            }
+        }
+
+        void Update()
+        {
+            CheckConnection();
+
+            SynchronizeTime();
+            SynchronizeInput();
+
+            StartCoroutine(EndOfFrame());
+        }
+
+        private float lasttime;
+        private void SynchronizeParticles()
+        {
+            ParticleSystem[] particleSystems = FindObjectsOfType(typeof(ParticleSystem)) as ParticleSystem[];
+            foreach (ParticleSystem particleSystem in particleSystems)
+            {
+                particleSystem.time -= Time.deltaTime;
+                particleSystem.time += deltaTime;
+            }
+        }
+
+        IEnumerator EndOfFrame()
+        {
+            yield return new WaitForEndOfFrame();
+            SynchronizeParticles();
+
             if (NodeInformation.type.Equals("master"))
             {
                 int counter = 0;
@@ -182,6 +314,23 @@ namespace UnityClusterPackage
             {
                 BroadcastMessage(new SynchroMessage(SynchroMessageType.FinishedRendering, 0));
             }
+        }
+
+        void OnDestroy()
+        {
+            byte error;
+            foreach (int connection in connections)
+            {
+                NetworkTransport.Disconnect(hostId, connection, out error);
+            }
+        }
+
+        public static float GetAxis(string orientation)
+        {
+            if (orientation == "Vertical")
+                return axisVertical;
+            else
+                return axisHorizontal;
         }
     }
 }
