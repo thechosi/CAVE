@@ -18,10 +18,6 @@ public class CircularMovement : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        GetComponent<NetworkTransform>().interpolateMovement = 0;
-        GetComponent<NetworkTransform>().movementTheshold = 0;
-        GetComponent<NetworkTransform>().sendInterval = 0;
-
         if (NodeInformation.type.Equals("slave"))
         {
             enabled = false;
@@ -32,7 +28,7 @@ public class CircularMovement : MonoBehaviour {
         y = transform.position.y;
         z = transform.position.z;
 
-}
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -41,7 +37,5 @@ public class CircularMovement : MonoBehaviour {
 		float xt = Mathf.Cos (timeCounter) * distance;
 		float zt = Mathf.Sin (timeCounter) * distance;
 		transform.position = new Vector3 (x + xt, y, z + zt);
-
-        GetComponent<NetworkTransform>().SetDirtyBit(1);
     }
 }
