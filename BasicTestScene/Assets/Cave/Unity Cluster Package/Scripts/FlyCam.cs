@@ -29,14 +29,16 @@ public class FlyCam : MonoBehaviour
     {
 
         // Mouse Look
+        if (Input.GetKey(KeyCode.Mouse0))
+        {
+            lastMouse = Input.mousePosition - lastMouse;
+            if (!inverted) lastMouse.y = -lastMouse.y;
+            lastMouse *= sensitivity;
+            lastMouse = new Vector3(transform.eulerAngles.x + lastMouse.y, transform.eulerAngles.y + lastMouse.x, 0);
+            transform.eulerAngles = lastMouse;
 
-        lastMouse = Input.mousePosition - lastMouse;
-        if (!inverted) lastMouse.y = -lastMouse.y;
-        lastMouse *= sensitivity;
-        lastMouse = new Vector3(transform.eulerAngles.x + lastMouse.y, transform.eulerAngles.y + lastMouse.x, 0);
-        transform.eulerAngles = lastMouse;
-
-        lastMouse = Input.mousePosition;
+            lastMouse = Input.mousePosition;
+        }
 
 
 
@@ -73,10 +75,5 @@ public class FlyCam : MonoBehaviour
             transform.Translate(lastDir * actSpeed * speed * Time.deltaTime * 40);
         else
             transform.Translate(dir * speed * Time.deltaTime * 20);
-    }
-
-    void OnGUI()
-    {
-        GUILayout.Box("actSpeed: " + actSpeed.ToString());
     }
 }
