@@ -39,8 +39,9 @@ namespace UnityClusterPackage
     {
         public static float deltaTime;
         public static float time;
-
-        public bool enableTimeout;
+        public int targetClientNumber = 1;
+        public int maxSecondsToWaitForConnections = 10;
+        
         private int reliableChannelId;
         private int hostId;
         private List<int> connections;
@@ -51,18 +52,18 @@ namespace UnityClusterPackage
 
         byte[] recBuffer;
         NetworkReader networkReader;
+        
 
         void Start()
         {
             recBuffer = new byte[1024];
             networkReader = new NetworkReader(recBuffer);
-            enableTimeout = true;
             started = false;
             GlobalConfig gConfig = new GlobalConfig();
             NetworkTransport.Init(gConfig);
 
             ConnectionConfig config = new ConnectionConfig();
-            reliableChannelId = config.AddChannel(QosType.Unreliable);
+            reliableChannelId = config.AddChannel(QosType.ReliableSequenced);
             HostTopology topology = new HostTopology(config, 10);
             hostId = NetworkTransport.AddHost(topology, 8888 + (NodeInformation.type.Equals("slave") ? 1 : 0));
 
@@ -164,11 +165,11 @@ namespace UnityClusterPackage
         void WaitForConnections(int targetNumber)
         {
             var watch = System.Diagnostics.Stopwatch.StartNew();
-            while (connections.Count < targetNumber && watch.ElapsedMilliseconds < 5000)
+            while (connections.Count < targetNumber && watch.ElapsedMilliseconds < 1000 * maxSecondsToWaitForConnections)
             {
                 ReceiveNextMessage(false);
             }
-            if (watch.ElapsedMilliseconds >= 5000)
+            if (watch.ElapsedMilliseconds >= 1000 * maxSecondsToWaitForConnections)
             {
                 Debug.Log("Waiting unsuccessfully for the next connection.");
                 Application.Quit();
@@ -202,7 +203,7 @@ namespace UnityClusterPackage
         {
             if (!started)
             {
-                WaitForConnections(1);
+                WaitForConnections(NodeInformation.type.Equals("master") ? targetClientNumber : 1);
                 started = true;
             }
             else
