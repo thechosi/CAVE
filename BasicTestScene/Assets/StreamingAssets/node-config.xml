@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <node type="master" name="vgn" id="120" nodes="6">
-	<server ip="192.168.180.20" port="25000"/>	
+	<server ip="localhost" port="25000"/>	
 	<screen stereo="false" eye="">
 		<pa x="-8" y="-5" z="0" />
 		<pb x="8" y="-5"  z="0" />

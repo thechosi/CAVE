@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityClusterPackage;
 using UnityEngine;
+using UnityEngine.Networking;
 
 public class CircularMovement : MonoBehaviour {
 
@@ -17,6 +18,9 @@ public class CircularMovement : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+        GetComponent<NetworkTransform>().interpolateMovement = 0;
+        GetComponent<NetworkTransform>().movementTheshold = 0;
+        GetComponent<NetworkTransform>().sendInterval = 0;
 
         if (NodeInformation.type.Equals("slave"))
         {
@@ -38,5 +42,6 @@ public class CircularMovement : MonoBehaviour {
 		float zt = Mathf.Sin (timeCounter) * distance;
 		transform.position = new Vector3 (x + xt, y, z + zt);
 
-	}
+        GetComponent<NetworkTransform>().SetDirtyBit(1);
+    }
 }
