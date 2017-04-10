@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
 public class SpawnSphere : MonoBehaviour {
 
@@ -66,7 +67,8 @@ public class SpawnSphere : MonoBehaviour {
                 {
 
                     // Spawns the object at the appropriate location with an random offset between 0 and 1 multiplied by an offset.
-                    Instantiate(obj, new Vector3(transform.position.x + Random.value * 30, transform.position.y + Random.value * 8, transform.position.z + Random.value * 28), Quaternion.identity);
+                    Transform spawnSpheresObjects = Instantiate(obj, new Vector3(transform.position.x + Random.value * 30, transform.position.y + Random.value * 8, transform.position.z + Random.value * 28), Quaternion.identity);
+                    NetworkServer.Spawn(spawnSpheresObjects.gameObject);
 
                 }
 
