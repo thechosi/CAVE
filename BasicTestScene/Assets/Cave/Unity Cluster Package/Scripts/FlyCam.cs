@@ -53,10 +53,10 @@ public class FlyCam : MonoBehaviour
         if (dir != Vector3.zero)
         {
             // some movement
-            if (actSpeed < 1)
+            if (actSpeed < 0.01)
                 actSpeed += acceleration * Time.deltaTime;
             else
-                actSpeed = 1.0f;
+                actSpeed = 0.01f;
 
             lastDir = dir;
         } else

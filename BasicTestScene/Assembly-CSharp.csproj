@@ -47,12 +47,15 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Cave\FlyCamera.cs" />
+     <Compile Include="Assets\Cave\Unity Cluster Package\Scripts\DeformableMesh.cs" />
      <Compile Include="Assets\Cave\Unity Cluster Package\Scripts\FlyCam.cs" />
+     <Compile Include="Assets\Cave\Unity Cluster Package\Scripts\GeneratePlaneMesh.cs" />
      <Compile Include="Assets\Cave\Unity Cluster Package\Scripts\Node\InstantiateNode.cs" />
      <Compile Include="Assets\Cave\Unity Cluster Package\Scripts\Node\NodeInformation.cs" />
      <Compile Include="Assets\Cave\Unity Cluster Package\Scripts\Node\OffAxisPerspective.cs" />
      <Compile Include="Assets\Cave\Unity Cluster Package\Scripts\Node\RigidBodySynchronization.cs" />
      <Compile Include="Assets\Cave\Unity Cluster Package\Scripts\Node\Statistics.cs" />
+     <Compile Include="Assets\Cave\Unity Cluster Package\Scripts\PhysicsDeformer.cs" />
      <Compile Include="Assets\Cave\Unity Cluster Package\Scripts\clickSpawn.cs" />
      <Compile Include="Assets\Cave\Unity Cluster Package\Scripts\spawnObject.cs" />
      <Compile Include="Assets\MovingBall\CircularMovement.cs" />
