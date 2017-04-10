@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityClusterPackage;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -16,7 +17,10 @@ public class Reset : MonoBehaviour {
         if(Input.GetKeyDown(KeyCode.R))
         {
             //Destroy(gameObject);
-            NetworkServer.Destroy(gameObject);
+            if (NodeInformation.type.Equals("master"))
+            {
+                NetworkServer.Destroy(gameObject);
+            }
 
         }
 		
