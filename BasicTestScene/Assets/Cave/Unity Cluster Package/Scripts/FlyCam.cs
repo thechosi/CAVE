@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityClusterPackage;
 using UnityEngine;
+using UnityEngine.Networking;
 
 public class FlyCam : MonoBehaviour
 {
@@ -27,56 +29,56 @@ public class FlyCam : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-        // Mouse Look
-
-        lastMouse = Input.mousePosition - lastMouse;
-        if (!inverted) lastMouse.y = -lastMouse.y;
-        lastMouse *= sensitivity;
-        lastMouse = new Vector3(transform.eulerAngles.x + lastMouse.y, transform.eulerAngles.y + lastMouse.x, 0);
-        transform.eulerAngles = lastMouse;
-
-        lastMouse = Input.mousePosition;
-
-
-
-        // Movement of Camera
-
-        Vector3 dir = new Vector3();    // create (0,0,0)
-
-        if (Input.GetKey(KeyCode.UpArrow)) dir.z += 1.0f;
-        if (Input.GetKey(KeyCode.DownArrow)) dir.z -= 1.0f;
-        if (Input.GetKey(KeyCode.LeftArrow)) dir.x -= 1.0f;
-        if (Input.GetKey(KeyCode.RightArrow)) dir.x += 1.0f;
-        dir.Normalize();
-
-        if (dir != Vector3.zero)
+        if (NodeInformation.type.Equals("master"))
         {
-            // some movement
-            if (actSpeed < 0.01)
-                actSpeed += acceleration * Time.deltaTime;
-            else
-                actSpeed = 0.01f;
+            // Mouse Look
+            if (Input.GetKey(KeyCode.Mouse0))
+            {
+                lastMouse = Input.mousePosition - lastMouse;
+                if (!inverted) lastMouse.y = -lastMouse.y;
+                lastMouse *= sensitivity;
+                lastMouse = new Vector3(transform.eulerAngles.x + lastMouse.y, transform.eulerAngles.y + lastMouse.x, 0);
+                transform.eulerAngles = lastMouse;
 
-            lastDir = dir;
-        } else
-        {
-            // should stop
-            if (actSpeed > 0)
-                actSpeed -= acceleration * Time.deltaTime;
+                lastMouse = Input.mousePosition;
+            }
+
+
+
+            // Movement of Camera
+
+            Vector3 dir = new Vector3();    // create (0,0,0)
+
+            if (Input.GetKey(KeyCode.UpArrow)) dir.z += 1.0f;
+            if (Input.GetKey(KeyCode.DownArrow)) dir.z -= 1.0f;
+            if (Input.GetKey(KeyCode.LeftArrow)) dir.x -= 1.0f;
+            if (Input.GetKey(KeyCode.RightArrow)) dir.x += 1.0f;
+            dir.Normalize();
+
+            if (dir != Vector3.zero)
+            {
+                // some movement
+                if (actSpeed < 0.01)
+                    actSpeed += acceleration * Time.deltaTime;
+                else
+                    actSpeed = 0.01f;
+
+                lastDir = dir;
+            }
             else
-                actSpeed = 0.0f;
+            {
+                // should stop
+                if (actSpeed > 0)
+                    actSpeed -= acceleration * Time.deltaTime;
+                else
+                    actSpeed = 0.0f;
+            }
+
+
+            if (smooth)
+                transform.Translate(lastDir * actSpeed * speed * Time.deltaTime * 40);
+            else
+                transform.Translate(dir * speed * Time.deltaTime * 20);
         }
-
-
-        if (smooth)
-            transform.Translate(lastDir * actSpeed * speed * Time.deltaTime * 40);
-        else
-            transform.Translate(dir * speed * Time.deltaTime * 20);
-    }
-
-    void OnGUI()
-    {
-        GUILayout.Box("actSpeed: " + actSpeed.ToString());
     }
 }

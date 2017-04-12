@@ -77,6 +77,7 @@
   <ItemGroup>
     <Compile Include="Assets\FlyCamera.cs" />
     <Compile Include="Assets\ParallaxMouse.cs" />
+    <Compile Include="Assets\SyncParticle.cs" />
     <Compile Include="Assets\TeapotRotate.cs" />
     <Compile Include="Assets\Unity Cluster Package\Scripts\Node\InstantiateNode.cs" />
     <Compile Include="Assets\Unity Cluster Package\Scripts\Node\NodeInformation.cs" />
