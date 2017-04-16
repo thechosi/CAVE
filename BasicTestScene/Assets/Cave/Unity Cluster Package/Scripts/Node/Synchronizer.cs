@@ -302,14 +302,24 @@ namespace UnityClusterPackage
             StartCoroutine(EndOfFrame());
         }
 
+        private float lastParticleTime = 0;
+
         private void SynchronizeParticles()
         {
             ParticleSystem[] particleSystems = FindObjectsOfType(typeof(ParticleSystem)) as ParticleSystem[];
             foreach (ParticleSystem particleSystem in particleSystems)
             {
-                particleSystem.time -= Time.deltaTime;
-                particleSystem.time += deltaTime;
+                //particleSystem.time -= Time.deltaTime;
+                particleSystem.time = lastParticleTime;
+                particleSystem.Simulate(deltaTime, true, false);
+                lastParticleTime = particleSystem.time;
+                //particleSystem.Simulate(deltaTime, true, false);
             }
+        }
+
+        void OnPreRender()
+        {
+
         }
 
         IEnumerator EndOfFrame()
@@ -335,6 +345,8 @@ namespace UnityClusterPackage
                 BroadcastMessage(new SynchroMessage(SynchroMessageType.FinishedRendering, 0));
             }
         }
+
+
 
         void OnDestroy()
         {
