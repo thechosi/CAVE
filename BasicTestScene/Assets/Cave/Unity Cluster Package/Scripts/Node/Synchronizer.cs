@@ -52,6 +52,7 @@ namespace UnityClusterPackage
 
         byte[] recBuffer;
         NetworkReader networkReader;
+        private int measureTime = 0;
         
 
         void Start()
@@ -296,7 +297,29 @@ namespace UnityClusterPackage
         void Update()
         {
             CheckConnection();
-            
+
+            if (measureTime < 5)
+            {
+                var watch = System.Diagnostics.Stopwatch.StartNew();
+                for (int i = 0; i < 100; i++)
+                {
+                    if (NodeInformation.type.Equals("master"))
+                    {
+                        BroadcastMessage(new SynchroMessage(SynchroMessageType.FinishedRendering, 0));
+                        WaitForNextMessage();
+                    }
+                    else
+                    {
+                        WaitForNextMessage();
+                        BroadcastMessage(new SynchroMessage(SynchroMessageType.FinishedRendering, 0));
+                    }
+                }
+                watch.Stop();
+                var elapsedMs = watch.ElapsedMilliseconds;
+                Debug.Log("Execution time: " + elapsedMs);
+                measureTime++;
+            }
+
             SynchronizeTime();
             SynchronizeInput();
 
