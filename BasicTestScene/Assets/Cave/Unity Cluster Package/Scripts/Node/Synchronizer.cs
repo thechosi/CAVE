@@ -1,10 +1,16 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections;
-using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Net.NetworkInformation;
+using System.Net.Sockets;
 using System.Text;
+using AwesomeSockets.Domain;
+using AwesomeSockets.Domain.Sockets;
+using AwesomeSockets.Sockets;
 using UnityEngine.Networking;
+using Buffer = AwesomeSockets.Buffers.Buffer;
 
 namespace UnityClusterPackage
 {
@@ -18,7 +24,7 @@ namespace UnityClusterPackage
         SetVerticalAxis
     }
 
-    public class SynchroMessage : MessageBase
+    public class SynchroMessage : UnityEngine.Networking.MessageBase
     {
         public SynchroMessageType type;
         public double data;
@@ -41,49 +47,40 @@ namespace UnityClusterPackage
         public static float time;
         public int targetClientNumber = 1;
         public int maxSecondsToWaitForConnections = 10;
-        
-        private int reliableChannelId;
-        private int hostId;
-        private List<int> connections;
-        private bool doClientInitialization;
+
+        private ISocket listenSocket;
+        private List<ISocket> connections;
         private bool started;
         private static float axisHorizontal;
         private static float axisVertical;
 
-        byte[] recBuffer;
-        NetworkReader networkReader;
         private int measureTime = 0;
-        
+        Buffer inBuf;
+        Buffer outBuf;
 
         void Start()
         {
-            recBuffer = new byte[1024];
-            networkReader = new NetworkReader(recBuffer);
+            inBuf = Buffer.New();
+            outBuf = Buffer.New();
+
             started = false;
-            GlobalConfig gConfig = new GlobalConfig();
-            NetworkTransport.Init(gConfig);
 
-            ConnectionConfig config = new ConnectionConfig();
-            reliableChannelId = config.AddChannel(QosType.ReliableSequenced);
-            HostTopology topology = new HostTopology(config, 10);
-            hostId = NetworkTransport.AddHost(topology, 8888 + (NodeInformation.type.Equals("slave") ? 1 : 0));
+            listenSocket = AweSock.TcpListen(8888 + (NodeInformation.type.Equals("slave") ? 1 : 0));
 
-            connections = new List<int>();
+            connections = new List<ISocket>();
 
             if (NodeInformation.type.Equals("slave"))
             {
                 QualitySettings.vSyncCount = 0;
-                byte error;
-                int connectionId = NetworkTransport.Connect(hostId, NodeInformation.serverIp, 8888, 0, out error);
             }
         }
 
-        void InitializeClient(int connectionId)
+        void InitializeClient(ISocket connection)
         {
             ParticleSystem[] particleSystems = FindObjectsOfType(typeof(ParticleSystem)) as ParticleSystem[];
             foreach (ParticleSystem particleSystem in particleSystems)
             {
-                SendMessage(new SynchroMessage(SynchroMessageType.SetParticleSeed, particleSystem.randomSeed), connectionId);
+                SendMessage(new SynchroMessage(SynchroMessageType.SetParticleSeed, particleSystem.randomSeed), connection);
                 particleSystem.Stop();
                 particleSystem.useAutoRandomSeed = false;
                 particleSystem.Clear();
@@ -96,55 +93,31 @@ namespace UnityClusterPackage
             ParticleSystem[] particleSystems = FindObjectsOfType(typeof(ParticleSystem)) as ParticleSystem[];
             foreach (ParticleSystem particleSystem in particleSystems)
             {
-                SynchroMessage message = WaitForNextMessage();
+                SynchroMessage message = WaitForNextMessage(connections[0]);
                 particleSystem.Stop();
                 particleSystem.randomSeed = (uint)message.data;
                 particleSystem.Clear();
                 particleSystem.Play();
             }
-            doClientInitialization = false;
         }
 
-        SynchroMessage ReceiveNextMessage(bool skipConnectingEvents)
+        SynchroMessage ReceiveNextMessage(bool skipConnectingEvents, ISocket connection)
         {
-            SynchroMessage message = null;
-            int connectionId;
-            int channelId;
-            int bufferSize = 1024;
-            int dataSize;
-            byte error;
-            NetworkEventType recData = NetworkTransport.ReceiveFromHost(hostId, out connectionId, out channelId, recBuffer, bufferSize, out dataSize, out error);
-            if (error > 0)
-                throw new NetworkInformationException(error);
-            switch (recData)
+            try
             {
-                case NetworkEventType.Nothing:
-                    break;
-                case NetworkEventType.ConnectEvent:
-                    connections.Add(connectionId);
-                    if (NodeInformation.type.Equals("master"))
-                        InitializeClient(connectionId);
-                    else
-                        doClientInitialization = true;
-
-                    if (skipConnectingEvents)
-                        message = ReceiveNextMessage(skipConnectingEvents);
-                    break;
-                case NetworkEventType.DataEvent:
-                    message = new SynchroMessage();
-                    networkReader.SeekZero();
-                    message.Deserialize(networkReader);
-                    break;
-                case NetworkEventType.DisconnectEvent:
-                    connections.Remove(connectionId);
-                    if (skipConnectingEvents)
-                        message = ReceiveNextMessage(skipConnectingEvents);
-                    break;
+                int received = AweSock.ReceiveMessage(connection, inBuf);
+                if (received == 0)
+                    throw new SocketException();
+                return new SynchroMessage((SynchroMessageType)Buffer.Get<int>(inBuf), Buffer.Get<double>(inBuf));
             }
-            return message;
+            catch (SocketException e)
+            {
+                connections.Remove(connection);
+                return null;
+            }
         }
 
-        SynchroMessage WaitForNextMessage()
+        SynchroMessage WaitForNextMessage(ISocket connection)
         {
             if (connections.Count > 0)
             {
@@ -153,7 +126,7 @@ namespace UnityClusterPackage
                 {
                     if (connections.Count == 0)
                         return null;
-                    message = ReceiveNextMessage(true);
+                    message = ReceiveNextMessage(true, connection);
                 } while (message == null || connections.Count == 0);
                 return message;
             }
@@ -168,7 +141,8 @@ namespace UnityClusterPackage
             var watch = System.Diagnostics.Stopwatch.StartNew();
             while (connections.Count < targetNumber && watch.ElapsedMilliseconds < 1000 * maxSecondsToWaitForConnections)
             {
-                ReceiveNextMessage(false);
+                connections.Add(AweSock.TcpAccept(listenSocket));
+                InitializeClient(connections[connections.Count - 1]);
             }
             if (watch.ElapsedMilliseconds >= 1000 * maxSecondsToWaitForConnections)
             {
@@ -179,32 +153,58 @@ namespace UnityClusterPackage
 
         void BroadcastMessage(SynchroMessage message)
         {
-            byte error;
-            NetworkWriter networkWriter = new NetworkWriter();
-            message.Serialize(networkWriter);
+            Buffer.ClearBuffer(outBuf);
+            Buffer.Add(outBuf, (int)message.type);
+            Buffer.Add(outBuf, message.data);
+            Buffer.FinalizeBuffer(outBuf);
 
-            foreach (int connectionId in connections)
+            foreach (ISocket connection in connections)
             {
-                NetworkTransport.Send(hostId, connectionId, reliableChannelId, networkWriter.AsArray(), networkWriter.Position, out error);
-                if (error > 0)
-                    throw new NetworkInformationException(error);
+                try
+                {
+                    int bytesSent = AweSock.SendMessage(connection, outBuf);
+
+                    if (bytesSent == 0)
+                        throw new NetworkInformationException();
+                }
+                catch (SocketException)
+                {
+                    connections.Remove(connection);
+                }
             }
         }
 
-        void SendMessage(SynchroMessage message, int connectionId)
+        void SendMessage(SynchroMessage message, ISocket connection)
         {
-            byte error;
-            NetworkWriter networkWriter = new NetworkWriter();
-            message.Serialize(networkWriter);
+            Buffer.ClearBuffer(outBuf);
+            Buffer.Add(outBuf, (int)message.type);
+            Buffer.Add(outBuf, message.data);
+            Buffer.FinalizeBuffer(outBuf);
 
-            NetworkTransport.Send(hostId, connectionId, reliableChannelId, networkWriter.AsArray(), networkWriter.Position, out error);
+            try
+            {
+                int bytesSent = AweSock.SendMessage(connection, outBuf);
+
+                if (bytesSent == 0)
+                    throw new NetworkInformationException();
+            }
+            catch (SocketException)
+            {
+                connections.Remove(connection);
+            }
         }
 
         void CheckConnection()
         {
             if (!started)
             {
-                WaitForConnections(NodeInformation.type.Equals("master") ? targetClientNumber : 1);
+                if (NodeInformation.type.Equals("master"))
+                    WaitForConnections(targetClientNumber);
+                else
+                {
+                    connections.Add(AweSock.TcpConnect(NodeInformation.serverIp, 8888));
+                    InitializeSelf();
+                }
                 started = true;
             }
             else
@@ -218,8 +218,6 @@ namespace UnityClusterPackage
 #endif
                 }
             }
-            if (doClientInitialization)
-                InitializeSelf();
 
         }
 
@@ -244,7 +242,7 @@ namespace UnityClusterPackage
                 time = -1;
                 do
                 {
-                    SynchroMessage message = WaitForNextMessage();
+                    SynchroMessage message = WaitForNextMessage(connections[0]);
 
                     if (message.type == SynchroMessageType.SetDeltaTime)
                         deltaTime = (float)message.data;
@@ -281,7 +279,7 @@ namespace UnityClusterPackage
                 axisVertical = -2;
                 do
                 {
-                    SynchroMessage message = WaitForNextMessage();
+                    SynchroMessage message = WaitForNextMessage(connections[0]);
 
                     if (message.type == SynchroMessageType.SetHorizontalAxis)
                         axisHorizontal = (float)message.data;
@@ -298,35 +296,12 @@ namespace UnityClusterPackage
         {
             CheckConnection();
 
-            if (measureTime < 5)
-            {
-                var watch = System.Diagnostics.Stopwatch.StartNew();
-                for (int i = 0; i < 100; i++)
-                {
-                    if (NodeInformation.type.Equals("master"))
-                    {
-                        BroadcastMessage(new SynchroMessage(SynchroMessageType.FinishedRendering, 0));
-                        WaitForNextMessage();
-                    }
-                    else
-                    {
-                        WaitForNextMessage();
-                        BroadcastMessage(new SynchroMessage(SynchroMessageType.FinishedRendering, 0));
-                    }
-                }
-                watch.Stop();
-                var elapsedMs = watch.ElapsedMilliseconds;
-                Debug.Log("Execution time: " + elapsedMs);
-                measureTime++;
-            }
-
             SynchronizeTime();
             SynchronizeInput();
 
             StartCoroutine(EndOfFrame());
         }
 
-        private float lasttime;
         private void SynchronizeParticles()
         {
             ParticleSystem[] particleSystems = FindObjectsOfType(typeof(ParticleSystem)) as ParticleSystem[];
@@ -347,7 +322,7 @@ namespace UnityClusterPackage
                 int counter = 0;
                 while (counter < connections.Count)
                 {
-                    SynchroMessage message = WaitForNextMessage();
+                    SynchroMessage message = WaitForNextMessage(connections[counter]);
 
                     if (message.type == SynchroMessageType.FinishedRendering)
                         counter++;
@@ -363,10 +338,9 @@ namespace UnityClusterPackage
 
         void OnDestroy()
         {
-            byte error;
-            foreach (int connection in connections)
+            foreach (ISocket connection in connections)
             {
-                NetworkTransport.Disconnect(hostId, connection, out error);
+                connection.Close();
             }
         }
 
