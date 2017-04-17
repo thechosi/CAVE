@@ -18,7 +18,7 @@
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
     <UnityVersion>5.5.2f1</UnityVersion>
     <RootNamespace></RootNamespace>
-    <LangVersion>4</LangVersion>
+    <LangVersion Condition=" '$(VisualStudioVersion)' != '10.0' ">4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -76,10 +76,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Cave\FlyCamera.cs" />
-    <Compile Include="Assets\Cave\Unity Cluster Package\Scripts\AnimationSync.cs" />
     <Compile Include="Assets\Cave\Unity Cluster Package\Scripts\DeformableMesh.cs" />
     <Compile Include="Assets\Cave\Unity Cluster Package\Scripts\FlyCam.cs" />
     <Compile Include="Assets\Cave\Unity Cluster Package\Scripts\GeneratePlaneMesh.cs" />
+    <Compile Include="Assets\Cave\Unity Cluster Package\Scripts\MoveCubes.cs" />
     <Compile Include="Assets\Cave\Unity Cluster Package\Scripts\Node\InstantiateNode.cs" />
     <Compile Include="Assets\Cave\Unity Cluster Package\Scripts\Node\NodeInformation.cs" />
     <Compile Include="Assets\Cave\Unity Cluster Package\Scripts\Node\OffAxisPerspective.cs" />
