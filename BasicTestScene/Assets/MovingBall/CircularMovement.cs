@@ -30,7 +30,7 @@ public class CircularMovement : MonoBehaviour
 	// Update is called once per frame
 	void Update () {
         
-        timeCounter += (Synchronizer.deltaTime * speed);
+        timeCounter += (TimeSynchronizer.deltaTime * speed);
 		float xt = Mathf.Cos (timeCounter) * distance;
 		float zt = Mathf.Sin (timeCounter) * distance;
 		transform.position = new Vector3 (x + xt, y, z + zt);
