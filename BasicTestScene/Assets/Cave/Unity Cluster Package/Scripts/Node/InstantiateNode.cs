@@ -3,26 +3,28 @@ using System.Collections;
 using System;
 using UnityEngine.Networking;
 
-namespace UnityClusterPackage {
-	
-	public class InstantiateNode : MonoBehaviour {
-		
-		public GameObject MultiProjectionCamera;
+namespace UnityClusterPackage
+{
+
+    public class InstantiateNode : MonoBehaviour
+    {
+
+        public GameObject MultiProjectionCamera;
         public GameObject camera;
 
-        void Start ()
-		{
-		    NetworkManager networkManager = GetComponent<NetworkManager>();
+        void Start()
+        {
+            NetworkManager networkManager = GetComponent<NetworkManager>();
             networkManager.networkAddress = NodeInformation.serverIp;
             networkManager.networkPort = NodeInformation.serverPort;
-            if ( NodeInformation.type.Equals("master") )
+            if (NodeInformation.type.Equals("master"))
             {
                 networkManager.StartServer();
 
                 GameObject obj = (GameObject)Instantiate(MultiProjectionCamera, transform.position, transform.rotation);
                 NetworkServer.Spawn(obj);
-			}
-			else if ( NodeInformation.type.Equals("slave") )
+            }
+            else if (NodeInformation.type.Equals("slave"))
             {
                 networkManager.StartClient();
 
@@ -43,36 +45,37 @@ namespace UnityClusterPackage {
             }
 
             // Configure all network transform components (we will synchronize manually)
-		    NetworkTransform[] networkTransforms = FindObjectsOfType(typeof(NetworkTransform)) as NetworkTransform[];
-		    foreach (NetworkTransform networkTransform in networkTransforms)
-		    {
-		        networkTransform.interpolateMovement = 0;
-		        networkTransform.sendInterval = 0;
-		        networkTransform.movementTheshold = 0.000001f;
-		    }
+            NetworkTransform[] networkTransforms = FindObjectsOfType(typeof(NetworkTransform)) as NetworkTransform[];
+            foreach (NetworkTransform networkTransform in networkTransforms)
+            {
+                networkTransform.interpolateMovement = 0;
+                networkTransform.sendInterval = 0;
+                networkTransform.movementTheshold = 0.000001f;
+            }
         }
 
 
-    void Update()
-	    {
+        void Update()
+        {
             // Manually start synchronization for all network tranforms
-	        NetworkTransform[] networkTransforms = FindObjectsOfType(typeof(NetworkTransform)) as NetworkTransform[];
-	        foreach (NetworkTransform networkTransform in networkTransforms)
-	        {
-	            networkTransform.SetDirtyBit(1);
-	        }
+            NetworkTransform[] networkTransforms = FindObjectsOfType(typeof(NetworkTransform)) as NetworkTransform[];
+            foreach (NetworkTransform networkTransform in networkTransforms)
+            {
+                networkTransform.SetDirtyBit(1);
+            }
 
             // Workaround
             // It may take to long to connect to Server
             if (camera == null)
             {
                 camera = GameObject.FindWithTag("MainCamera");
-                if (camera == null)
+                Debug.Log(camera);
+                if (camera != null)
                 {
                     Debug.Log(NodeInformation.cameraRoation);
                     camera.transform.Rotate(NodeInformation.cameraRoation);
                 }
             }
         }
-	}
+    }
 }

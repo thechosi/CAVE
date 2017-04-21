@@ -15,7 +15,6 @@ namespace UnityClusterPackage
         public static String cameraEye;
         public static int id, nodes, serverPort;
         public static bool stereo;
-        public static string eye;
         public static float paX, paY, paZ, pbX, pbY, pbZ, pcX, pcY, pcZ, peX, peY, peZ;
 
         static NodeInformation()
@@ -136,27 +135,28 @@ namespace UnityClusterPackage
                 switch (node.Name)
                 {
                     case "master":
-                        if (Network.player.ipAddress == node.Attributes["ip"].Value || node.Attributes["ip"].Value == "localhost") { 
-                            type = "master";
-                        Debug.Log("Wir sind master");
-                        getServerInfosOfNode(node);
-
-
-                        foreach (XmlNode master_node in node.ChildNodes)
+                        if (Network.player.ipAddress == node.Attributes["ip"].Value || node.Attributes["ip"].Value == "localhost")
                         {
-                            switch (master_node.Name)
-                            {
-                                case "relationToOrigin":
-                                    cameraRoation = getRotationOfNode(master_node);
-                                    break;
+                            type = "master";
+                            Debug.Log("Wir sind master");
+                            getServerInfosOfNode(node);
 
-                                case "screenplane":
-                                    getScreenplane(master_node);
-                                    break;
+
+                            foreach (XmlNode master_node in node.ChildNodes)
+                            {
+                                switch (master_node.Name)
+                                {
+                                    case "relationToOrigin":
+                                        cameraRoation = getRotationOfNode(master_node);
+                                        break;
+
+                                    case "screenplane":
+                                        getScreenplane(master_node);
+                                        break;
+                                }
                             }
                         }
-                    }
-                    break;
+                        break;
 
                     case "slave":
                         if (Network.player.ipAddress == node.Attributes["ip"].Value)
@@ -184,7 +184,7 @@ namespace UnityClusterPackage
 
             }
 
-            
+
         }
     }
 }
