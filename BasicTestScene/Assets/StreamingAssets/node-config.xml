@@ -3,7 +3,7 @@
   <master ip="localhost" port="25000">
     <relationToOrigin>
       <position x="0" y="0" z="0"/>
-      <rotation x="0" y="90" z="0"/>
+      <rotation x="0" y="0" z="0"/>
     </relationToOrigin>
     <screenplane>
       <pa x="-3" y="-3" z="0"/>

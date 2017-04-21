@@ -9,8 +9,8 @@ namespace UnityClusterPackage
     public class InstantiateNode : MonoBehaviour
     {
 
-        public GameObject MultiProjectionCamera;
-        public GameObject camera;
+        public GameObject CameraHolder;
+        public GameObject cameraSlave;
 
         void Start()
         {
@@ -21,7 +21,7 @@ namespace UnityClusterPackage
             {
                 networkManager.StartServer();
 
-                GameObject obj = (GameObject)Instantiate(MultiProjectionCamera, transform.position, transform.rotation);
+                GameObject obj = (GameObject)Instantiate(CameraHolder, transform.position, transform.rotation);
                 NetworkServer.Spawn(obj);
             }
             else if (NodeInformation.type.Equals("slave"))
@@ -35,12 +35,12 @@ namespace UnityClusterPackage
                     rigidbody.useGravity = false;
                 }
                 // The slave needs to connect to the MainCamera
-                if (camera == null)
+                if (cameraSlave == null)
                 {
-                    camera = GameObject.FindWithTag("MainCamera");
+                    cameraSlave = GameObject.FindWithTag("MainCamera");
 
                     Debug.Log(NodeInformation.cameraRoation);
-                    camera.transform.Rotate(NodeInformation.cameraRoation);
+                    cameraSlave.transform.Rotate(NodeInformation.cameraRoation);
                 }
             }
 
@@ -66,14 +66,14 @@ namespace UnityClusterPackage
 
             // Workaround
             // It may take to long to connect to Server
-            if (camera == null)
+            if (cameraSlave == null)
             {
-                camera = GameObject.FindWithTag("MainCamera");
-                Debug.Log(camera);
-                if (camera != null)
+                cameraSlave = GameObject.FindWithTag("MainCamera");
+                Debug.Log(cameraSlave);
+                if (cameraSlave != null)
                 {
                     Debug.Log(NodeInformation.cameraRoation);
-                    camera.transform.Rotate(NodeInformation.cameraRoation);
+                    cameraSlave.transform.Rotate(NodeInformation.cameraRoation);
                 }
             }
         }

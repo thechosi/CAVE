@@ -13,11 +13,13 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile></CompilerResponseFile>
+    <CompilerResponseFile>
+    </CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
     <UnityVersion>5.5.2f1</UnityVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
     <LangVersion Condition=" '$(VisualStudioVersion)' != '10.0' ">4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -91,9 +93,29 @@
     <Compile Include="Assets\SpawnSpheres\Reset.cs" />
     <Compile Include="Assets\SpawnSpheres\SpawnSphere.cs" />
     <Compile Include="Assets\SyncParticle.cs" />
+    <Compile Include="Assets\Tracking\Plugins\UnityVRPN\Scripts\LeftHandedVRPN.cs" />
+    <Compile Include="Assets\Tracking\Plugins\UnityVRPN\Scripts\TrackerHostSettings.cs" />
+    <Compile Include="Assets\Tracking\Plugins\UnityVRPN\Scripts\TrackerPreset.cs" />
+    <Compile Include="Assets\Tracking\Plugins\UnityVRPN\Scripts\TrackerSettings.cs" />
+    <Compile Include="Assets\Tracking\Plugins\UnityVRPN\Scripts\VRPN.cs" />
+    <Compile Include="Assets\Tracking\Plugins\UnityVRPN\Scripts\ViconVRPN.cs" />
+    <Compile Include="Assets\Tracking\Scripts\ActivateDisplays.cs" />
+    <Compile Include="Assets\Tracking\Scripts\ApplicationManager.cs" />
+    <Compile Include="Assets\Tracking\Scripts\AsymmetricFrustum.cs" />
+    <Compile Include="Assets\Tracking\Scripts\FixedMoveDirection.cs" />
+    <Compile Include="Assets\Tracking\Scripts\FixedRotation.cs" />
+    <Compile Include="Assets\Tracking\Scripts\FlyStickInteraction.cs" />
+    <Compile Include="Assets\Tracking\Scripts\Flystick.cs" />
+    <Compile Include="Assets\Tracking\Scripts\InterpupillaryDistance.cs" />
+    <Compile Include="Assets\Tracking\Scripts\VRInteractiveItem.cs" />
+    <Compile Include="Assets\Tracking\Scripts\flystickNavigation.cs" />
+    <Compile Include="Assets\Tracking\Scripts\interactionTrigger.cs" />
+    <Compile Include="Assets\Tracking\Scripts\manageTracking.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\StreamingAssets\node-config.xml" />
+    <None Include="Assets\StreamingAssets\node-config.xml">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />
