@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2017
+# Visual Studio 2015
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BasicTestScene", "BasicTestScene.csproj", "{81FEF594-D5A1-7CCF-CA6B-EBB32511D5F5}"
 EndProject
 Global

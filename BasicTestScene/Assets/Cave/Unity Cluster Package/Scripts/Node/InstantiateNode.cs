@@ -8,8 +8,9 @@ namespace UnityClusterPackage {
 	public class InstantiateNode : MonoBehaviour {
 		
 		public GameObject MultiProjectionCamera;
-        
-		void Start ()
+        public GameObject camera;
+
+        void Start ()
 		{
 		    NetworkManager networkManager = GetComponent<NetworkManager>();
             networkManager.networkAddress = NodeInformation.serverIp;
@@ -30,6 +31,14 @@ namespace UnityClusterPackage {
                 foreach (Rigidbody rigidbody in rigidbodies)
                 {
                     rigidbody.useGravity = false;
+                }
+                // The slave needs to connect to the MainCamera
+                if (camera == null)
+                {
+                    camera = GameObject.FindWithTag("MainCamera");
+
+                    Debug.Log(NodeInformation.cameraRoation);
+                    camera.transform.Rotate(NodeInformation.cameraRoation);
                 }
             }
 
@@ -52,6 +61,18 @@ namespace UnityClusterPackage {
 	        {
 	            networkTransform.SetDirtyBit(1);
 	        }
+
+            // Workaround
+            // It may take to long to connect to Server
+            if (camera == null)
+            {
+                camera = GameObject.FindWithTag("MainCamera");
+                if (camera == null)
+                {
+                    Debug.Log(NodeInformation.cameraRoation);
+                    camera.transform.Rotate(NodeInformation.cameraRoation);
+                }
+            }
         }
 	}
 }
