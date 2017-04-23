@@ -5,16 +5,16 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{6345636C-D376-970A-5BBB-E2AE0D745DB8}</ProjectGuid>
+    <ProjectGuid>{BD3E2255-4F00-4F7C-1CFC-C7A79DED6D9B}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <AssemblyName>Assembly-CSharp</AssemblyName>
+    <AssemblyName>Assembly-CSharp-Editor</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
+    <TargetFrameworkProfile>Unity Full v3.5</TargetFrameworkProfile>
     <CompilerResponseFile></CompilerResponseFile>
-    <UnityProjectType>Game:1</UnityProjectType>
+    <UnityProjectType>Editor:5</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
     <UnityVersion>5.5.2f1</UnityVersion>
     <RootNamespace></RootNamespace>
@@ -52,8 +52,17 @@
     <Reference Include="UnityEngine">
       <HintPath>Library\UnityAssemblies\UnityEngine.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEditor">
+      <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.Analytics">
       <HintPath>Library\UnityAssemblies\UnityEngine.Analytics.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.Analytics">
+      <HintPath>Library\UnityAssemblies\UnityEditor.Analytics.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.PlaymodeTestsRunner">
+      <HintPath>Library\UnityAssemblies\UnityEditor.PlaymodeTestsRunner.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.PlaymodeTestsRunner">
       <HintPath>Library\UnityAssemblies\UnityEngine.PlaymodeTestsRunner.dll</HintPath>
@@ -61,72 +70,58 @@
     <Reference Include="UnityEngine.Networking">
       <HintPath>Library\UnityAssemblies\UnityEngine.Networking.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEditor.Networking">
+      <HintPath>Library\UnityAssemblies\UnityEditor.Networking.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.UI">
       <HintPath>Library\UnityAssemblies\UnityEngine.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.UI">
+      <HintPath>Library\UnityAssemblies\UnityEditor.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.Advertisements">
+      <HintPath>Library\UnityAssemblies\UnityEditor.Advertisements.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework">
+      <HintPath>Library\UnityAssemblies\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.EditorTestsRunner">
+      <HintPath>Library\UnityAssemblies\UnityEditor.EditorTestsRunner.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.TreeEditor">
+      <HintPath>Library\UnityAssemblies\UnityEditor.TreeEditor.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.HoloLens">
+      <HintPath>Library\UnityAssemblies\UnityEditor.HoloLens.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.HoloLens">
       <HintPath>Library\UnityAssemblies\UnityEngine.HoloLens.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEditor.VR">
+      <HintPath>Library\UnityAssemblies\UnityEditor.VR.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.VR">
       <HintPath>Library\UnityAssemblies\UnityEngine.VR.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEditor">
-      <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
+    <Reference Include="UnityEditor.Graphs">
+      <HintPath>Library\UnityAssemblies\UnityEditor.Graphs.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.WindowsStandalone.Extensions">
+      <HintPath>Library\UnityAssemblies\UnityEditor.WindowsStandalone.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="SyntaxTree.VisualStudio.Unity.Bridge">
+      <HintPath>Library\UnityAssemblies\SyntaxTree.VisualStudio.Unity.Bridge.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Cave\AwesomeSockets\Buffers\Buffer.cs" />
-    <Compile Include="Assets\Cave\AwesomeSockets\Domain\Enumerations.cs" />
-    <Compile Include="Assets\Cave\AwesomeSockets\Domain\SocketModifiers\ISocketModifier.cs" />
-    <Compile Include="Assets\Cave\AwesomeSockets\Domain\SocketModifiers\MulticastSocketModifier.cs" />
-    <Compile Include="Assets\Cave\AwesomeSockets\Domain\Sockets\AwesomeSocket.cs" />
-    <Compile Include="Assets\Cave\AwesomeSockets\Domain\Sockets\ISocket.cs" />
-    <Compile Include="Assets\Cave\AwesomeSockets\Properties\AssemblyInfo.cs" />
-    <Compile Include="Assets\Cave\AwesomeSockets\Sockets\AweSock.cs" />
-    <Compile Include="Assets\Cave\FlyCamera.cs" />
-    <Compile Include="Assets\Cave\Unity Cluster Package\Scripts\DeformableMesh.cs" />
-    <Compile Include="Assets\Cave\Unity Cluster Package\Scripts\FlyCam.cs" />
-    <Compile Include="Assets\Cave\Unity Cluster Package\Scripts\GeneratePlaneMesh.cs" />
-    <Compile Include="Assets\Cave\Unity Cluster Package\Scripts\MoveCubes.cs" />
-    <Compile Include="Assets\Cave\Unity Cluster Package\Scripts\Node\AnimatorSynchronizer.cs" />
-    <Compile Include="Assets\Cave\Unity Cluster Package\Scripts\Node\Client.cs" />
-    <Compile Include="Assets\Cave\Unity Cluster Package\Scripts\Node\InputSynchronizer.cs" />
-    <Compile Include="Assets\Cave\Unity Cluster Package\Scripts\Node\InstantiateNode.cs" />
-    <Compile Include="Assets\Cave\Unity Cluster Package\Scripts\Node\NetworkNode.cs" />
-    <Compile Include="Assets\Cave\Unity Cluster Package\Scripts\Node\NodeInformation.cs" />
-    <Compile Include="Assets\Cave\Unity Cluster Package\Scripts\Node\OffAxisPerspective.cs" />
-    <Compile Include="Assets\Cave\Unity Cluster Package\Scripts\Node\ParticleSynchronizer.cs" />
-    <Compile Include="Assets\Cave\Unity Cluster Package\Scripts\Node\RigidBodySynchronizer.cs" />
-    <Compile Include="Assets\Cave\Unity Cluster Package\Scripts\Node\Server.cs" />
-    <Compile Include="Assets\Cave\Unity Cluster Package\Scripts\Node\Statistics.cs" />
-    <Compile Include="Assets\Cave\Unity Cluster Package\Scripts\Node\SynchroMessage.cs" />
-    <Compile Include="Assets\Cave\Unity Cluster Package\Scripts\Node\Synchronizer.cs" />
-    <Compile Include="Assets\Cave\Unity Cluster Package\Scripts\Node\TimeSynchronizer.cs" />
-    <Compile Include="Assets\Cave\Unity Cluster Package\Scripts\PhysicsDeformer.cs" />
-    <Compile Include="Assets\Cave\Unity Cluster Package\Scripts\clickSpawn.cs" />
-    <Compile Include="Assets\Cave\Unity Cluster Package\Scripts\spawnObject.cs" />
-    <Compile Include="Assets\MovingBall\CircularMovement.cs" />
-    <Compile Include="Assets\SpawnSpheres\Reset.cs" />
-    <Compile Include="Assets\SpawnSpheres\SpawnSphere.cs" />
-    <Compile Include="Assets\SyncParticle.cs" />
-    <Compile Include="Assets\Tracking\Plugins\UnityVRPN\Scripts\LeftHandedVRPN.cs" />
-    <Compile Include="Assets\Tracking\Plugins\UnityVRPN\Scripts\TrackerHostSettings.cs" />
-    <Compile Include="Assets\Tracking\Plugins\UnityVRPN\Scripts\TrackerPreset.cs" />
-    <Compile Include="Assets\Tracking\Plugins\UnityVRPN\Scripts\TrackerSettings.cs" />
-    <Compile Include="Assets\Tracking\Plugins\UnityVRPN\Scripts\VRPN.cs" />
-    <Compile Include="Assets\Tracking\Plugins\UnityVRPN\Scripts\ViconVRPN.cs" />
-    <Compile Include="Assets\Tracking\Scripts\ActivateDisplays.cs" />
-    <Compile Include="Assets\Tracking\Scripts\ApplicationManager.cs" />
-    <Compile Include="Assets\Tracking\Scripts\AsymmetricFrustum.cs" />
-    <Compile Include="Assets\Tracking\Scripts\FixedMoveDirection.cs" />
-    <Compile Include="Assets\Tracking\Scripts\FixedRotation.cs" />
-    <Compile Include="Assets\Tracking\Scripts\FlyStickInteraction.cs" />
-    <Compile Include="Assets\Tracking\Scripts\Flystick.cs" />
-    <Compile Include="Assets\Tracking\Scripts\InterpupillaryDistance.cs" />
-    <Compile Include="Assets\Tracking\Scripts\VRInteractiveItem.cs" />
-    <Compile Include="Assets\Tracking\Scripts\flystickNavigation.cs" />
-    <Compile Include="Assets\Tracking\Scripts\interactionTrigger.cs" />
-    <Compile Include="Assets\Tracking\Scripts\manageTracking.cs" />
+    <ProjectReference Include="BasicTestScene.CSharp.csproj">
+      <Project>{6345636C-D376-970A-5BBB-E2AE0D745DB8}</Project>
+      <Name>BasicTestScene.CSharp</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Assets\Tracking\Plugins\UnityVRPN\Editor\TrackerHostSettingsEditor.cs" />
+    <Compile Include="Assets\Tracking\Plugins\UnityVRPN\Editor\TrackerSettingsEditor.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\StreamingAssets\node-config.xml" />

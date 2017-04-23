@@ -1,6 +1,5 @@
 using UnityEngine;
 using System;
-using System.IO;
 using System.Xml;
 
 namespace UnityClusterPackage
@@ -135,11 +134,11 @@ namespace UnityClusterPackage
                 switch (node.Name)
                 {
                     case "master":
+                        getServerInfosOfNode(node);
                         if (Network.player.ipAddress == node.Attributes["ip"].Value || node.Attributes["ip"].Value == "localhost")
                         {
                             type = "master";
                             Debug.Log("Wir sind master");
-                            getServerInfosOfNode(node);
 
 
                             foreach (XmlNode master_node in node.ChildNodes)
@@ -159,7 +158,7 @@ namespace UnityClusterPackage
                         break;
 
                     case "slave":
-                        if (Network.player.ipAddress == node.Attributes["ip"].Value)
+                        if (Network.player.ipAddress == node.Attributes["ip"].Value || node.Attributes["ip"].Value == "localhost")
                         {
 
                             type = "slave";

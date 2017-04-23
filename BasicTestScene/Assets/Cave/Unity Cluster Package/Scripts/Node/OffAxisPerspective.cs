@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 // This script is an adaptation of https://en.wikibooks.org/wiki/Cg_Programming/Unity/Projection_for_Virtual_Reality, which is based
 // on Robert Kooima's publication "Generalized Perspective Projection," 2009, // http://csc.lsu.edu/~kooima/pdfs/gen-perspective.pdf
