@@ -6,10 +6,10 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{B7951A4C-DE5F-6819-B2CE-F714628AD70F}</ProjectGuid>
+    <ProjectGuid>{0C53E0F3-8B3B-ED0C-8685-711506F674EE}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <AssemblyName>Assembly-CSharp</AssemblyName>
+    <AssemblyName>Assembly-CSharp-Editor</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <BaseDirectory>Assets</BaseDirectory>
@@ -46,59 +46,67 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Cave\FlyCamera.cs" />
-     <Compile Include="Assets\Cave\Unity Cluster Package\Scripts\DeformableMesh.cs" />
-     <Compile Include="Assets\Cave\Unity Cluster Package\Scripts\FlyCam.cs" />
-     <Compile Include="Assets\Cave\Unity Cluster Package\Scripts\GeneratePlaneMesh.cs" />
-     <Compile Include="Assets\Cave\Unity Cluster Package\Scripts\MoveCubes.cs" />
-     <Compile Include="Assets\Cave\Unity Cluster Package\Scripts\Node\InstantiateNode.cs" />
-     <Compile Include="Assets\Cave\Unity Cluster Package\Scripts\Node\NodeInformation.cs" />
-     <Compile Include="Assets\Cave\Unity Cluster Package\Scripts\Node\OffAxisPerspective.cs" />
-     <Compile Include="Assets\Cave\Unity Cluster Package\Scripts\Node\Statistics.cs" />
-     <Compile Include="Assets\Cave\Unity Cluster Package\Scripts\PhysicsDeformer.cs" />
-     <Compile Include="Assets\Cave\Unity Cluster Package\Scripts\clickSpawn.cs" />
-     <Compile Include="Assets\Cave\Unity Cluster Package\Scripts\spawnObject.cs" />
-     <Compile Include="Assets\MovingBall\CircularMovement.cs" />
-     <Compile Include="Assets\SpawnSpheres\Reset.cs" />
-     <Compile Include="Assets\SpawnSpheres\SpawnSphere.cs" />
-     <Compile Include="Assets\SyncParticle.cs" />
-     <Compile Include="Assets\Tracking\Plugins\UnityVRPN\Scripts\LeftHandedVRPN.cs" />
-     <Compile Include="Assets\Tracking\Plugins\UnityVRPN\Scripts\TrackerHostSettings.cs" />
-     <Compile Include="Assets\Tracking\Plugins\UnityVRPN\Scripts\TrackerPreset.cs" />
-     <Compile Include="Assets\Tracking\Plugins\UnityVRPN\Scripts\TrackerSettings.cs" />
-     <Compile Include="Assets\Tracking\Plugins\UnityVRPN\Scripts\VRPN.cs" />
-     <Compile Include="Assets\Tracking\Plugins\UnityVRPN\Scripts\ViconVRPN.cs" />
-     <Compile Include="Assets\Tracking\Scripts\ActivateDisplays.cs" />
-     <Compile Include="Assets\Tracking\Scripts\ApplicationManager.cs" />
-     <Compile Include="Assets\Tracking\Scripts\AsymmetricFrustum.cs" />
-     <Compile Include="Assets\Tracking\Scripts\FixedMoveDirection.cs" />
-     <Compile Include="Assets\Tracking\Scripts\FixedRotation.cs" />
-     <Compile Include="Assets\Tracking\Scripts\FlyStickInteraction.cs" />
-     <Compile Include="Assets\Tracking\Scripts\Flystick.cs" />
-     <Compile Include="Assets\Tracking\Scripts\InterpupillaryDistance.cs" />
-     <Compile Include="Assets\Tracking\Scripts\VRInteractiveItem.cs" />
-     <Compile Include="Assets\Tracking\Scripts\flystickNavigation.cs" />
-     <Compile Include="Assets\Tracking\Scripts\interactionTrigger.cs" />
-     <Compile Include="Assets\Tracking\Scripts\manageTracking.cs" />
+     <Compile Include="Assets\Tracking\Plugins\UnityVRPN\Editor\TrackerHostSettingsEditor.cs" />
+     <Compile Include="Assets\Tracking\Plugins\UnityVRPN\Editor\TrackerSettingsEditor.cs" />
      <None Include="Assets\StreamingAssets\node-config.xml" />
+ <Reference Include="UnityEditor.Advertisements">
+ <HintPath>D:/Program Files/Unity5.5/Editor/Data/UnityExtensions/Unity/Advertisements/Editor/UnityEditor.Advertisements.dll</HintPath>
+ </Reference>
+ <Reference Include="nunit.framework">
+ <HintPath>D:/Program Files/Unity5.5/Editor/Data/UnityExtensions/Unity/EditorTestsRunner/Editor/nunit.framework.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEditor.EditorTestsRunner">
+ <HintPath>D:/Program Files/Unity5.5/Editor/Data/UnityExtensions/Unity/EditorTestsRunner/Editor/UnityEditor.EditorTestsRunner.dll</HintPath>
+ </Reference>
  <Reference Include="UnityEngine.UI">
  <HintPath>D:/Program Files/Unity5.5/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEditor.UI">
+ <HintPath>D:/Program Files/Unity5.5/Editor/Data/UnityExtensions/Unity/GUISystem/Editor/UnityEditor.UI.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.Networking">
  <HintPath>D:/Program Files/Unity5.5/Editor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
  </Reference>
+ <Reference Include="UnityEditor.Networking">
+ <HintPath>D:/Program Files/Unity5.5/Editor/Data/UnityExtensions/Unity/Networking/Editor/UnityEditor.Networking.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEditor.PlaymodeTestsRunner">
+ <HintPath>D:/Program Files/Unity5.5/Editor/Data/UnityExtensions/Unity/PlaymodeTestsRunner/Editor/UnityEditor.PlaymodeTestsRunner.dll</HintPath>
+ </Reference>
  <Reference Include="UnityEngine.PlaymodeTestsRunner">
  <HintPath>D:/Program Files/Unity5.5/Editor/Data/UnityExtensions/Unity/PlaymodeTestsRunner/UnityEngine.PlaymodeTestsRunner.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEditor.TreeEditor">
+ <HintPath>D:/Program Files/Unity5.5/Editor/Data/UnityExtensions/Unity/TreeEditor/Editor/UnityEditor.TreeEditor.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.Analytics">
  <HintPath>D:/Program Files/Unity5.5/Editor/Data/UnityExtensions/Unity/UnityAnalytics/UnityEngine.Analytics.dll</HintPath>
  </Reference>
+ <Reference Include="UnityEditor.Analytics">
+ <HintPath>D:/Program Files/Unity5.5/Editor/Data/UnityExtensions/Unity/UnityAnalytics/Editor/UnityEditor.Analytics.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEditor.HoloLens">
+ <HintPath>D:/Program Files/Unity5.5/Editor/Data/UnityExtensions/Unity/UnityHoloLens/Editor/UnityEditor.HoloLens.dll</HintPath>
+ </Reference>
  <Reference Include="UnityEngine.HoloLens">
  <HintPath>D:/Program Files/Unity5.5/Editor/Data/UnityExtensions/Unity/UnityHoloLens/RuntimeEditor/UnityEngine.HoloLens.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEditor.VR">
+ <HintPath>D:/Program Files/Unity5.5/Editor/Data/UnityExtensions/Unity/UnityVR/Editor/UnityEditor.VR.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.VR">
  <HintPath>D:/Program Files/Unity5.5/Editor/Data/UnityExtensions/Unity/UnityVR/RuntimeEditor/UnityEngine.VR.dll</HintPath>
  </Reference>
+ <Reference Include="UnityEditor.Graphs">
+ <HintPath>D:/Program Files/Unity5.5/Editor/Data/Managed/UnityEditor.Graphs.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEditor.WindowsStandalone.Extensions">
+ <HintPath>D:/Program Files/Unity5.5/Editor/Data/PlaybackEngines/windowsstandalonesupport/UnityEditor.WindowsStandalone.Extensions.dll</HintPath>
+ </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="Assembly-CSharp.csproj">
+      <Project>{B7951A4C-DE5F-6819-B2CE-F714628AD70F}</Project>      <Name>Assembly-CSharp</Name>    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
