@@ -1,16 +1,4 @@
-﻿using System;
-using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
-using System.Net;
-using System.Net.NetworkInformation;
-using System.Net.Sockets;
-using System.Text;
-using AwesomeSockets.Domain;
-using AwesomeSockets.Domain.Sockets;
-using AwesomeSockets.Sockets;
-using UnityEngine.Networking;
-using Buffer = AwesomeSockets.Buffers.Buffer;
+﻿using AwesomeSockets.Sockets;
 
 namespace UnityClusterPackage
 {

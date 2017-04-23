@@ -1,16 +1,5 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
-using System.Collections.Generic;
-using System.Net;
-using System.Net.NetworkInformation;
-using System.Net.Sockets;
-using System.Text;
-using AwesomeSockets.Domain;
-using AwesomeSockets.Domain.Sockets;
-using AwesomeSockets.Sockets;
-using UnityEngine.Networking;
-using Buffer = AwesomeSockets.Buffers.Buffer;
 
 namespace UnityClusterPackage
 {
@@ -22,7 +11,7 @@ namespace UnityClusterPackage
 
         private bool started;
         
-        private NetworkNode node;
+        public static NetworkNode node;
 
         void Start()
         {
@@ -74,7 +63,7 @@ namespace UnityClusterPackage
         IEnumerator EndOfFrame()
         {
             yield return new WaitForEndOfFrame();
-            ParticleSynchronizer.Synchronize();
+            ParticleSynchronizer.Synchronize(node);
             node.FinishFrame();
         }
 

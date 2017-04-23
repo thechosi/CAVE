@@ -1,7 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
 using UnityClusterPackage;
-using UnityEngine.Networking;
 
 public class FlyCamera : MonoBehaviour {
 

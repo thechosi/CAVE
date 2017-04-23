@@ -1,8 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityClusterPackage;
+﻿using UnityClusterPackage;
 using UnityEngine;
-using UnityEngine.Networking;
 
 public class CircularMovement : MonoBehaviour
 {

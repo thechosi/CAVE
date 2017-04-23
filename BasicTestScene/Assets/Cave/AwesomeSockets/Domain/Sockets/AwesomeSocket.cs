@@ -1,6 +1,5 @@
 ﻿using AwesomeSockets.Domain.SocketModifiers;
 using AwesomeSockets.Sockets;
-using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
