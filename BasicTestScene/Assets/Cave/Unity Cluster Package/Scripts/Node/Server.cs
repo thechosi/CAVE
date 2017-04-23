@@ -46,15 +46,7 @@ namespace UnityClusterPackage
 
         void InitializeClient(ISocket connection)
         {
-            ParticleSystem[] particleSystems = MonoBehaviour.FindObjectsOfType(typeof(ParticleSystem)) as ParticleSystem[];
-            foreach (ParticleSystem particleSystem in particleSystems)
-            {
-                SendMessage(new SynchroMessage(SynchroMessageType.SetParticleSeed, particleSystem.randomSeed), connection);
-                particleSystem.Stop();
-                particleSystem.useAutoRandomSeed = false;
-                particleSystem.Clear();
-                particleSystem.Play();
-            }
+           ParticleSynchronizer.InitializeFromServer(this, connection);
         }
 
 

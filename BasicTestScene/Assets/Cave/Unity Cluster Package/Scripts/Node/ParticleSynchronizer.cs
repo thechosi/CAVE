@@ -31,6 +31,30 @@ namespace UnityClusterPackage
             }
         }
 
+        public static void InitializeFromServer(Server server, ISocket client)
+        {
+            ParticleSystem[] particleSystems = MonoBehaviour.FindObjectsOfType(typeof(ParticleSystem)) as ParticleSystem[];
+            foreach (ParticleSystem particleSystem in particleSystems)
+            {
+                server.SendMessage(new SynchroMessage(SynchroMessageType.SetParticleSeed, particleSystem.randomSeed), client);
+                particleSystem.Stop();
+                particleSystem.useAutoRandomSeed = false;
+                particleSystem.Clear();
+                particleSystem.Play();
+            }
+        }
 
+        public static void InitializeFromClient(Client client)
+        {
+            ParticleSystem[] particleSystems = MonoBehaviour.FindObjectsOfType(typeof(ParticleSystem)) as ParticleSystem[];
+            foreach (ParticleSystem particleSystem in particleSystems)
+            {
+                SynchroMessage message = client.WaitForNextMessage();
+                particleSystem.Stop();
+                particleSystem.randomSeed = (uint)message.data;
+                particleSystem.Clear();
+                particleSystem.Play();
+            }
+        }
     }
 }

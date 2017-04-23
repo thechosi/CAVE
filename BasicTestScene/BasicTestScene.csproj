@@ -92,7 +92,7 @@
     <Compile Include="Assets\Cave\Unity Cluster Package\Scripts\Node\NetworkNode.cs" />
     <Compile Include="Assets\Cave\Unity Cluster Package\Scripts\Node\NodeInformation.cs" />
     <Compile Include="Assets\Cave\Unity Cluster Package\Scripts\Node\OffAxisPerspective.cs" />
-    <Compile Include="Assets\Cave\Unity Cluster Package\Scripts\Node\RigidBodySynchronization.cs" />
+    <Compile Include="Assets\Cave\Unity Cluster Package\Scripts\Node\RigidBodySynchronizer.cs" />
     <Compile Include="Assets\Cave\Unity Cluster Package\Scripts\Node\Statistics.cs" />
     <Compile Include="Assets\Cave\Unity Cluster Package\Scripts\Node\SynchroMessage.cs" />
     <Compile Include="Assets\Cave\Unity Cluster Package\Scripts\Node\Synchronizer.cs" />

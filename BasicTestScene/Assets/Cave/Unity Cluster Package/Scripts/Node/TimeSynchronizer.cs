@@ -29,11 +29,6 @@ namespace UnityClusterPackage
                 deltaTime = Time.deltaTime;
                 time = Time.time;
 
-                NetworkTransform[] networkTransforms = MonoBehaviour.FindObjectsOfType(typeof(NetworkTransform)) as NetworkTransform[];
-                foreach (NetworkTransform networkTransform in networkTransforms)
-                {
-                    networkTransform.SetDirtyBit(1);
-                }
             }
             else
             {
@@ -51,14 +46,6 @@ namespace UnityClusterPackage
                         throw new Exception("Received unexpected message.");
 
                 } while (time == -1 || deltaTime == -1);
-
-                NetworkTransform[] networkTransforms = MonoBehaviour.FindObjectsOfType(typeof(NetworkTransform)) as NetworkTransform[];
-                foreach (NetworkTransform networkTransform in networkTransforms)
-                {
-                    Rigidbody rigidBody = networkTransform.GetComponentInParent<Rigidbody>();
-                    if (rigidBody != null)
-                        rigidBody.useGravity = false;
-                }
             }
         }
 

@@ -13,8 +13,8 @@ using UnityEngine.Networking;
 using Buffer = AwesomeSockets.Buffers.Buffer;
 
 namespace UnityClusterPackage
-{ 
-    class Client : NetworkNode
+{
+    public class Client : NetworkNode
     {
         
         public override void Connect()
@@ -22,27 +22,17 @@ namespace UnityClusterPackage
             connections.Add(AweSock.TcpConnect(NodeInformation.serverIp, 8888));
             InitializeSelf();
         }
-
-
+        
         void InitializeSelf()
         {
-            ParticleSystem[] particleSystems = MonoBehaviour.FindObjectsOfType(typeof(ParticleSystem)) as ParticleSystem[];
-            foreach (ParticleSystem particleSystem in particleSystems)
-            {
-                SynchroMessage message = WaitForNextMessage(connections[0]);
-                particleSystem.Stop();
-                particleSystem.randomSeed = (uint)message.data;
-                particleSystem.Clear();
-                particleSystem.Play();
-            }
+           ParticleSynchronizer.InitializeFromClient(this);
+           RigidBodySynchronizer.InitializeFromClient(this);
         }
-
 
         public override void FinishFrame()
         {
             BroadcastMessage(new SynchroMessage(SynchroMessageType.FinishedRendering, 0));
         }
-
 
         public SynchroMessage WaitForNextMessage()
         {

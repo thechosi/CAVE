@@ -13,8 +13,8 @@ using UnityEngine.Networking;
 using Buffer = AwesomeSockets.Buffers.Buffer;
 
 namespace UnityClusterPackage
-{ 
-    abstract class NetworkNode
+{
+    public abstract class NetworkNode
     {
         protected List<ISocket> connections;
         Buffer inBuf;
