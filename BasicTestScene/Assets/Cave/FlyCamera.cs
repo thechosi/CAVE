@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
-using UnityEngine.Networking;
+using UnityClusterPackage;
 
 public class FlyCamera : MonoBehaviour {
 
@@ -9,15 +8,12 @@ public class FlyCamera : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        NetworkIdentity nView = GetComponent<NetworkIdentity>();
-        if (!nView.hasAuthority) {
-            enabled = false;
-        }
+
     }
 	
 	// Update is called once per frame
 	void Update () {
-        directionVector = new Vector3(-1.0f*Input.GetAxis("Vertical"), 0, Input.GetAxis("Horizontal"));
+        directionVector = new Vector3(InputSynchronizer.GetAxis("Horizontal"), 0, InputSynchronizer.GetAxis("Vertical"));
         transform.position += directionVector * translateVelocity;
     }
 }
