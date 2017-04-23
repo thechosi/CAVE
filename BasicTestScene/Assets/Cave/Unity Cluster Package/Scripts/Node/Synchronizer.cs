@@ -7,7 +7,6 @@ namespace UnityClusterPackage
     public class Synchronizer : MonoBehaviour
     {
         public int targetClientNumber = 1;
-        public int maxSecondsToWaitForConnections = 10;
 
         private bool started;
         
@@ -24,7 +23,7 @@ namespace UnityClusterPackage
             }
             else
             {
-                node = new Server(targetClientNumber, maxSecondsToWaitForConnections);
+                node = new Server(targetClientNumber);
             }
         }
 

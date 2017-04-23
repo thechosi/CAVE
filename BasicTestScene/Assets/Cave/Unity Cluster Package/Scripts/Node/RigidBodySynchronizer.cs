@@ -25,6 +25,9 @@ public class RigidBodySynchronizer : MonoBehaviour {
             Rigidbody rigidBody = networkTransform.GetComponentInParent<Rigidbody>();
             if (rigidBody != null)
                 rigidBody.useGravity = false;
+            networkTransform.interpolateMovement = 0;
+            networkTransform.sendInterval = 0;
+            networkTransform.movementTheshold = 0.000001f;
         }
     }
 
