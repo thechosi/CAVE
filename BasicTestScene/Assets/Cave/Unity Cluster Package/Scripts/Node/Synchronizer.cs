@@ -37,7 +37,7 @@ namespace UnityClusterPackage
             }
             else
             {
-                if (node.LostConnection())
+                if (node.LostConnection() && targetClientNumber > 0)
                 {
 #if UNITY_EDITOR
                     UnityEditor.EditorApplication.isPlaying = false;
