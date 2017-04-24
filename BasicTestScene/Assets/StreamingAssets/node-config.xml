@@ -1,10 +1,128 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<node type="master" name="vgn" id="120" nodes="6">
-	<server ip="localhost" port="25000"/>	
-	<screen stereo="false" eye="">
-		<pa x="-8" y="-5" z="0" />
-		<pb x="8" y="-5"  z="0" />
-		<pc x="-8" y="5" z="0" />
-		<pe x="0"  y="0"  z="5" />
-	</screen>
-</node>
+<config>
+  <master ip="localhost" port="25000">
+    <relationToOrigin>
+      <position x="0" y="0" z="0"/>
+      <rotation x="0" y="0" z="0"/>
+    </relationToOrigin>
+    <screenplane>
+      <pa x="-3" y="-3" z="0"/>
+      <pb x="3" y="-3" z="0"/>
+      <pc x="-3" y="3" z="0"/>
+      <pe x="0" y="0" z="3"/>
+    </screenplane>
+  </master>
+  <!-- Use for client on same machine:
+  <master ip="127.0.0.1" port="25000">
+    <relationToOrigin>
+      <position x="0" y="0" z="0"/>
+      <rotation x="0" y="0" z="0"/>
+    </relationToOrigin>
+    <screenplane>
+      <pa x="-3" y="-3" z="0"/>
+      <pb x="3" y="-3" z="0"/>
+      <pc x="-3" y="3" z="0"/>
+      <pe x="0" y="0" z="3"/>
+    </screenplane> 
+  </master> 
+  <slave ip="localhost">
+    <camera eye="left">
+      <rotation x="0" y="90" z="0" />
+    </camera>
+    <screenplane>
+      <pa x="-8" y="-5" z="0"/>
+      <pb x="8" y="-5" z="0"/>
+      <pc x="-8" y="5" z="0"/>
+      <pe x="0" y="0" z="5"/>
+    </screenplane>
+  </slave>
+  -->
+  <slave ip="192.168.178.35">
+    <camera eye="right">
+      <rotation x="0" y="90" z="0" />
+    </camera>
+    <screenplane>
+      <pa x="-8" y="-5" z="0"/>
+      <pb x="8" y="-5" z="0"/>
+      <pc x="-8" y="5" z="0"/>
+      <pe x="0" y="0" z="5"/>
+    </screenplane>
+  </slave>
+  <slave ip="192.168.178.36">
+    <camera eye="left">
+      <rotation x="0" y="90" z="0" />
+    </camera>
+    <screenplane>
+      <pa x="-8" y="-5" z="0"/>
+      <pb x="8" y="-5" z="0"/>
+      <pc x="-8" y="5" z="0"/>
+      <pe x="0" y="0" z="5"/>
+    </screenplane>
+  </slave>
+  <slave ip="192.168.178.37">
+    <camera eye="left">
+      <rotation x="0" y="90" z="0" />
+    </camera>
+    <screenplane>
+      <pa x="-8" y="-5" z="0"/>
+      <pb x="8" y="-5" z="0"/>
+      <pc x="-8" y="5" z="0"/>
+      <pe x="0" y="0" z="5"/>
+    </screenplane>
+  </slave>
+  <slave ip="192.168.178.38">
+    <camera eye="left">
+      <rotation x="0" y="90" z="0" />
+    </camera>
+    <screenplane>
+      <pa x="-8" y="-5" z="0"/>
+      <pb x="8" y="-5" z="0"/>
+      <pc x="-8" y="5" z="0"/>
+      <pe x="0" y="0" z="5"/>
+    </screenplane>
+  </slave>
+  <slave ip="192.168.178.39">
+    <camera eye="left">
+      <rotation x="0" y="90" z="0" />
+    </camera>
+    <screenplane>
+      <pa x="-8" y="-5" z="0"/>
+      <pb x="8" y="-5" z="0"/>
+      <pc x="-8" y="5" z="0"/>
+      <pe x="0" y="0" z="5"/>
+    </screenplane>
+  </slave>
+  <slave ip="192.168.178.40">
+    <camera eye="left">
+      <rotation x="0" y="90" z="0" />
+    </camera>
+    <screenplane>
+      <pa x="-8" y="-5" z="0"/>
+      <pb x="8" y="-5" z="0"/>
+      <pc x="-8" y="5" z="0"/>
+      <pe x="0" y="0" z="5"/>
+    </screenplane>
+  </slave>
+  <slave ip="192.168.178.41">
+    <camera eye="left">
+      <rotation x="0" y="90" z="0" />
+    </camera>
+    <screenplane>
+      <pa x="-8" y="-5" z="0"/>
+      <pb x="8" y="-5" z="0"/>
+      <pc x="-8" y="5" z="0"/>
+      <pe x="0" y="0" z="5"/>
+    </screenplane>
+  </slave>
+  <slave ip="192.168.178.42">
+    <camera eye="left">
+      <rotation x="0" y="90" z="0" />
+    </camera>
+    <screenplane>
+      <pa x="-8" y="-5" z="0"/>
+      <pb x="8" y="-5" z="0"/>
+      <pc x="-8" y="5" z="0"/>
+      <pe x="0" y="0" z="5"/>
+    </screenplane>
+  </slave>
+</config>

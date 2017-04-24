@@ -75,21 +75,58 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Cave\AwesomeSockets\Buffers\Buffer.cs" />
+    <Compile Include="Assets\Cave\AwesomeSockets\Domain\Enumerations.cs" />
+    <Compile Include="Assets\Cave\AwesomeSockets\Domain\SocketModifiers\ISocketModifier.cs" />
+    <Compile Include="Assets\Cave\AwesomeSockets\Domain\SocketModifiers\MulticastSocketModifier.cs" />
+    <Compile Include="Assets\Cave\AwesomeSockets\Domain\Sockets\AwesomeSocket.cs" />
+    <Compile Include="Assets\Cave\AwesomeSockets\Domain\Sockets\ISocket.cs" />
+    <Compile Include="Assets\Cave\AwesomeSockets\Properties\AssemblyInfo.cs" />
+    <Compile Include="Assets\Cave\AwesomeSockets\Sockets\AweSock.cs" />
     <Compile Include="Assets\Cave\FlyCamera.cs" />
-    <Compile Include="Assets\Cave\Unity Cluster Package\Scripts\AnimationSync.cs" />
     <Compile Include="Assets\Cave\Unity Cluster Package\Scripts\DeformableMesh.cs" />
     <Compile Include="Assets\Cave\Unity Cluster Package\Scripts\FlyCam.cs" />
     <Compile Include="Assets\Cave\Unity Cluster Package\Scripts\GeneratePlaneMesh.cs" />
+    <Compile Include="Assets\Cave\Unity Cluster Package\Scripts\MoveCubes.cs" />
+    <Compile Include="Assets\Cave\Unity Cluster Package\Scripts\Node\AnimatorSynchronizer.cs" />
+    <Compile Include="Assets\Cave\Unity Cluster Package\Scripts\Node\Client.cs" />
+    <Compile Include="Assets\Cave\Unity Cluster Package\Scripts\Node\InputSynchronizer.cs" />
     <Compile Include="Assets\Cave\Unity Cluster Package\Scripts\Node\InstantiateNode.cs" />
+    <Compile Include="Assets\Cave\Unity Cluster Package\Scripts\Node\NetworkNode.cs" />
     <Compile Include="Assets\Cave\Unity Cluster Package\Scripts\Node\NodeInformation.cs" />
     <Compile Include="Assets\Cave\Unity Cluster Package\Scripts\Node\OffAxisPerspective.cs" />
+    <Compile Include="Assets\Cave\Unity Cluster Package\Scripts\Node\ParticleSynchronizer.cs" />
+    <Compile Include="Assets\Cave\Unity Cluster Package\Scripts\Node\RigidBodySynchronizer.cs" />
+    <Compile Include="Assets\Cave\Unity Cluster Package\Scripts\Node\Server.cs" />
     <Compile Include="Assets\Cave\Unity Cluster Package\Scripts\Node\Statistics.cs" />
+    <Compile Include="Assets\Cave\Unity Cluster Package\Scripts\Node\SynchroMessage.cs" />
+    <Compile Include="Assets\Cave\Unity Cluster Package\Scripts\Node\Synchronizer.cs" />
+    <Compile Include="Assets\Cave\Unity Cluster Package\Scripts\Node\TimeSynchronizer.cs" />
     <Compile Include="Assets\Cave\Unity Cluster Package\Scripts\PhysicsDeformer.cs" />
     <Compile Include="Assets\Cave\Unity Cluster Package\Scripts\clickSpawn.cs" />
     <Compile Include="Assets\Cave\Unity Cluster Package\Scripts\spawnObject.cs" />
     <Compile Include="Assets\MovingBall\CircularMovement.cs" />
     <Compile Include="Assets\SpawnSpheres\Reset.cs" />
     <Compile Include="Assets\SpawnSpheres\SpawnSphere.cs" />
+    <Compile Include="Assets\SyncParticle.cs" />
+    <Compile Include="Assets\Tracking\Plugins\UnityVRPN\Scripts\LeftHandedVRPN.cs" />
+    <Compile Include="Assets\Tracking\Plugins\UnityVRPN\Scripts\TrackerHostSettings.cs" />
+    <Compile Include="Assets\Tracking\Plugins\UnityVRPN\Scripts\TrackerPreset.cs" />
+    <Compile Include="Assets\Tracking\Plugins\UnityVRPN\Scripts\TrackerSettings.cs" />
+    <Compile Include="Assets\Tracking\Plugins\UnityVRPN\Scripts\VRPN.cs" />
+    <Compile Include="Assets\Tracking\Plugins\UnityVRPN\Scripts\ViconVRPN.cs" />
+    <Compile Include="Assets\Tracking\Scripts\ActivateDisplays.cs" />
+    <Compile Include="Assets\Tracking\Scripts\ApplicationManager.cs" />
+    <Compile Include="Assets\Tracking\Scripts\AsymmetricFrustum.cs" />
+    <Compile Include="Assets\Tracking\Scripts\FixedMoveDirection.cs" />
+    <Compile Include="Assets\Tracking\Scripts\FixedRotation.cs" />
+    <Compile Include="Assets\Tracking\Scripts\FlyStickInteraction.cs" />
+    <Compile Include="Assets\Tracking\Scripts\Flystick.cs" />
+    <Compile Include="Assets\Tracking\Scripts\InterpupillaryDistance.cs" />
+    <Compile Include="Assets\Tracking\Scripts\VRInteractiveItem.cs" />
+    <Compile Include="Assets\Tracking\Scripts\flystickNavigation.cs" />
+    <Compile Include="Assets\Tracking\Scripts\interactionTrigger.cs" />
+    <Compile Include="Assets\Tracking\Scripts\manageTracking.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\StreamingAssets\node-config.xml" />
