@@ -53,9 +53,7 @@ Partial Class Form1
         Me.list_rela = New System.Windows.Forms.ListBox()
         Me.grp_depl = New System.Windows.Forms.GroupBox()
         Me.Label9 = New System.Windows.Forms.Label()
-        Me.txt_depl_name = New System.Windows.Forms.TextBox()
         Me.txt_depl_user = New System.Windows.Forms.TextBox()
-        Me.Label7 = New System.Windows.Forms.Label()
         Me.Label8 = New System.Windows.Forms.Label()
         Me.txt_depl_pw = New System.Windows.Forms.TextBox()
         Me.chk_master = New System.Windows.Forms.CheckBox()
@@ -72,7 +70,7 @@ Partial Class Form1
         Me.txt_port = New System.Windows.Forms.TextBox()
         Me.txt_ipAddress = New System.Windows.Forms.TextBox()
         Me.Label1 = New System.Windows.Forms.Label()
-        Me.Button1 = New System.Windows.Forms.Button()
+        Me.btn_configSave = New System.Windows.Forms.Button()
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
         Me.GroupBox1.SuspendLayout()
         Me.MenuStrip1.SuspendLayout()
@@ -189,6 +187,7 @@ Partial Class Form1
         Me.grp_cam.Controls.Add(Me.txt_cam_x)
         Me.grp_cam.Controls.Add(Me.Label15)
         Me.grp_cam.Controls.Add(Me.list_cam)
+        Me.grp_cam.Enabled = False
         Me.grp_cam.Location = New System.Drawing.Point(6, 162)
         Me.grp_cam.Name = "grp_cam"
         Me.grp_cam.Size = New System.Drawing.Size(231, 121)
@@ -199,6 +198,7 @@ Partial Class Form1
         'combo_eye
         '
         Me.combo_eye.FormattingEnabled = True
+        Me.combo_eye.Items.AddRange(New Object() {"left", "right"})
         Me.combo_eye.Location = New System.Drawing.Point(47, 16)
         Me.combo_eye.Name = "combo_eye"
         Me.combo_eye.Size = New System.Drawing.Size(178, 21)
@@ -264,6 +264,7 @@ Partial Class Form1
         'list_cam
         '
         Me.list_cam.FormattingEnabled = True
+        Me.list_cam.Items.AddRange(New Object() {"rotation"})
         Me.list_cam.Location = New System.Drawing.Point(7, 46)
         Me.list_cam.Name = "list_cam"
         Me.list_cam.Size = New System.Drawing.Size(68, 69)
@@ -278,6 +279,7 @@ Partial Class Form1
         Me.grp_relation.Controls.Add(Me.txt_relat_x)
         Me.grp_relation.Controls.Add(Me.Label12)
         Me.grp_relation.Controls.Add(Me.list_rela)
+        Me.grp_relation.Enabled = False
         Me.grp_relation.Location = New System.Drawing.Point(6, 46)
         Me.grp_relation.Name = "grp_relation"
         Me.grp_relation.Size = New System.Drawing.Size(231, 110)
@@ -336,6 +338,7 @@ Partial Class Form1
         'list_rela
         '
         Me.list_rela.FormattingEnabled = True
+        Me.list_rela.Items.AddRange(New Object() {"position", "rotation"})
         Me.list_rela.Location = New System.Drawing.Point(7, 20)
         Me.list_rela.Name = "list_rela"
         Me.list_rela.Size = New System.Drawing.Size(68, 82)
@@ -344,11 +347,10 @@ Partial Class Form1
         'grp_depl
         '
         Me.grp_depl.Controls.Add(Me.Label9)
-        Me.grp_depl.Controls.Add(Me.txt_depl_name)
         Me.grp_depl.Controls.Add(Me.txt_depl_user)
-        Me.grp_depl.Controls.Add(Me.Label7)
         Me.grp_depl.Controls.Add(Me.Label8)
         Me.grp_depl.Controls.Add(Me.txt_depl_pw)
+        Me.grp_depl.Enabled = False
         Me.grp_depl.Location = New System.Drawing.Point(243, 162)
         Me.grp_depl.Name = "grp_depl"
         Me.grp_depl.Size = New System.Drawing.Size(240, 121)
@@ -359,41 +361,24 @@ Partial Class Form1
         'Label9
         '
         Me.Label9.AutoSize = True
-        Me.Label9.Location = New System.Drawing.Point(6, 76)
+        Me.Label9.Location = New System.Drawing.Point(6, 49)
         Me.Label9.Name = "Label9"
         Me.Label9.Size = New System.Drawing.Size(78, 13)
         Me.Label9.TabIndex = 9
         Me.Label9.Text = "User-Passwort:"
         '
-        'txt_depl_name
-        '
-        Me.txt_depl_name.Location = New System.Drawing.Point(98, 21)
-        Me.txt_depl_name.Name = "txt_depl_name"
-        Me.txt_depl_name.Size = New System.Drawing.Size(136, 20)
-        Me.txt_depl_name.TabIndex = 8
-        Me.txt_depl_name.Text = "CAVE1"
-        '
         'txt_depl_user
         '
-        Me.txt_depl_user.Location = New System.Drawing.Point(98, 47)
+        Me.txt_depl_user.Location = New System.Drawing.Point(85, 19)
         Me.txt_depl_user.Name = "txt_depl_user"
-        Me.txt_depl_user.Size = New System.Drawing.Size(136, 20)
+        Me.txt_depl_user.Size = New System.Drawing.Size(149, 20)
         Me.txt_depl_user.TabIndex = 6
         Me.txt_depl_user.Text = "CAVEUser1"
-        '
-        'Label7
-        '
-        Me.Label7.AutoSize = True
-        Me.Label7.Location = New System.Drawing.Point(6, 24)
-        Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(86, 13)
-        Me.Label7.TabIndex = 7
-        Me.Label7.Text = "Computer-Name:"
         '
         'Label8
         '
         Me.Label8.AutoSize = True
-        Me.Label8.Location = New System.Drawing.Point(6, 50)
+        Me.Label8.Location = New System.Drawing.Point(7, 22)
         Me.Label8.Name = "Label8"
         Me.Label8.Size = New System.Drawing.Size(63, 13)
         Me.Label8.TabIndex = 5
@@ -401,9 +386,9 @@ Partial Class Form1
         '
         'txt_depl_pw
         '
-        Me.txt_depl_pw.Location = New System.Drawing.Point(98, 73)
+        Me.txt_depl_pw.Location = New System.Drawing.Point(85, 46)
         Me.txt_depl_pw.Name = "txt_depl_pw"
-        Me.txt_depl_pw.Size = New System.Drawing.Size(136, 20)
+        Me.txt_depl_pw.Size = New System.Drawing.Size(149, 20)
         Me.txt_depl_pw.TabIndex = 10
         Me.txt_depl_pw.Text = "CAVEUser1"
         Me.txt_depl_pw.UseSystemPasswordChar = True
@@ -411,6 +396,7 @@ Partial Class Form1
         'chk_master
         '
         Me.chk_master.AutoSize = True
+        Me.chk_master.Enabled = False
         Me.chk_master.Location = New System.Drawing.Point(462, 23)
         Me.chk_master.Name = "chk_master"
         Me.chk_master.Size = New System.Drawing.Size(15, 14)
@@ -493,6 +479,7 @@ Partial Class Form1
         'list_splane
         '
         Me.list_splane.FormattingEnabled = True
+        Me.list_splane.Items.AddRange(New Object() {"pa", "pb", "pc", "pe"})
         Me.list_splane.Location = New System.Drawing.Point(7, 20)
         Me.list_splane.Name = "list_splane"
         Me.list_splane.Size = New System.Drawing.Size(68, 82)
@@ -530,14 +517,14 @@ Partial Class Form1
         Me.Label1.TabIndex = 0
         Me.Label1.Text = "IP-Adress:"
         '
-        'Button1
+        'btn_configSave
         '
-        Me.Button1.Location = New System.Drawing.Point(526, 329)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(126, 23)
-        Me.Button1.TabIndex = 4
-        Me.Button1.Text = "Konfiguration &speichern"
-        Me.Button1.UseVisualStyleBackColor = True
+        Me.btn_configSave.Location = New System.Drawing.Point(526, 329)
+        Me.btn_configSave.Name = "btn_configSave"
+        Me.btn_configSave.Size = New System.Drawing.Size(126, 23)
+        Me.btn_configSave.TabIndex = 4
+        Me.btn_configSave.Text = "Konfiguration &speichern"
+        Me.btn_configSave.UseVisualStyleBackColor = True
         '
         'OpenFileDialog1
         '
@@ -548,7 +535,7 @@ Partial Class Form1
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(664, 363)
-        Me.Controls.Add(Me.Button1)
+        Me.Controls.Add(Me.btn_configSave)
         Me.Controls.Add(Me.GroupBox2)
         Me.Controls.Add(Me.GroupBox1)
         Me.Controls.Add(Me.MenuStrip1)
@@ -596,11 +583,9 @@ Partial Class Form1
     Friend WithEvents list_splane As ListBox
     Friend WithEvents chk_master As CheckBox
     Friend WithEvents Label6 As Label
-    Friend WithEvents Button1 As Button
+    Friend WithEvents btn_configSave As Button
     Friend WithEvents txt_depl_user As TextBox
-    Friend WithEvents txt_depl_name As TextBox
     Friend WithEvents Label8 As Label
-    Friend WithEvents Label7 As Label
     Friend WithEvents txt_depl_pw As TextBox
     Friend WithEvents Label9 As Label
     Friend WithEvents grp_depl As GroupBox

@@ -38,14 +38,14 @@
   </slave>
   -->
   <slave ip="192.168.178.35">
-    <camera eye="left">
+    <camera eye="right">
       <rotation x="0" y="90" z="0" />
     </camera>
     <screenplane>
       <pa x="-8" y="-5" z="0"/>
       <pb x="8" y="-5" z="0"/>
       <pc x="-8" y="5" z="0"/>
-      <pd x="0" y="0" z="5"/>
+      <pe x="0" y="0" z="5"/>
     </screenplane>
   </slave>
   <slave ip="192.168.178.36">
