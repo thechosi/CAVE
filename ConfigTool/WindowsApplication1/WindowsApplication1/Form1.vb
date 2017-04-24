@@ -44,10 +44,14 @@ Public Class Form1
                 For j = 0 To XMLAttributes.Count - 1
                     If exitFor Then
                         If XMLAttributes.Item(j).Name.Equals("ip") Then
-                            Me.txt_ipAddress.Text = XMLAttributes.Item(j).InnerText.Trim()
+                            If XMLAttributes.Item(j).InnerText.Trim().Equals(computerName) Then
+                                Me.txt_ipAddress.Text = XMLAttributes.Item(j).InnerText.Trim()
+                            End If
                         End If
                         If XMLAttributes.Item(j).Name.Equals("port") Then
-                            Me.txt_port.Text = XMLAttributes.Item(j).InnerText.Trim()
+                            If XMLAttributes.Item(0).InnerText.Trim().Equals(computerName) Then
+                                Me.txt_port.Text = XMLAttributes.Item(j).InnerText.Trim()
+                            End If
                         End If
                         If XMLAttributes.Item(j).Name.Equals("name") Then
                             Me.txt_computerName.Enabled = True
@@ -128,10 +132,11 @@ Public Class Form1
         For Each attribute In xml.<config>.<slave>.Attributes
             If attribute.Name.ToString.Equals("ip") Then
                 If attribute.Value.Trim().Equals(computername) Then
-
+            
                 End If
             End If
         Next
+
 
         fs.Close()
 
