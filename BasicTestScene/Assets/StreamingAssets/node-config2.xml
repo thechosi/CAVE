@@ -37,7 +37,7 @@
     </screenplane>
   </slave>
   -->
-  <slave ip="192.168.178.35">
+  <slave ip="192.168.178.40">
     <camera eye="right">
       <rotation x="0" y="90" z="0" />
     </camera>

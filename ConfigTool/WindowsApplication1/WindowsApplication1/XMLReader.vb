@@ -3,6 +3,8 @@
 Public Class XMLReader
 
 
+
+
     Private Function ReadVektor(data As XElement)
         Dim Vektor As New Vektor
 

@@ -3,6 +3,7 @@
 Public Class Form1
     Dim computers As New List(Of Computer)
     Dim act_computer As Computer
+    Dim filename As String
 
     Private Function clearAllFields()
         txt_ipAddress.Text = ""
@@ -66,6 +67,7 @@ Public Class Form1
     Private Sub ÖffnenToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ÖffnenToolStripMenuItem.Click
         If OpenFileDialog1.ShowDialog() = System.Windows.Forms.DialogResult.OK Then
             Dim fs As New FileStream(OpenFileDialog1.FileName, FileMode.Open, FileAccess.Read)
+            filename = OpenFileDialog1.FileName
             ListBox1.Items.Clear()
 
             Dim xmlReader As New XMLReader
@@ -138,11 +140,25 @@ Public Class Form1
     End Sub
 
     Private Sub btn_configSave_Click(sender As Object, e As EventArgs) Handles btn_configSave.Click
+        If SaveFileDialog1.ShowDialog() = System.Windows.Forms.DialogResult.OK Then
 
+            Dim xmlWriter As New XMLWriter
+            xmlWriter.SetAllComputers(filename, SaveFileDialog1.FileName, computers)
+        End If
     End Sub
 
     Private Sub txt_ipAddress_TextChanged(sender As Object, e As EventArgs) Handles txt_ipAddress.TextChanged
         act_computer.ip = txt_ipAddress.Text
+
+        Dim position_lb1 As Integer = ListBox1.SelectedIndex
+
+        ListBox1.Items.Clear()
+        For Each computer In computers
+            ListBox1.Items.Add(computer.ToString)
+        Next
+        ListBox1.SelectedIndex = position_lb1
+
+
     End Sub
 
     Private Sub txt_port_TextChanged(sender As Object, e As EventArgs) Handles txt_port.TextChanged

@@ -72,6 +72,7 @@ Partial Class Form1
         Me.Label1 = New System.Windows.Forms.Label()
         Me.btn_configSave = New System.Windows.Forms.Button()
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
+        Me.SaveFileDialog1 = New System.Windows.Forms.SaveFileDialog()
         Me.grp_computerList.SuspendLayout()
         Me.MenuStrip1.SuspendLayout()
         Me.grp_computerInfo.SuspendLayout()
@@ -537,6 +538,11 @@ Partial Class Form1
         Me.OpenFileDialog1.FileName = "OpenFileDialog1"
         Me.OpenFileDialog1.Filter = "XML files|*.xml"
         '
+        'SaveFileDialog1
+        '
+        Me.SaveFileDialog1.FileName = "node-config.xml"
+        Me.SaveFileDialog1.Filter = "XML files|*.xml"
+        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -618,4 +624,5 @@ Partial Class Form1
     Friend WithEvents OpenFileDialog1 As OpenFileDialog
     Friend WithEvents lbl_computerName As Label
     Friend WithEvents txt_computerName As TextBox
+    Friend WithEvents SaveFileDialog1 As SaveFileDialog
 End Class
