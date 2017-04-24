@@ -133,7 +133,6 @@ Public Class Form1
             End If
         Next
 
-
         fs.Close()
 
     End Function
