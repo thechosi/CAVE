@@ -33,7 +33,7 @@ Partial Class Form1
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
         Me.lbl_computerName = New System.Windows.Forms.Label()
         Me.txt_computerName = New System.Windows.Forms.TextBox()
-        Me.GroupBox6 = New System.Windows.Forms.GroupBox()
+        Me.grp_cam = New System.Windows.Forms.GroupBox()
         Me.combo_eye = New System.Windows.Forms.ComboBox()
         Me.Label16 = New System.Windows.Forms.Label()
         Me.txt_cam_z = New System.Windows.Forms.TextBox()
@@ -43,7 +43,7 @@ Partial Class Form1
         Me.txt_cam_x = New System.Windows.Forms.TextBox()
         Me.Label15 = New System.Windows.Forms.Label()
         Me.list_cam = New System.Windows.Forms.ListBox()
-        Me.GroupBox5 = New System.Windows.Forms.GroupBox()
+        Me.grp_relation = New System.Windows.Forms.GroupBox()
         Me.txt_relat_z = New System.Windows.Forms.TextBox()
         Me.Label10 = New System.Windows.Forms.Label()
         Me.txt_relat_y = New System.Windows.Forms.TextBox()
@@ -51,7 +51,7 @@ Partial Class Form1
         Me.txt_relat_x = New System.Windows.Forms.TextBox()
         Me.Label12 = New System.Windows.Forms.Label()
         Me.list_rela = New System.Windows.Forms.ListBox()
-        Me.GroupBox4 = New System.Windows.Forms.GroupBox()
+        Me.grp_depl = New System.Windows.Forms.GroupBox()
         Me.Label9 = New System.Windows.Forms.Label()
         Me.txt_depl_name = New System.Windows.Forms.TextBox()
         Me.txt_depl_user = New System.Windows.Forms.TextBox()
@@ -60,7 +60,7 @@ Partial Class Form1
         Me.txt_depl_pw = New System.Windows.Forms.TextBox()
         Me.chk_master = New System.Windows.Forms.CheckBox()
         Me.Label6 = New System.Windows.Forms.Label()
-        Me.GroupBox3 = New System.Windows.Forms.GroupBox()
+        Me.grp_splane = New System.Windows.Forms.GroupBox()
         Me.txt_splane_z = New System.Windows.Forms.TextBox()
         Me.Label5 = New System.Windows.Forms.Label()
         Me.txt_splane_y = New System.Windows.Forms.TextBox()
@@ -77,10 +77,10 @@ Partial Class Form1
         Me.GroupBox1.SuspendLayout()
         Me.MenuStrip1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
-        Me.GroupBox6.SuspendLayout()
-        Me.GroupBox5.SuspendLayout()
-        Me.GroupBox4.SuspendLayout()
-        Me.GroupBox3.SuspendLayout()
+        Me.grp_cam.SuspendLayout()
+        Me.grp_relation.SuspendLayout()
+        Me.grp_depl.SuspendLayout()
+        Me.grp_splane.SuspendLayout()
         Me.SuspendLayout()
         '
         'ListBox1
@@ -146,12 +146,12 @@ Partial Class Form1
         '
         Me.GroupBox2.Controls.Add(Me.lbl_computerName)
         Me.GroupBox2.Controls.Add(Me.txt_computerName)
-        Me.GroupBox2.Controls.Add(Me.GroupBox6)
-        Me.GroupBox2.Controls.Add(Me.GroupBox5)
-        Me.GroupBox2.Controls.Add(Me.GroupBox4)
+        Me.GroupBox2.Controls.Add(Me.grp_cam)
+        Me.GroupBox2.Controls.Add(Me.grp_relation)
+        Me.GroupBox2.Controls.Add(Me.grp_depl)
         Me.GroupBox2.Controls.Add(Me.chk_master)
         Me.GroupBox2.Controls.Add(Me.Label6)
-        Me.GroupBox2.Controls.Add(Me.GroupBox3)
+        Me.GroupBox2.Controls.Add(Me.grp_splane)
         Me.GroupBox2.Controls.Add(Me.Label2)
         Me.GroupBox2.Controls.Add(Me.txt_port)
         Me.GroupBox2.Controls.Add(Me.txt_ipAddress)
@@ -178,28 +178,27 @@ Partial Class Form1
         Me.txt_computerName.Size = New System.Drawing.Size(114, 20)
         Me.txt_computerName.TabIndex = 12
         '
-        'GroupBox6
+        'grp_cam
         '
-        Me.GroupBox6.Controls.Add(Me.combo_eye)
-        Me.GroupBox6.Controls.Add(Me.Label16)
-        Me.GroupBox6.Controls.Add(Me.txt_cam_z)
-        Me.GroupBox6.Controls.Add(Me.Label13)
-        Me.GroupBox6.Controls.Add(Me.txt_cam_y)
-        Me.GroupBox6.Controls.Add(Me.Label14)
-        Me.GroupBox6.Controls.Add(Me.txt_cam_x)
-        Me.GroupBox6.Controls.Add(Me.Label15)
-        Me.GroupBox6.Controls.Add(Me.list_cam)
-        Me.GroupBox6.Location = New System.Drawing.Point(6, 162)
-        Me.GroupBox6.Name = "GroupBox6"
-        Me.GroupBox6.Size = New System.Drawing.Size(231, 121)
-        Me.GroupBox6.TabIndex = 5
-        Me.GroupBox6.TabStop = False
-        Me.GroupBox6.Text = "Camera"
+        Me.grp_cam.Controls.Add(Me.combo_eye)
+        Me.grp_cam.Controls.Add(Me.Label16)
+        Me.grp_cam.Controls.Add(Me.txt_cam_z)
+        Me.grp_cam.Controls.Add(Me.Label13)
+        Me.grp_cam.Controls.Add(Me.txt_cam_y)
+        Me.grp_cam.Controls.Add(Me.Label14)
+        Me.grp_cam.Controls.Add(Me.txt_cam_x)
+        Me.grp_cam.Controls.Add(Me.Label15)
+        Me.grp_cam.Controls.Add(Me.list_cam)
+        Me.grp_cam.Location = New System.Drawing.Point(6, 162)
+        Me.grp_cam.Name = "grp_cam"
+        Me.grp_cam.Size = New System.Drawing.Size(231, 121)
+        Me.grp_cam.TabIndex = 5
+        Me.grp_cam.TabStop = False
+        Me.grp_cam.Text = "Camera"
         '
         'combo_eye
         '
         Me.combo_eye.FormattingEnabled = True
-        Me.combo_eye.Items.AddRange(New Object() {"Left", "Right"})
         Me.combo_eye.Location = New System.Drawing.Point(47, 16)
         Me.combo_eye.Name = "combo_eye"
         Me.combo_eye.Size = New System.Drawing.Size(178, 21)
@@ -265,27 +264,26 @@ Partial Class Form1
         'list_cam
         '
         Me.list_cam.FormattingEnabled = True
-        Me.list_cam.Items.AddRange(New Object() {"Rotation"})
         Me.list_cam.Location = New System.Drawing.Point(7, 46)
         Me.list_cam.Name = "list_cam"
         Me.list_cam.Size = New System.Drawing.Size(68, 69)
         Me.list_cam.TabIndex = 0
         '
-        'GroupBox5
+        'grp_relation
         '
-        Me.GroupBox5.Controls.Add(Me.txt_relat_z)
-        Me.GroupBox5.Controls.Add(Me.Label10)
-        Me.GroupBox5.Controls.Add(Me.txt_relat_y)
-        Me.GroupBox5.Controls.Add(Me.Label11)
-        Me.GroupBox5.Controls.Add(Me.txt_relat_x)
-        Me.GroupBox5.Controls.Add(Me.Label12)
-        Me.GroupBox5.Controls.Add(Me.list_rela)
-        Me.GroupBox5.Location = New System.Drawing.Point(6, 46)
-        Me.GroupBox5.Name = "GroupBox5"
-        Me.GroupBox5.Size = New System.Drawing.Size(231, 110)
-        Me.GroupBox5.TabIndex = 7
-        Me.GroupBox5.TabStop = False
-        Me.GroupBox5.Text = "RelationToOrigin"
+        Me.grp_relation.Controls.Add(Me.txt_relat_z)
+        Me.grp_relation.Controls.Add(Me.Label10)
+        Me.grp_relation.Controls.Add(Me.txt_relat_y)
+        Me.grp_relation.Controls.Add(Me.Label11)
+        Me.grp_relation.Controls.Add(Me.txt_relat_x)
+        Me.grp_relation.Controls.Add(Me.Label12)
+        Me.grp_relation.Controls.Add(Me.list_rela)
+        Me.grp_relation.Location = New System.Drawing.Point(6, 46)
+        Me.grp_relation.Name = "grp_relation"
+        Me.grp_relation.Size = New System.Drawing.Size(231, 110)
+        Me.grp_relation.TabIndex = 7
+        Me.grp_relation.TabStop = False
+        Me.grp_relation.Text = "RelationToOrigin"
         '
         'txt_relat_z
         '
@@ -338,26 +336,25 @@ Partial Class Form1
         'list_rela
         '
         Me.list_rela.FormattingEnabled = True
-        Me.list_rela.Items.AddRange(New Object() {"Position", "Rotation"})
         Me.list_rela.Location = New System.Drawing.Point(7, 20)
         Me.list_rela.Name = "list_rela"
         Me.list_rela.Size = New System.Drawing.Size(68, 82)
         Me.list_rela.TabIndex = 0
         '
-        'GroupBox4
+        'grp_depl
         '
-        Me.GroupBox4.Controls.Add(Me.Label9)
-        Me.GroupBox4.Controls.Add(Me.txt_depl_name)
-        Me.GroupBox4.Controls.Add(Me.txt_depl_user)
-        Me.GroupBox4.Controls.Add(Me.Label7)
-        Me.GroupBox4.Controls.Add(Me.Label8)
-        Me.GroupBox4.Controls.Add(Me.txt_depl_pw)
-        Me.GroupBox4.Location = New System.Drawing.Point(243, 162)
-        Me.GroupBox4.Name = "GroupBox4"
-        Me.GroupBox4.Size = New System.Drawing.Size(240, 121)
-        Me.GroupBox4.TabIndex = 11
-        Me.GroupBox4.TabStop = False
-        Me.GroupBox4.Text = "Deploy-Settings"
+        Me.grp_depl.Controls.Add(Me.Label9)
+        Me.grp_depl.Controls.Add(Me.txt_depl_name)
+        Me.grp_depl.Controls.Add(Me.txt_depl_user)
+        Me.grp_depl.Controls.Add(Me.Label7)
+        Me.grp_depl.Controls.Add(Me.Label8)
+        Me.grp_depl.Controls.Add(Me.txt_depl_pw)
+        Me.grp_depl.Location = New System.Drawing.Point(243, 162)
+        Me.grp_depl.Name = "grp_depl"
+        Me.grp_depl.Size = New System.Drawing.Size(240, 121)
+        Me.grp_depl.TabIndex = 11
+        Me.grp_depl.TabStop = False
+        Me.grp_depl.Text = "Deploy-Settings"
         '
         'Label9
         '
@@ -429,21 +426,21 @@ Partial Class Form1
         Me.Label6.TabIndex = 5
         Me.Label6.Text = "Master:"
         '
-        'GroupBox3
+        'grp_splane
         '
-        Me.GroupBox3.Controls.Add(Me.txt_splane_z)
-        Me.GroupBox3.Controls.Add(Me.Label5)
-        Me.GroupBox3.Controls.Add(Me.txt_splane_y)
-        Me.GroupBox3.Controls.Add(Me.Label4)
-        Me.GroupBox3.Controls.Add(Me.txt_splane_x)
-        Me.GroupBox3.Controls.Add(Me.Label3)
-        Me.GroupBox3.Controls.Add(Me.list_splane)
-        Me.GroupBox3.Location = New System.Drawing.Point(243, 46)
-        Me.GroupBox3.Name = "GroupBox3"
-        Me.GroupBox3.Size = New System.Drawing.Size(240, 110)
-        Me.GroupBox3.TabIndex = 4
-        Me.GroupBox3.TabStop = False
-        Me.GroupBox3.Text = "ScreenPlane"
+        Me.grp_splane.Controls.Add(Me.txt_splane_z)
+        Me.grp_splane.Controls.Add(Me.Label5)
+        Me.grp_splane.Controls.Add(Me.txt_splane_y)
+        Me.grp_splane.Controls.Add(Me.Label4)
+        Me.grp_splane.Controls.Add(Me.txt_splane_x)
+        Me.grp_splane.Controls.Add(Me.Label3)
+        Me.grp_splane.Controls.Add(Me.list_splane)
+        Me.grp_splane.Location = New System.Drawing.Point(243, 46)
+        Me.grp_splane.Name = "grp_splane"
+        Me.grp_splane.Size = New System.Drawing.Size(240, 110)
+        Me.grp_splane.TabIndex = 4
+        Me.grp_splane.TabStop = False
+        Me.grp_splane.Text = "ScreenPlane"
         '
         'txt_splane_z
         '
@@ -496,7 +493,6 @@ Partial Class Form1
         'list_splane
         '
         Me.list_splane.FormattingEnabled = True
-        Me.list_splane.Items.AddRange(New Object() {"pa", "pb", "pc", "pe"})
         Me.list_splane.Location = New System.Drawing.Point(7, 20)
         Me.list_splane.Name = "list_splane"
         Me.list_splane.Size = New System.Drawing.Size(68, 82)
@@ -565,14 +561,14 @@ Partial Class Form1
         Me.MenuStrip1.PerformLayout()
         Me.GroupBox2.ResumeLayout(False)
         Me.GroupBox2.PerformLayout()
-        Me.GroupBox6.ResumeLayout(False)
-        Me.GroupBox6.PerformLayout()
-        Me.GroupBox5.ResumeLayout(False)
-        Me.GroupBox5.PerformLayout()
-        Me.GroupBox4.ResumeLayout(False)
-        Me.GroupBox4.PerformLayout()
-        Me.GroupBox3.ResumeLayout(False)
-        Me.GroupBox3.PerformLayout()
+        Me.grp_cam.ResumeLayout(False)
+        Me.grp_cam.PerformLayout()
+        Me.grp_relation.ResumeLayout(False)
+        Me.grp_relation.PerformLayout()
+        Me.grp_depl.ResumeLayout(False)
+        Me.grp_depl.PerformLayout()
+        Me.grp_splane.ResumeLayout(False)
+        Me.grp_splane.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -590,7 +586,7 @@ Partial Class Form1
     Friend WithEvents txt_port As TextBox
     Friend WithEvents txt_ipAddress As TextBox
     Friend WithEvents Label1 As Label
-    Friend WithEvents GroupBox3 As GroupBox
+    Friend WithEvents grp_splane As GroupBox
     Friend WithEvents txt_splane_z As TextBox
     Friend WithEvents Label5 As Label
     Friend WithEvents txt_splane_y As TextBox
@@ -607,8 +603,8 @@ Partial Class Form1
     Friend WithEvents Label7 As Label
     Friend WithEvents txt_depl_pw As TextBox
     Friend WithEvents Label9 As Label
-    Friend WithEvents GroupBox4 As GroupBox
-    Friend WithEvents GroupBox6 As GroupBox
+    Friend WithEvents grp_depl As GroupBox
+    Friend WithEvents grp_cam As GroupBox
     Friend WithEvents txt_cam_z As TextBox
     Friend WithEvents Label13 As Label
     Friend WithEvents txt_cam_y As TextBox
@@ -616,7 +612,7 @@ Partial Class Form1
     Friend WithEvents txt_cam_x As TextBox
     Friend WithEvents Label15 As Label
     Friend WithEvents list_cam As ListBox
-    Friend WithEvents GroupBox5 As GroupBox
+    Friend WithEvents grp_relation As GroupBox
     Friend WithEvents txt_relat_z As TextBox
     Friend WithEvents Label10 As Label
     Friend WithEvents txt_relat_y As TextBox
