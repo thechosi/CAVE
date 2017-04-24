@@ -23,14 +23,14 @@ Partial Class Form1
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.ListBox1 = New System.Windows.Forms.ListBox()
-        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.grp_computerList = New System.Windows.Forms.GroupBox()
         Me.MenuStrip1 = New System.Windows.Forms.MenuStrip()
         Me.DateiToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ÖffnenToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.BeendenToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
         Me.ÜberDasToolToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.GroupBox2 = New System.Windows.Forms.GroupBox()
+        Me.grp_computerInfo = New System.Windows.Forms.GroupBox()
         Me.lbl_computerName = New System.Windows.Forms.Label()
         Me.txt_computerName = New System.Windows.Forms.TextBox()
         Me.grp_cam = New System.Windows.Forms.GroupBox()
@@ -72,9 +72,9 @@ Partial Class Form1
         Me.Label1 = New System.Windows.Forms.Label()
         Me.btn_configSave = New System.Windows.Forms.Button()
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
-        Me.GroupBox1.SuspendLayout()
+        Me.grp_computerList.SuspendLayout()
         Me.MenuStrip1.SuspendLayout()
-        Me.GroupBox2.SuspendLayout()
+        Me.grp_computerInfo.SuspendLayout()
         Me.grp_cam.SuspendLayout()
         Me.grp_relation.SuspendLayout()
         Me.grp_depl.SuspendLayout()
@@ -89,15 +89,16 @@ Partial Class Form1
         Me.ListBox1.Size = New System.Drawing.Size(133, 121)
         Me.ListBox1.TabIndex = 0
         '
-        'GroupBox1
+        'grp_computerList
         '
-        Me.GroupBox1.Controls.Add(Me.ListBox1)
-        Me.GroupBox1.Location = New System.Drawing.Point(12, 34)
-        Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(145, 156)
-        Me.GroupBox1.TabIndex = 1
-        Me.GroupBox1.TabStop = False
-        Me.GroupBox1.Text = "Which Computer"
+        Me.grp_computerList.Controls.Add(Me.ListBox1)
+        Me.grp_computerList.Enabled = False
+        Me.grp_computerList.Location = New System.Drawing.Point(12, 34)
+        Me.grp_computerList.Name = "grp_computerList"
+        Me.grp_computerList.Size = New System.Drawing.Size(145, 156)
+        Me.grp_computerList.TabIndex = 1
+        Me.grp_computerList.TabStop = False
+        Me.grp_computerList.Text = "Which Computer"
         '
         'MenuStrip1
         '
@@ -140,25 +141,26 @@ Partial Class Form1
         Me.ÜberDasToolToolStripMenuItem.Size = New System.Drawing.Size(155, 22)
         Me.ÜberDasToolToolStripMenuItem.Text = "Über das Tool..."
         '
-        'GroupBox2
+        'grp_computerInfo
         '
-        Me.GroupBox2.Controls.Add(Me.lbl_computerName)
-        Me.GroupBox2.Controls.Add(Me.txt_computerName)
-        Me.GroupBox2.Controls.Add(Me.grp_cam)
-        Me.GroupBox2.Controls.Add(Me.grp_relation)
-        Me.GroupBox2.Controls.Add(Me.grp_depl)
-        Me.GroupBox2.Controls.Add(Me.chk_master)
-        Me.GroupBox2.Controls.Add(Me.Label6)
-        Me.GroupBox2.Controls.Add(Me.grp_splane)
-        Me.GroupBox2.Controls.Add(Me.Label2)
-        Me.GroupBox2.Controls.Add(Me.txt_port)
-        Me.GroupBox2.Controls.Add(Me.txt_ipAddress)
-        Me.GroupBox2.Controls.Add(Me.Label1)
-        Me.GroupBox2.Location = New System.Drawing.Point(163, 34)
-        Me.GroupBox2.Name = "GroupBox2"
-        Me.GroupBox2.Size = New System.Drawing.Size(489, 289)
-        Me.GroupBox2.TabIndex = 3
-        Me.GroupBox2.TabStop = False
+        Me.grp_computerInfo.Controls.Add(Me.lbl_computerName)
+        Me.grp_computerInfo.Controls.Add(Me.txt_computerName)
+        Me.grp_computerInfo.Controls.Add(Me.grp_cam)
+        Me.grp_computerInfo.Controls.Add(Me.grp_relation)
+        Me.grp_computerInfo.Controls.Add(Me.grp_depl)
+        Me.grp_computerInfo.Controls.Add(Me.chk_master)
+        Me.grp_computerInfo.Controls.Add(Me.Label6)
+        Me.grp_computerInfo.Controls.Add(Me.grp_splane)
+        Me.grp_computerInfo.Controls.Add(Me.Label2)
+        Me.grp_computerInfo.Controls.Add(Me.txt_port)
+        Me.grp_computerInfo.Controls.Add(Me.txt_ipAddress)
+        Me.grp_computerInfo.Controls.Add(Me.Label1)
+        Me.grp_computerInfo.Enabled = False
+        Me.grp_computerInfo.Location = New System.Drawing.Point(163, 34)
+        Me.grp_computerInfo.Name = "grp_computerInfo"
+        Me.grp_computerInfo.Size = New System.Drawing.Size(489, 289)
+        Me.grp_computerInfo.TabIndex = 3
+        Me.grp_computerInfo.TabStop = False
         '
         'lbl_computerName
         '
@@ -171,6 +173,7 @@ Partial Class Form1
         '
         'txt_computerName
         '
+        Me.txt_computerName.Enabled = False
         Me.txt_computerName.Location = New System.Drawing.Point(294, 20)
         Me.txt_computerName.Name = "txt_computerName"
         Me.txt_computerName.Size = New System.Drawing.Size(114, 20)
@@ -197,7 +200,9 @@ Partial Class Form1
         '
         'combo_eye
         '
+        Me.combo_eye.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.combo_eye.FormattingEnabled = True
+        Me.combo_eye.ImeMode = System.Windows.Forms.ImeMode.NoControl
         Me.combo_eye.Items.AddRange(New Object() {"left", "right"})
         Me.combo_eye.Location = New System.Drawing.Point(47, 16)
         Me.combo_eye.Name = "combo_eye"
@@ -421,6 +426,7 @@ Partial Class Form1
         Me.grp_splane.Controls.Add(Me.txt_splane_x)
         Me.grp_splane.Controls.Add(Me.Label3)
         Me.grp_splane.Controls.Add(Me.list_splane)
+        Me.grp_splane.Enabled = False
         Me.grp_splane.Location = New System.Drawing.Point(243, 46)
         Me.grp_splane.Name = "grp_splane"
         Me.grp_splane.Size = New System.Drawing.Size(240, 110)
@@ -529,6 +535,7 @@ Partial Class Form1
         'OpenFileDialog1
         '
         Me.OpenFileDialog1.FileName = "OpenFileDialog1"
+        Me.OpenFileDialog1.Filter = "XML files|*.xml"
         '
         'Form1
         '
@@ -536,18 +543,18 @@ Partial Class Form1
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(664, 363)
         Me.Controls.Add(Me.btn_configSave)
-        Me.Controls.Add(Me.GroupBox2)
-        Me.Controls.Add(Me.GroupBox1)
+        Me.Controls.Add(Me.grp_computerInfo)
+        Me.Controls.Add(Me.grp_computerList)
         Me.Controls.Add(Me.MenuStrip1)
         Me.HelpButton = True
         Me.MainMenuStrip = Me.MenuStrip1
         Me.Name = "Form1"
-        Me.Text = "CaveUnity-Konfigurations-Tool"
-        Me.GroupBox1.ResumeLayout(False)
+        Me.Text = "CaveUnity-ConfigTool"
+        Me.grp_computerList.ResumeLayout(False)
         Me.MenuStrip1.ResumeLayout(False)
         Me.MenuStrip1.PerformLayout()
-        Me.GroupBox2.ResumeLayout(False)
-        Me.GroupBox2.PerformLayout()
+        Me.grp_computerInfo.ResumeLayout(False)
+        Me.grp_computerInfo.PerformLayout()
         Me.grp_cam.ResumeLayout(False)
         Me.grp_cam.PerformLayout()
         Me.grp_relation.ResumeLayout(False)
@@ -562,13 +569,13 @@ Partial Class Form1
     End Sub
 
     Friend WithEvents ListBox1 As ListBox
-    Friend WithEvents GroupBox1 As GroupBox
+    Friend WithEvents grp_computerList As GroupBox
     Friend WithEvents MenuStrip1 As MenuStrip
     Friend WithEvents DateiToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents BeendenToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ToolStripMenuItem1 As ToolStripMenuItem
     Friend WithEvents ÜberDasToolToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents GroupBox2 As GroupBox
+    Friend WithEvents grp_computerInfo As GroupBox
     Friend WithEvents Label2 As Label
     Friend WithEvents txt_port As TextBox
     Friend WithEvents txt_ipAddress As TextBox

@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "WindowsApplication1", "WindowsApplication1\WindowsApplication1.vbproj", "{651AC0B2-9D33-442A-B8A0-1895C653F43B}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "CaveUnity-ConfigTool", "WindowsApplication1\CaveUnity-ConfigTool.vbproj", "{651AC0B2-9D33-442A-B8A0-1895C653F43B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
