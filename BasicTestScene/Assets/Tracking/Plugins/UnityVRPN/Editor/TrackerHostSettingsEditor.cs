@@ -1,5 +1,7 @@
 ﻿using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEditor.SceneManagement;
 
 [CustomEditor(typeof(TrackerHostSettings))]
 public class TrackerHostSettingsEditor : Editor
@@ -16,6 +18,7 @@ public class TrackerHostSettingsEditor : Editor
             if (GUI.changed)
             {
                 EditorUtility.SetDirty(settings);
+                EditorSceneManager.MarkSceneDirty(SceneManager.GetActiveScene());
             }
         }
     }

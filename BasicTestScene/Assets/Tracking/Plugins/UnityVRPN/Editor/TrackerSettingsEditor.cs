@@ -1,5 +1,7 @@
 ﻿using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEditor.SceneManagement;
 using UnityEngine.Events;
 using System.Collections;
 
@@ -29,6 +31,7 @@ public class TrackerSettingsEditor : Editor
 			if (GUI.changed)
             {
                 EditorUtility.SetDirty(settings);
+                EditorSceneManager.MarkSceneDirty(SceneManager.GetActiveScene());
             }
         }
     }
