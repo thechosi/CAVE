@@ -22,7 +22,7 @@ namespace UnityClusterPackage
             projectionPlane = transform.Find("ProjectionPlane");
             userHead = transform.Find("ProjectionPlane/UserHead");
 
-            if (NodeInformation.stereo)
+            if (NodeInformation.type.Equals("slave"))
             {
                 if (NodeInformation.cameraEye.Equals("right"))
                 {

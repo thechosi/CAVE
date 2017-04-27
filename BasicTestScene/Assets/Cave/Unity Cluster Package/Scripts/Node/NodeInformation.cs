@@ -11,7 +11,7 @@ namespace UnityClusterPackage
 
         public static string name, type, serverIp;
         public static Vector3 cameraRoation;
-        public static String cameraEye;
+        public static string cameraEye;
         public static int id, nodes, serverPort;
         public static bool stereo;
         public static float paX, paY, paZ, pbX, pbY, pbZ, pcX, pcY, pcZ, peX, peY, peZ;
