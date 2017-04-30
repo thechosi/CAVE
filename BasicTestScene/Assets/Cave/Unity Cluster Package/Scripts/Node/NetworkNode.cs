@@ -9,51 +9,40 @@ namespace UnityClusterPackage
 {
     public abstract class NetworkNode
     {
-        protected List<ISocket> connections;
+        public List<ISocket> connections;
         Buffer inBuf;
         Buffer outBuf;
 
         public NetworkNode()
         {
-            inBuf = Buffer.New();
-            outBuf = Buffer.New();
+            inBuf = Buffer.New(4 + 8 + 4 * 100);
+            outBuf = Buffer.New(4 + 8 + 4 * 100);
 
             connections = new List<ISocket>();
         }
 
 
-        public SynchroMessage ReceiveNextMessage(bool skipConnectingEvents, ISocket connection)
+        public void ReceiveNextMessage(bool skipConnectingEvents, ISocket connection, ISynchroMessage targetMessage)
         {
             try
             {
+                inBuf = Buffer.New(targetMessage.GetLength());
                 int received = AweSock.ReceiveMessage(connection, inBuf);
                 if (received == 0)
                     throw new SocketException();
-                return new SynchroMessage((SynchroMessageType)Buffer.Get<int>(inBuf), Buffer.Get<double>(inBuf));
+                targetMessage.Deserialize(inBuf);
             }
             catch (SocketException e)
             {
                 connections.Remove(connection);
-                return null;
             }
         }
 
-        public SynchroMessage WaitForNextMessage(ISocket connection)
+        public void WaitForNextMessage(ISocket connection, ISynchroMessage targetMessage)
         {
             if (connections.Count > 0)
             {
-                SynchroMessage message;
-                do
-                {
-                    if (connections.Count == 0)
-                        return null;
-                    message = ReceiveNextMessage(true, connection);
-                } while (message == null || connections.Count == 0);
-                return message;
-            }
-            else
-            {
-                return null;
+                ReceiveNextMessage(true, connection, targetMessage);
             }
         }
 
@@ -61,11 +50,11 @@ namespace UnityClusterPackage
 
         public abstract void FinishFrame();
 
-        public void BroadcastMessage(SynchroMessage message)
+        public void BroadcastMessage(ISynchroMessage message)
         {
+            outBuf = Buffer.New(message.GetLength());
             Buffer.ClearBuffer(outBuf);
-            Buffer.Add(outBuf, (int)message.type);
-            Buffer.Add(outBuf, message.data);
+            message.Serialize(outBuf);
             Buffer.FinalizeBuffer(outBuf);
 
             foreach (ISocket connection in connections)
@@ -84,11 +73,11 @@ namespace UnityClusterPackage
             }
         }
 
-        public void SendMessage(SynchroMessage message, ISocket connection)
+        public void SendMessage(ISynchroMessage message, ISocket connection)
         {
+            outBuf = Buffer.New(message.GetLength());
             Buffer.ClearBuffer(outBuf);
-            Buffer.Add(outBuf, (int)message.type);
-            Buffer.Add(outBuf, message.data);
+            message.Serialize(outBuf);
             Buffer.FinalizeBuffer(outBuf);
 
             try
@@ -111,11 +100,6 @@ namespace UnityClusterPackage
             {
                 connection.Close();
             }
-        }
-
-        public bool LostConnection()
-        {
-            return connections.Count == 0;
         }
     }
 }

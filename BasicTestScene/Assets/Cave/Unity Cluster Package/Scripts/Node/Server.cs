@@ -45,9 +45,10 @@ namespace UnityClusterPackage
             int counter = 0;
             while (counter < connections.Count)
             {
-                SynchroMessage message = WaitForNextMessage(connections[counter]);
+                FinishMessage message = new FinishMessage();
+                WaitForNextMessage(connections[counter], message);
 
-                if (message.type == SynchroMessageType.FinishedRendering)
+                if (message.finished)
                     counter++;
                 else
                     throw new Exception("Received unexpected message.");

@@ -37,7 +37,7 @@ namespace UnityClusterPackage
             }
             else
             {
-                if (node.LostConnection() && targetClientNumber > 0)
+                if (NodeInformation.type.Equals("master") && node.connections.Count != targetClientNumber || NodeInformation.type.Equals("slave") && node.connections.Count == 0)
                 {
 #if UNITY_EDITOR
                     UnityEditor.EditorApplication.isPlaying = false;
@@ -53,16 +53,35 @@ namespace UnityClusterPackage
         {
             CheckConnection();
 
-            TimeSynchronizer.Synchronize(node);
-            InputSynchronizer.Synchronize(node);
+            if (NodeInformation.type.Equals("master"))
+            {
+                InputMessage inputMessage = new InputMessage();
 
+                TimeSynchronizer.BuildMessage(inputMessage);
+                InputSynchronizer.BuildMessage(inputMessage);
+                ParticleSynchronizer.BuildMessage(inputMessage);
+                AnimatorSynchronizer.BuildMessage(inputMessage);
+
+                node.BroadcastMessage(inputMessage);
+            }
+            else
+            {
+                InputMessage inputMessage = new InputMessage();
+                ((Client)node).WaitForNextMessage(inputMessage);
+
+                TimeSynchronizer.ProcessMessage(inputMessage);
+                InputSynchronizer.ProcessMessage(inputMessage);
+                ParticleSynchronizer.ProcessMessage(inputMessage);
+                AnimatorSynchronizer.ProcessMessage(inputMessage);
+            }
+            
             StartCoroutine(EndOfFrame());
         }
 
         IEnumerator EndOfFrame()
         {
             yield return new WaitForEndOfFrame();
-            ParticleSynchronizer.Synchronize(node);
+            //ParticleSynchronizer.Synchronize(node);
             node.FinishFrame();
         }
 

@@ -5,23 +5,23 @@ using AwesomeSockets.Domain.Sockets;
 
 namespace UnityClusterPackage
 {
-    public class AnimatorSynchronizer : MonoBehaviour
+    public class AnimatorSynchronizer
     {
-        public void Update()
-        {
-           Animator animator = FindObjectOfType<Animator>();
-            if (NodeInformation.type.Equals("master"))
-            {
-                Synchronizer.node.BroadcastMessage(new SynchroMessage(SynchroMessageType.SetAnimationTime,  animator.GetCurrentAnimatorStateInfo(0).normalizedTime));
-            }
-            else
-            {
-                SynchroMessage message = ((Client)Synchronizer.node).WaitForNextMessage();
+        private static Animator[] animators = MonoBehaviour.FindObjectsOfType(typeof(Animator)) as Animator[];
 
-                if (message.type == SynchroMessageType.SetAnimationTime)
-                    animator.Play(animator.GetAnimatorTransitionInfo(0).nameHash, 0, (float)message.data);
-                else
-                    throw new Exception("Received unexpected message.");
+        public static void ProcessMessage(InputMessage message)
+        {
+            if (animators.Length > 0)
+            {
+                animators[0].Play(animators[0].GetAnimatorTransitionInfo(0).nameHash, 0, message.animatorTime);
+            }
+        }
+
+        public static void BuildMessage(InputMessage message)
+        {
+            if (animators.Length > 0)
+            {
+                message.animatorTime = animators[0].GetCurrentAnimatorStateInfo(0).normalizedTime;
             }
         }
 

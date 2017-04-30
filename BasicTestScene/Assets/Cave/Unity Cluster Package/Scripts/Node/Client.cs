@@ -45,12 +45,12 @@ namespace UnityClusterPackage
 
         public override void FinishFrame()
         {
-            BroadcastMessage(new SynchroMessage(SynchroMessageType.FinishedRendering, 0));
+            BroadcastMessage(new FinishMessage());
         }
 
-        public SynchroMessage WaitForNextMessage()
+        public void WaitForNextMessage(ISynchroMessage targetMessage)
         {
-            return WaitForNextMessage(connections[0]);
+            WaitForNextMessage(connections[0], targetMessage);
         }
 
     }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using UnityEngine;
 using AwesomeSockets.Domain.Sockets;
@@ -9,49 +10,49 @@ namespace UnityClusterPackage
     {
         private static float lastParticleTime = 0;
         private static bool firstSyncTime = true;
-
-        public static void Synchronize(NetworkNode node)
+        private static Dictionary<ParticleSystem, float> target = new Dictionary<ParticleSystem, float>(0);
+        private static ParticleSystem[] particleSystems;
+        public static void ProcessMessage(InputMessage message)
         {
-            ParticleSystem[] particleSystems = MonoBehaviour.FindObjectsOfType(typeof(ParticleSystem)) as ParticleSystem[];
-
             if (particleSystems.Length > 0)
             {
-                if (NodeInformation.type.Equals("master"))
+                foreach (ParticleSystem particleSystem in particleSystems)
                 {
-                    float deltaTime = particleSystems[0].time - lastParticleTime;
-                    if (deltaTime < 0)
-                        deltaTime = particleSystems[0].time - lastParticleTime + particleSystems[0].main.duration;
-                    node.BroadcastMessage(new SynchroMessage(SynchroMessageType.SetParticleDeltaTime, deltaTime));
-                    lastParticleTime = particleSystems[0].time;
-                    //Debug.Log(lastParticleTime);
-                    //Debug.Log("P" + deltaTime);
-                }
-                else
-                {
-                    SynchroMessage message = ((Client)node).WaitForNextMessage();
-                    float deltaTime;
+                    target[particleSystem] = (message.particleDeltaTime + target[particleSystem]) % particleSystem.main.duration;
 
-                    if (message.type == SynchroMessageType.SetParticleDeltaTime)
-                        deltaTime = (float)message.data;
-                    else
-                        throw new Exception("Received unexpected message.");
-
-                    foreach (ParticleSystem particleSystem in particleSystems)
-                    {
+                    float deltaTime = target[particleSystem] - particleSystem.time;
+                    if (deltaTime < -particleSystem.main.duration + 1)
+                        deltaTime += particleSystem.main.duration;
+                    if (deltaTime > 0)
                         particleSystem.Simulate(deltaTime, true, firstSyncTime);
-                        // Debug.Log(particleSystem.time);
-                    }
-                    firstSyncTime = false;
                 }
+                firstSyncTime = false;
+            }
+        }
+
+        public static void BuildMessage(InputMessage message)
+        {
+            if (particleSystems.Length > 0)
+            {
+                float deltaTime = particleSystems[0].time - lastParticleTime;
+                if (deltaTime < 0)
+                    deltaTime = particleSystems[0].time - lastParticleTime + particleSystems[0].main.duration;
+                message.particleDeltaTime = deltaTime;
+
+                lastParticleTime = particleSystems[0].time;
             }
         }
 
         public static void InitializeFromServer(Server server, ISocket client)
         {
-            ParticleSystem[] particleSystems = MonoBehaviour.FindObjectsOfType(typeof(ParticleSystem)) as ParticleSystem[];
+            particleSystems = MonoBehaviour.FindObjectsOfType(typeof(ParticleSystem)) as ParticleSystem[];
             foreach (ParticleSystem particleSystem in particleSystems)
             {
-                server.SendMessage(new SynchroMessage(SynchroMessageType.SetParticleSeed, particleSystem.randomSeed), client);
+                EventMessage message = new EventMessage();
+                message.type = SynchroMessageType.SetParticleSeed;
+                message.data = particleSystem.randomSeed;
+
+                server.SendMessage(message, client);
                 particleSystem.Stop();
                 particleSystem.useAutoRandomSeed = false;
                 particleSystem.Clear();
@@ -61,12 +62,15 @@ namespace UnityClusterPackage
 
         public static void InitializeFromClient(Client client)
         {
-            ParticleSystem[] particleSystems = MonoBehaviour.FindObjectsOfType(typeof(ParticleSystem)) as ParticleSystem[];
+            particleSystems = MonoBehaviour.FindObjectsOfType(typeof(ParticleSystem)) as ParticleSystem[];
             foreach (ParticleSystem particleSystem in particleSystems)
             {
-                SynchroMessage message = client.WaitForNextMessage();
+                EventMessage message = new EventMessage();
+                client.WaitForNextMessage(message);
+
+                target[particleSystem] = 0;
                 particleSystem.Stop();
-                particleSystem.randomSeed = (uint)message.data;
+                particleSystem.randomSeed = message.data;
                 particleSystem.Clear();
                 particleSystem.Play();
             }
