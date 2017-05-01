@@ -23,7 +23,7 @@ namespace UnityClusterPackage
                     float deltaTime = target[particleSystem] - particleSystem.time;
                     if (deltaTime < -particleSystem.main.duration + 1)
                         deltaTime += particleSystem.main.duration;
-                    if (deltaTime > 0)
+                    if (deltaTime > 0 && deltaTime < 1)
                         particleSystem.Simulate(deltaTime, true, firstSyncTime);
                 }
                 firstSyncTime = false;
