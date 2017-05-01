@@ -4,8 +4,8 @@ using AwesomeSockets.Domain.Sockets;
 using AwesomeSockets.Sockets;
 
 namespace UnityClusterPackage
-{ 
-    class Server : NetworkNode
+{
+    public class Server : NetworkNode
     {
         public int targetClientNumber = 1;
 
@@ -30,6 +30,7 @@ namespace UnityClusterPackage
         void InitializeClient(ISocket connection)
         {
            ParticleSynchronizer.InitializeFromServer(this, connection);
+           RigidBodySynchronizer.InitializeFromServer(this, connection);
         }
 
 

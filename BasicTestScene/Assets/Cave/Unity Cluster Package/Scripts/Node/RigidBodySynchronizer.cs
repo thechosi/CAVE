@@ -1,33 +1,34 @@
-﻿using UnityClusterPackage;
+﻿using AwesomeSockets.Domain.Sockets;
+using UnityClusterPackage;
 using UnityEngine;
 using UnityEngine.Networking;
 
 public class RigidBodySynchronizer : MonoBehaviour {
 
-	// Use this for initialization
-    void Synchronize(NetworkNode node)
+    private static void InitializeNetworkTransforms()
     {
-        if (NodeInformation.type.Equals("master"))
+        NetworkTransform[] networkTransforms = Resources.FindObjectsOfTypeAll(typeof(NetworkTransform)) as NetworkTransform[];
+        foreach (NetworkTransform networkTransform in networkTransforms)
         {
-            NetworkTransform[] networkTransforms = MonoBehaviour.FindObjectsOfType(typeof(NetworkTransform)) as NetworkTransform[];
-            foreach (NetworkTransform networkTransform in networkTransforms)
-            {
-                networkTransform.SetDirtyBit(1);
-            }
+            networkTransform.interpolateMovement = 0;
+            networkTransform.sendInterval = 0.01f;
+            networkTransform.movementTheshold = 0.0001f;
+            networkTransform.transformSyncMode = NetworkTransform.TransformSyncMode.SyncTransform;
         }
+    }
+
+    public static void InitializeFromServer(Server server, ISocket client)
+    {
+        InitializeNetworkTransforms();
     }
 
     public static void InitializeFromClient(Client client)
     {
-        NetworkTransform[] networkTransforms = MonoBehaviour.FindObjectsOfType(typeof(NetworkTransform)) as NetworkTransform[];
-        foreach (NetworkTransform networkTransform in networkTransforms)
+        InitializeNetworkTransforms();
+        Rigidbody[] rigidbodies = Resources.FindObjectsOfTypeAll(typeof(Rigidbody)) as Rigidbody[];
+        foreach (Rigidbody rigidbody in rigidbodies)
         {
-            Rigidbody rigidBody = networkTransform.GetComponentInParent<Rigidbody>();
-            if (rigidBody != null)
-                rigidBody.useGravity = false;
-            networkTransform.interpolateMovement = 0;
-            networkTransform.sendInterval = 0;
-            networkTransform.movementTheshold = 0.000001f;
+            Destroy(rigidbody);
         }
     }
 
