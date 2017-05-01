@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityClusterPackage;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -10,6 +11,10 @@ public class MoveCubes : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+	    if (NodeInformation.type.Equals("slave"))
+	    {
+	        enabled = false;
+	    }
         force = 5f;
         // initCubes();
 	}
