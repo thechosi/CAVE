@@ -14,6 +14,7 @@ namespace UnityClusterPackage
         public static string cameraEye;
         public static int id, nodes, serverPort;
         public static bool stereo;
+        public static int numberOfSlaves;
         public static float paX, paY, paZ, pbX, pbY, pbZ, pcX, pcY, pcZ, peX, peY, peZ;
 
         static NodeInformation()
@@ -22,6 +23,7 @@ namespace UnityClusterPackage
 
             string filePath = System.IO.Path.Combine(Application.streamingAssetsPath, "node-config.xml");
             string contentXml = "";
+            numberOfSlaves = 0;
 
             if (Application.platform == RuntimePlatform.Android)
             {
@@ -158,6 +160,7 @@ namespace UnityClusterPackage
                         break;
 
                     case "slave":
+                        numberOfSlaves = numberOfSlaves + 1;
                         if (Network.player.ipAddress == node.Attributes["ip"].Value || node.Attributes["ip"].Value == "localhost")
                         {
 

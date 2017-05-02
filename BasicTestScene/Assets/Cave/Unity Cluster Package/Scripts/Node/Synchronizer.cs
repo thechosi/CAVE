@@ -6,7 +6,7 @@ namespace UnityClusterPackage
    
     public class Synchronizer : MonoBehaviour
     {
-        public int targetClientNumber = 1;
+        
 
         private bool started;
         
@@ -23,7 +23,7 @@ namespace UnityClusterPackage
             }
             else
             {
-                node = new Server(targetClientNumber);
+                node = new Server(NodeInformation.numberOfSlaves);
             }
         }
 
@@ -37,7 +37,7 @@ namespace UnityClusterPackage
             }
             else
             {
-                if (NodeInformation.type.Equals("master") && node.connections.Count != targetClientNumber || NodeInformation.type.Equals("slave") && node.connections.Count == 0)
+                if (NodeInformation.type.Equals("master") && node.connections.Count != NodeInformation.numberOfSlaves || NodeInformation.type.Equals("slave") && node.connections.Count == 0)
                 {
 #if UNITY_EDITOR
                     UnityEditor.EditorApplication.isPlaying = false;

@@ -6,10 +6,10 @@
       <rotation x="0" y="0" z="0" />
     </relationToOrigin>
     <screenplane>
-      <pa x="-3" y="-3" z="0" />
-      <pb x="3" y="-3" z="0" />
-      <pc x="-3" y="3" z="0" />
-      <pe x="0" y="0" z="3" />
+      <pa x="-5" y="-5" z="0" />
+      <pb x="5" y="-5" z="0" />
+      <pc x="-5" y="5" z="0" />
+      <pe x="0" y="0" z="5" />
     </screenplane>
   </master>
   <!-- Use for client on same machine:
@@ -19,10 +19,10 @@
       <rotation x="0" y="0" z="0"/>
     </relationToOrigin>
     <screenplane>
-      <pa x="-3" y="-3" z="0"/>
-      <pb x="3" y="-3" z="0"/>
-      <pc x="-3" y="3" z="0"/>
-      <pe x="0" y="0" z="3"/>
+      <pa x="-5" y="-5" z="0"/>
+      <pb x="5" y="-5" z="0"/>
+      <pc x="-5" y="5" z="0"/>
+      <pe x="0" y="0" z="5"/>
     </screenplane> 
   </master> 
   <slave ip="localhost">
@@ -42,10 +42,10 @@
       <rotation x="0" y="0" z="0" />
     </camera>
     <screenplane>
-      <pa x="-3" y="-3" z="0" />
-      <pb x="3" y="-3" z="0" />
-      <pc x="-3" y="3" z="0" />
-      <pe x="0" y="0" z="3" />
+      <pa x="-5" y="-5" z="0" />
+      <pb x="5" y="-5" z="0" />
+      <pc x="-5" y="5" z="0" />
+      <pe x="0" y="0" z="5" />
     </screenplane>
   </slave>
   <slave ip="192.168.0.12">
@@ -53,10 +53,10 @@
       <rotation x="0" y="0" z="0" />
     </camera>
     <screenplane>
-      <pa x="-3" y="-3" z="0" />
-      <pb x="3" y="-3" z="0" />
-      <pc x="-3" y="3" z="0" />
-      <pe x="0" y="0" z="3" />
+      <pa x="-5" y="-5" z="0" />
+      <pb x="5" y="-5" z="0" />
+      <pc x="-5" y="5" z="0" />
+      <pe x="0" y="0" z="5" />
     </screenplane>
   </slave>
   <slave ip="192.168.0.13">
@@ -64,10 +64,10 @@
       <rotation x="0" y="-90" z="0" />
     </camera>
     <screenplane>
-      <pa x="-3" y="-3" z="0" />
-      <pb x="3" y="-3" z="0" />
-      <pc x="-3" y="3" z="0" />
-      <pe x="0" y="0" z="3" />
+      <pa x="-5" y="-5" z="0" />
+      <pb x="5" y="-5" z="0" />
+      <pc x="-5" y="5" z="0" />
+      <pe x="0" y="0" z="5" />
     </screenplane>
   </slave>
   <slave ip="192.168.0.14">
@@ -75,10 +75,10 @@
       <rotation x="0" y="-90" z="0" />
     </camera>
     <screenplane>
-      <pa x="-3" y="-3" z="0" />
-      <pb x="3" y="-3" z="0" />
-      <pc x="-3" y="3" z="0" />
-      <pe x="0" y="0" z="3" />
+      <pa x="-5" y="-5" z="0" />
+      <pb x="5" y="-5" z="0" />
+      <pc x="-5" y="5" z="0" />
+      <pe x="0" y="0" z="5" />
     </screenplane>
   </slave>
   <slave ip="192.168.0.15">
@@ -86,10 +86,10 @@
       <rotation x="0" y="90" z="0" />
     </camera>
     <screenplane>
-      <pa x="-3" y="-3" z="0" />
-      <pb x="3" y="-3" z="0" />
-      <pc x="-3" y="3" z="0" />
-      <pe x="0" y="0" z="3" />
+      <pa x="-5" y="-5" z="0" />
+      <pb x="5" y="-5" z="0" />
+      <pc x="-5" y="5" z="0" />
+      <pe x="0" y="0" z="5" />
     </screenplane>
   </slave>
   <slave ip="192.168.0.16">
@@ -97,10 +97,10 @@
       <rotation x="0" y="90" z="0" />
     </camera>
     <screenplane>
-      <pa x="-3" y="-3" z="0" />
-      <pb x="3" y="-3" z="0" />
-      <pc x="-3" y="3" z="0" />
-      <pe x="0" y="0" z="3" />
+      <pa x="-5" y="-5" z="0" />
+      <pb x="5" y="-5" z="0" />
+      <pc x="-5" y="5" z="0" />
+      <pe x="0" y="0" z="5" />
     </screenplane>
   </slave>
   <slave ip="192.168.0.17">
@@ -108,10 +108,10 @@
       <rotation x="-90" y="0" z="0" />
     </camera>
     <screenplane>
-      <pa x="-3" y="-3" z="0" />
-      <pb x="3" y="-3" z="0" />
-      <pc x="-3" y="3" z="0" />
-      <pe x="0" y="0" z="3" />
+      <pa x="-5" y="-5" z="0" />
+      <pb x="5" y="-5" z="0" />
+      <pc x="-5" y="5" z="0" />
+      <pe x="0" y="0" z="5" />
     </screenplane>
   </slave>
   <slave ip="192.168.0.18">
@@ -119,10 +119,10 @@
       <rotation x="-90" y="0" z="0" />
     </camera>
     <screenplane>
-      <pa x="-3" y="-3" z="0" />
-      <pb x="3" y="-3" z="0" />
-      <pc x="-3" y="3" z="0" />
-      <pe x="0" y="0" z="3" />
+      <pa x="-5" y="-5" z="0" />
+      <pb x="5" y="-5" z="0" />
+      <pc x="-5" y="5" z="0" />
+      <pe x="0" y="0" z="5" />
     </screenplane>
   </slave>
 </config>
