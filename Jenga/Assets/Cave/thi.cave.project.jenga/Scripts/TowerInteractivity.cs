@@ -30,17 +30,15 @@ public class TowerInteractivity : MonoBehaviour
                 Debug.Log("2");
                 if (hitInfo.transform.gameObject.tag == "Brick")
                 {
-                    Debug.Log("It's working!");
-
-                    if (selectedObj != null)
+                    if (hitInfo.transform.gameObject != selectedObj)
                     {
-                        selectedObj.GetComponent<Renderer>().material.color = Color.green;
+                        select(hitInfo.transform.gameObject);
                     }
-
-                    selectedObj = hitInfo.transform.gameObject;
-
-                    Debug.Log("Name_" + selectedObj.name);
-                    selectedObj.GetComponent<Renderer>().material.color = Color.red;
+                    else
+                    {
+                        deselect();
+                    }
+                    
                 }
             }
         }
@@ -104,5 +102,21 @@ public class TowerInteractivity : MonoBehaviour
         }
 
 
+    }
+
+    private void deselect()
+    {
+        if (selectedObj != null)
+        {
+            selectedObj.GetComponent<Renderer>().material.color = Color.green;
+            selectedObj = null;
+        }
+    }
+
+    private void select(GameObject gameObject)
+    {
+        deselect();
+        selectedObj = gameObject;
+        selectedObj.GetComponent<Renderer>().material.color = Color.red;
     }
 }
