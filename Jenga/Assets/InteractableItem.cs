@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InteractableItem : MonoBehaviour {
+public class InteractableItem : MonoBehaviour
+{
 
 
     private Rigidbody rigidbody;
@@ -25,16 +26,18 @@ public class InteractableItem : MonoBehaviour {
     public float velocityFactor = 20000f;
 
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start()
+    {
         rigidbody = GetComponent<Rigidbody>();
         interactionPoint = new GameObject().transform;
         velocityFactor /= rigidbody.mass;
         rotationFactor /= rigidbody.mass;
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update()
+    {
         if (attachedWand && currentlyInteracting)
         {
             posDelta = attachedWand.transform.position - interactionPoint.position;
@@ -50,7 +53,7 @@ public class InteractableItem : MonoBehaviour {
 
             this.rigidbody.angularVelocity = (Time.fixedDeltaTime * angle * axis) * rotationFactor;
         }
-	}
+    }
 
     public void BeginInteraction(FlyStickSim wand)
     {
@@ -75,4 +78,13 @@ public class InteractableItem : MonoBehaviour {
     {
         return currentlyInteracting;
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.collider.name == "Plane" && transform.parent.name != "Row#1")
+        {
+            Debug.Log("Turm fällt");
+        }
+    }
+
 }
