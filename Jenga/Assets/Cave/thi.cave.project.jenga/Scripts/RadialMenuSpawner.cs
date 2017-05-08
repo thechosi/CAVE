@@ -14,9 +14,15 @@ public class RadialMenuSpawner : MonoBehaviour {
 	public void SpawnMenu(Interactable obj){
 		RadialMenu newMenu = Instantiate(menuPrefab) as RadialMenu;
 		newMenu.transform.SetParent(transform, false);
-		//TODO Set position and rotation to flystick
-		newMenu.transform.position = new Vector3(0f,2f,-5f);
-		newMenu.transform.eulerAngles = new Vector3 (20f,0f,0f);
+
+		GameObject Flystick = GameObject.Find ("FlystickSim");
+
+		newMenu.transform.position = Flystick.transform.position;
+		newMenu.transform.rotation = Flystick.transform.rotation;
+
+		newMenu.transform.Rotate (270f,0f,0f);
+		newMenu.transform.Translate (Flystick.transform.up*2, Space.World);
+
 		newMenu.SpawnButtons (obj);
 	}
 }

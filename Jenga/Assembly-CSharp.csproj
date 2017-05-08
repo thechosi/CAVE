@@ -48,6 +48,7 @@
   <ItemGroup>
      <Compile Include="Assets\Cave\thi.cave.project.jenga\Scripts\EventArgs\BlockEventArgs.cs" />
      <Compile Include="Assets\Cave\thi.cave.project.jenga\Scripts\EventArgs\TowerStateChangedEventArgs.cs" />
+     <Compile Include="Assets\Cave\thi.cave.project.jenga\Scripts\FlyStickSim.cs" />
      <Compile Include="Assets\Cave\thi.cave.project.jenga\Scripts\GUIManager.cs" />
      <Compile Include="Assets\Cave\thi.cave.project.jenga\Scripts\GameManager.cs" />
      <Compile Include="Assets\Cave\thi.cave.project.jenga\Scripts\Interactable.cs" />
@@ -62,6 +63,9 @@
      <Compile Include="Assets\Cave\thi.cave.project.jenga\Scripts\Tower\Blocks\TopBlockPlacer.cs" />
      <Compile Include="Assets\Cave\thi.cave.project.jenga\Scripts\Tower\CenterMaintainer.cs" />
      <Compile Include="Assets\Cave\thi.cave.project.jenga\Scripts\Tower\TowerManager.cs" />
+     <Compile Include="Assets\Cave\thi.cave.project.jenga\Scripts\TowerInteractivity.cs" />
+     <Compile Include="Assets\InteractableItem.cs" />
+     <Compile Include="Assets\Moving.cs" />
      <None Include="Assets\Cave\thi.cave.project.jenga\Textures\Skyboxes\checkered\Note.txt" />
  <Reference Include="UnityEngine.UI">
  <HintPath>D:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
