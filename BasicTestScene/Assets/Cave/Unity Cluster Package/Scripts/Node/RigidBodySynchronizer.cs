@@ -5,6 +5,18 @@ using UnityEngine.Networking;
 
 public class RigidBodySynchronizer : MonoBehaviour {
 
+    public static void Prepare()
+    {
+        Rigidbody[] rigidbodies = Resources.FindObjectsOfTypeAll(typeof(Rigidbody)) as Rigidbody[];
+        foreach (Rigidbody rigidbody in rigidbodies)
+        {
+            if (rigidbody.gameObject.GetComponent<NetworkIdentity>() != null)
+            {
+                rigidbody.gameObject.AddComponent<NetworkTransform>();
+            }
+        }
+    }
+
     private static void InitializeNetworkTransforms()
     {
         NetworkTransform[] networkTransforms = Resources.FindObjectsOfTypeAll(typeof(NetworkTransform)) as NetworkTransform[];

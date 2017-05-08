@@ -14,6 +14,7 @@ namespace UnityClusterPackage
 
         void Start()
         {
+            RigidBodySynchronizer.Prepare();
             started = false;
             
             if (NodeInformation.type.Equals("slave"))

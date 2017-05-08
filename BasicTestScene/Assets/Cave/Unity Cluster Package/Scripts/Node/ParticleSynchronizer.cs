@@ -14,7 +14,7 @@ namespace UnityClusterPackage
         private static ParticleSystem[] particleSystems;
         public static void ProcessMessage(InputMessage message)
         {
-            if (particleSystems.Length > 0)
+            if (particleSystems != null && particleSystems.Length > 0)
             {
                 foreach (ParticleSystem particleSystem in particleSystems)
                 {
@@ -32,7 +32,7 @@ namespace UnityClusterPackage
 
         public static void BuildMessage(InputMessage message)
         {
-            if (particleSystems.Length > 0)
+            if (particleSystems != null && particleSystems.Length > 0)
             {
                 float deltaTime = particleSystems[0].time - lastParticleTime;
                 if (deltaTime < 0)
