@@ -15,14 +15,17 @@ public class FlyStickInteraction : MonoBehaviour {
 	// Use this for initialization
 	void Start () {		
 		lineRender = this.GetComponent<LineRenderer> ();
-		model = GameObject.FindWithTag ("InteractiveModel");
-		print (model.name);
 		trackerSettings = this.GetComponent<TrackerSettings> ();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		drawLaser();
+	    if (model == null)
+	    {
+	        model = GameObject.FindWithTag("InteractiveModel");
+	        print(model.name);
+	    }
+	    drawLaser();
 		rotateSelectedObject ();
 	}
 
@@ -39,15 +42,6 @@ public class FlyStickInteraction : MonoBehaviour {
 
 	public void trigger(){
 		model.GetComponent<interactionTrigger> ().trigger ();
-		/*if (selectedPart != null) {
-			if (selectedPart.GetComponent<interactionTrigger> () != null) {
-				selectedPart.GetComponent<interactionTrigger> ().trigger ();
-			} else {
-				print ("No interactionTrigger Script found! Make sure that your skrict inherited the interaction script and the trigger function is overrided.\n");
-			}
-		} else {
-			print ("Nothing is selected");
-		}*/
 	}
 
 	private void rotateSelectedObject(){

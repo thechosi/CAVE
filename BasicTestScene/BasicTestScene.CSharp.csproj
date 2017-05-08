@@ -105,6 +105,7 @@
     <Compile Include="Assets\Cave\Unity Cluster Package\Scripts\clickSpawn.cs" />
     <Compile Include="Assets\Cave\Unity Cluster Package\Scripts\spawnObject.cs" />
     <Compile Include="Assets\MoveCubes\MoveCubes.cs" />
+    <Compile Include="Assets\MoveCubes\V_Motor_interaction.cs" />
     <Compile Include="Assets\MovingBall\CircularMovement.cs" />
     <Compile Include="Assets\SpawnSpheres\Reset.cs" />
     <Compile Include="Assets\SpawnSpheres\SpawnSphere.cs" />
