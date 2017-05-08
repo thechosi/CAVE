@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class RadialMenu : MonoBehaviour {
 
@@ -19,12 +21,32 @@ public class RadialMenu : MonoBehaviour {
 			newButton.circle.color = obj.options [i].color;
 			newButton.icon.sprite = obj.options [i].sprite;
 			newButton.title.text = obj.options [i].title;
+			newButton.myMenu = this;
 		}
 	}
 
 	void Update(){
 		if (Input.GetKeyUp(KeyCode.Escape)) {
+			if (selected) {
+				selected.ButtonPressed ();
+			}
 			Destroy (gameObject);
+		}
+
+		GameObject flystick = GameObject.Find ("FlystickSim");
+
+		RaycastHit hit;
+
+		if (Physics.Raycast (flystick.transform.position + flystick.transform.up, flystick.transform.up, out hit, 10)) {
+			if (hit.collider.gameObject.name == "Button(Clone)") {
+				GameObject hitObj = hit.collider.gameObject;
+				RadialButton hitButton = hitObj.GetComponent<RadialButton> ();
+
+				selected = hitButton;
+			}
+		}
+		else {
+			selected = null;
 		}
 	}
 }

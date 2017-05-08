@@ -2,20 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 public class RadialButton : MonoBehaviour {
 
 	public Image circle;
 	public Image icon;
 	public Text title;
+	public RadialMenu myMenu;
 
-	// Use this for initialization
-	void Start () {
-		
+	public void ButtonPressed(){
+		Debug.Log ("button "+title.text+" selected");
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
+
+	public void Update(){
+		if (myMenu.selected == this) {
+			transform.localScale = new Vector3 (1.2f, 1.2f, 1.2f);
+		} else {
+			transform.localScale = new Vector3 (1f, 1f, 1f);
+		}
 	}
 }
