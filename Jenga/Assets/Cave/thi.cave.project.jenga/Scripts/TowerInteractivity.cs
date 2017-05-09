@@ -12,12 +12,16 @@ public class TowerInteractivity : MonoBehaviour
 
     private int rows;
 
+    private Material wood;
+
     // Use this for initialization
     void Start()
     {
         force = 5f;
-
+        wood = this.transform.GetChild(0).GetChild(0).GetComponent<Renderer>().material;
         
+    
+
     }
 
     // Update is called once per frame
@@ -119,7 +123,7 @@ public class TowerInteractivity : MonoBehaviour
     {
         if (selectedObj != null)
         {
-            selectedObj.GetComponent<Renderer>().material.color = Color.green;
+            selectedObj.GetComponent<Renderer>().material = wood;
             selectedObj = null;
         }
     }
@@ -128,7 +132,6 @@ public class TowerInteractivity : MonoBehaviour
     {
         deselect();
         selectedObj = gameObject;
-        selectedObj.GetComponent<Renderer>().material.color = Color.red;
-       
+        selectedObj.GetComponent<Renderer>().material.color = Color.green;
     }
 }
