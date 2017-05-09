@@ -49,7 +49,7 @@ Public Class XMLWriter
 
     End Function
 
-    Public Function SetAllComputers(filename As String, saveFileName As String, computers As List(Of Computer))
+    Public Function SetAllComputers(filename As String, computers As List(Of Computer))
         Dim openFile As New FileStream(filename, FileMode.Open, FileAccess.Read)
         Dim xml As XDocument = XDocument.Load(openFile)
         Dim counter As Integer = 0
@@ -85,7 +85,7 @@ Public Class XMLWriter
             End If
             counter = counter + 1
         Next
-        Dim saveFile As New FileStream(saveFileName, FileMode.OpenOrCreate, FileAccess.ReadWrite)
+        Dim saveFile As New FileStream(filename, FileMode.OpenOrCreate, FileAccess.ReadWrite)
 
         xml.Save(saveFile)
         saveFile.Close()
