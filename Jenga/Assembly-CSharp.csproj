@@ -39,10 +39,10 @@
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="UnityEngine">
-      <HintPath>D:/Program Files/Unity/Editor/Data/Managed/UnityEngine.dll</HintPath>
+      <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor">
-      <HintPath>D:/Program Files/Unity/Editor/Data/Managed/UnityEditor.dll</HintPath>
+      <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEditor.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -52,7 +52,9 @@
      <Compile Include="Assets\Cave\thi.cave.project.jenga\Scripts\GUIManager.cs" />
      <Compile Include="Assets\Cave\thi.cave.project.jenga\Scripts\GameManager.cs" />
      <Compile Include="Assets\Cave\thi.cave.project.jenga\Scripts\Interactable.cs" />
+     <Compile Include="Assets\Cave\thi.cave.project.jenga\Scripts\InteractableItem.cs" />
      <Compile Include="Assets\Cave\thi.cave.project.jenga\Scripts\MoveCubes.cs" />
+     <Compile Include="Assets\Cave\thi.cave.project.jenga\Scripts\Moving.cs" />
      <Compile Include="Assets\Cave\thi.cave.project.jenga\Scripts\OrbitCamera.cs" />
      <Compile Include="Assets\Cave\thi.cave.project.jenga\Scripts\RadialButton.cs" />
      <Compile Include="Assets\Cave\thi.cave.project.jenga\Scripts\RadialMenu.cs" />
@@ -64,26 +66,24 @@
      <Compile Include="Assets\Cave\thi.cave.project.jenga\Scripts\Tower\CenterMaintainer.cs" />
      <Compile Include="Assets\Cave\thi.cave.project.jenga\Scripts\Tower\TowerManager.cs" />
      <Compile Include="Assets\Cave\thi.cave.project.jenga\Scripts\TowerInteractivity.cs" />
-     <Compile Include="Assets\InteractableItem.cs" />
-     <Compile Include="Assets\Moving.cs" />
      <None Include="Assets\Cave\thi.cave.project.jenga\Textures\Skyboxes\checkered\Note.txt" />
  <Reference Include="UnityEngine.UI">
- <HintPath>D:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
+ <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.Networking">
- <HintPath>D:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
+ <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.PlaymodeTestsRunner">
- <HintPath>D:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/PlaymodeTestsRunner/UnityEngine.PlaymodeTestsRunner.dll</HintPath>
+ <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/PlaymodeTestsRunner/UnityEngine.PlaymodeTestsRunner.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.Analytics">
- <HintPath>D:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityAnalytics/UnityEngine.Analytics.dll</HintPath>
+ <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityAnalytics/UnityEngine.Analytics.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.HoloLens">
- <HintPath>D:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityHoloLens/RuntimeEditor/UnityEngine.HoloLens.dll</HintPath>
+ <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityHoloLens/RuntimeEditor/UnityEngine.HoloLens.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.VR">
- <HintPath>D:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityVR/RuntimeEditor/UnityEngine.VR.dll</HintPath>
+ <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityVR/RuntimeEditor/UnityEngine.VR.dll</HintPath>
  </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

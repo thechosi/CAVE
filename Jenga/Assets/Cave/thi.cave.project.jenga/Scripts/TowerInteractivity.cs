@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 using UnityEngine;
 
 public class TowerInteractivity : MonoBehaviour
@@ -9,16 +10,20 @@ public class TowerInteractivity : MonoBehaviour
 
     public float force;
 
+    private int rows;
 
     // Use this for initialization
     void Start()
     {
         force = 5f;
+
+        
     }
 
     // Update is called once per frame
     void Update()
     {
+
         if (Input.GetMouseButtonDown(0))
         {
 
@@ -27,11 +32,13 @@ public class TowerInteractivity : MonoBehaviour
             bool hit = Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo);
             if (hit)
             {
-                Debug.Log("2");
+                
                 if (hitInfo.transform.gameObject.tag == "Brick")
                 {
-                    if (hitInfo.transform.gameObject != selectedObj)
+                    rows = hitInfo.transform.parent.parent.childCount;
+                    if (hitInfo.transform.gameObject != selectedObj && hitInfo.transform.parent.name != "Row#" + rows)
                     {
+                        Debug.Log("select");
                         select(hitInfo.transform.gameObject);
                     }
                     else
@@ -46,6 +53,7 @@ public class TowerInteractivity : MonoBehaviour
 
     void FixedUpdate()
     {
+
         if (selectedObj != null)
         {
             Rigidbody rigidbody = selectedObj.GetComponent<Rigidbody>();
@@ -104,6 +112,9 @@ public class TowerInteractivity : MonoBehaviour
 
     }
 
+
+
+
     private void deselect()
     {
         if (selectedObj != null)
@@ -118,5 +129,6 @@ public class TowerInteractivity : MonoBehaviour
         deselect();
         selectedObj = gameObject;
         selectedObj.GetComponent<Renderer>().material.color = Color.red;
+       
     }
 }

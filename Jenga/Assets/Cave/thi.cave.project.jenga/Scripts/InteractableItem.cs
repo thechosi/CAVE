@@ -83,7 +83,11 @@ public class InteractableItem : MonoBehaviour
     {
         if (collision.collider.name == "Plane" && transform.parent.name != "Row#1")
         {
-            Debug.Log("Turm fällt");
+            if(transform.GetComponent<Renderer>().material.color != Color.red)
+            {
+                Debug.Log("Turm fällt");
+            }
+            
         }
     }
 

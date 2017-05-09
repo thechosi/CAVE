@@ -14,6 +14,7 @@ public class GUIManager : MonoBehaviour
 
     void Update()
     {
+        
         switch (GameManager.instance.State)
         {
             case GameState.PLAYING:
