@@ -14,14 +14,79 @@ public class TowerInteractivity : MonoBehaviour
 
     private Material wood;
 
+    public GameObject brick;
+
+    public int diffBetweenBlocks;
+
+    public int nrOfRows;
+
+
+
     // Use this for initialization
     void Start()
     {
-        force = 5f;
+        if (diffBetweenBlocks <0)
+        {
+            diffBetweenBlocks = 0;
+        }
+        if (nrOfRows < 1)
+        {
+            nrOfRows = 1;
+        }
+        createTower();
+        destroyTower();
         wood = this.transform.GetChild(0).GetChild(0).GetComponent<Renderer>().material;
-        
-    
+    }
 
+    public void createTower()
+    {
+        GameObject newBrick;
+
+
+        newBrick = Instantiate(brick) as GameObject;
+        float height = newBrick.GetComponent<Renderer>().bounds.size.y;
+        Destroy(newBrick);
+
+
+        for (int i = 0; i < nrOfRows; i++)
+        {
+            GameObject row = new GameObject();
+            row.name = "Row#" + (i + 1);
+            row.transform.parent = this.transform;
+
+            float absolutDiff = (height + diffBetweenBlocks) * i;
+            
+            if (i % 2 == 1)
+            {
+                newBrick = Instantiate(brick, new Vector3(1, absolutDiff, 0), Quaternion.identity) as GameObject;
+                newBrick.transform.parent = row.transform;
+                newBrick = Instantiate(brick, new Vector3(1, absolutDiff, 1), Quaternion.identity) as GameObject;
+                newBrick.transform.parent = row.transform;
+                newBrick = Instantiate(brick, new Vector3(1, absolutDiff, 2), Quaternion.identity) as GameObject;
+                newBrick.transform.parent = row.transform;
+            }
+            else
+            {
+                newBrick = Instantiate(brick, new Vector3(0, absolutDiff, 1), Quaternion.identity) as GameObject;
+                newBrick.transform.Rotate(new Vector3(0, 90, 0));
+                newBrick.transform.parent = row.transform;
+                newBrick = Instantiate(brick, new Vector3(1, absolutDiff, 1), Quaternion.identity) as GameObject;
+                newBrick.transform.Rotate(new Vector3(0, 90, 0));
+                newBrick.transform.parent = row.transform;
+                newBrick = Instantiate(brick, new Vector3(2, absolutDiff, 1), Quaternion.identity) as GameObject;
+                newBrick.transform.Rotate(new Vector3(0, 90, 0));
+                newBrick.transform.parent = row.transform;
+            }
+        }
+    }
+
+
+    public void destroyTower()
+    {
+        foreach (Transform child in transform)
+        {
+            Destroy(child.gameObject);
+        }
     }
 
     // Update is called once per frame
@@ -30,26 +95,23 @@ public class TowerInteractivity : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
-
-            Debug.Log("1");
             RaycastHit hitInfo = new RaycastHit();
             bool hit = Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo);
             if (hit)
             {
-                
+
                 if (hitInfo.transform.gameObject.tag == "Brick")
                 {
                     rows = hitInfo.transform.parent.parent.childCount;
                     if (hitInfo.transform.gameObject != selectedObj && hitInfo.transform.parent.name != "Row#" + rows)
                     {
-                        Debug.Log("select");
                         select(hitInfo.transform.gameObject);
                     }
                     else
                     {
                         deselect();
                     }
-                    
+
                 }
             }
         }

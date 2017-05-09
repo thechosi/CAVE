@@ -13,6 +13,18 @@ public class RadialButton : MonoBehaviour {
 
 	public void ButtonPressed(){
 		Debug.Log ("button "+title.text+" selected");
+
+        if (title.text == "Zurücksetzen")
+        {
+            Debug.Log("DO IT!");
+            GameObject towerObject = GameObject.Find("DynamicTower");
+            if (towerObject != null)
+            {
+                TowerInteractivity tower = towerObject.GetComponent<TowerInteractivity>();
+                tower.destroyTower();
+                tower.createTower();
+            }
+        }
 	}
 
 	public void Update(){

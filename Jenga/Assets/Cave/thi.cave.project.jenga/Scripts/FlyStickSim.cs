@@ -39,7 +39,6 @@ public class FlyStickSim : MonoBehaviour
                         closestItem = item;
                     }
                 }
-                Debug.Log(minDistance);
 
                 interactingItem = closestItem;
                 closestItem = null;
