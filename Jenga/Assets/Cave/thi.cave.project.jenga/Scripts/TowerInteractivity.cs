@@ -25,7 +25,7 @@ public class TowerInteractivity : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        if (diffBetweenBlocks <0)
+        if (diffBetweenBlocks < 0)
         {
             diffBetweenBlocks = 0;
         }
@@ -34,15 +34,15 @@ public class TowerInteractivity : MonoBehaviour
             nrOfRows = 1;
         }
         createTower();
-        destroyTower();
         wood = this.transform.GetChild(0).GetChild(0).GetComponent<Renderer>().material;
     }
 
     public void createTower()
     {
+        Debug.Log("creating Tower");
+
+        // to get the height of the prefab
         GameObject newBrick;
-
-
         newBrick = Instantiate(brick) as GameObject;
         float height = newBrick.GetComponent<Renderer>().bounds.size.y;
         Destroy(newBrick);
@@ -55,7 +55,7 @@ public class TowerInteractivity : MonoBehaviour
             row.transform.parent = this.transform;
 
             float absolutDiff = (height + diffBetweenBlocks) * i;
-            
+
             if (i % 2 == 1)
             {
                 newBrick = Instantiate(brick, new Vector3(1, absolutDiff, 0), Quaternion.identity) as GameObject;
@@ -83,6 +83,7 @@ public class TowerInteractivity : MonoBehaviour
 
     public void destroyTower()
     {
+        Debug.Log("Destroying Tower");
         foreach (Transform child in transform)
         {
             Destroy(child.gameObject);
@@ -186,6 +187,7 @@ public class TowerInteractivity : MonoBehaviour
         if (selectedObj != null)
         {
             selectedObj.GetComponent<Renderer>().material = wood;
+            selectedObj.GetComponent<Renderer>().material.color = Color.white;
             selectedObj = null;
         }
     }

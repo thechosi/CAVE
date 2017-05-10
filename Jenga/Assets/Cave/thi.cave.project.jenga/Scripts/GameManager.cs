@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System;
+using UnityEngine.SceneManagement;
 
-public delegate void GameStateChangedEventHandler(object sender,GameStateChangedEventArgs e);
+public delegate void GameStateChangedEventHandler(object sender, GameStateChangedEventArgs e);
 
 public class GameManager
 {
@@ -43,16 +44,16 @@ public class GameManager
                 Time.timeScale = 0;
                 break;
             case GameState.MENU:
-                if (e.PreviousState == GameState.PAUSEMENU || 
-                    e.PreviousState == GameState.OVER || 
+                if (e.PreviousState == GameState.PAUSEMENU ||
+                    e.PreviousState == GameState.OVER ||
                     e.PreviousState == GameState.INTRO)
                 {
-                    Application.LoadLevel("MenuScene");
+                    SceneManager.LoadScene("MenuScene");
                 }
                 break;
             case GameState.PLAYING:
                 if (e.PreviousState != GameState.PAUSEMENU)
-                    Application.LoadLevel("GameScene");
+                    SceneManager.LoadScene("GameScene");
                 break;
         }
 

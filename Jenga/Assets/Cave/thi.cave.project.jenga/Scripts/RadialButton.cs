@@ -4,19 +4,20 @@ using UnityEngine;
 using UnityEngine.UI;
 using System;
 
-public class RadialButton : MonoBehaviour {
+public class RadialButton : MonoBehaviour
+{
 
-	public Image circle;
-	public Image icon;
-	public Text title;
-	public RadialMenu myMenu;
+    public Image circle;
+    public Image icon;
+    public Text title;
+    public RadialMenu myMenu;
 
-	public void ButtonPressed(){
-		Debug.Log ("button "+title.text+" selected");
+    public void ButtonPressed()
+    {
+        Debug.Log("button " + title.text + " selected");
 
         if (title.text == "Zurücksetzen")
         {
-            Debug.Log("DO IT!");
             GameObject towerObject = GameObject.Find("DynamicTower");
             if (towerObject != null)
             {
@@ -25,13 +26,17 @@ public class RadialButton : MonoBehaviour {
                 tower.createTower();
             }
         }
-	}
+    }
 
-	public void Update(){
-		if (myMenu.selected == this) {
-			transform.localScale = new Vector3 (1.2f, 1.2f, 1.2f);
-		} else {
-			transform.localScale = new Vector3 (1f, 1f, 1f);
-		}
-	}
+    public void Update()
+    {
+        if (myMenu.selected == this)
+        {
+            transform.localScale = new Vector3(1.2f, 1.2f, 1.2f);
+        }
+        else
+        {
+            transform.localScale = new Vector3(1f, 1f, 1f);
+        }
+    }
 }

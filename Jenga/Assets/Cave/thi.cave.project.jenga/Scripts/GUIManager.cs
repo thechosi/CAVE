@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class GUIManager : MonoBehaviour
 {
@@ -64,7 +65,7 @@ public class GUIManager : MonoBehaviour
                 {
                     if (GameManager.instance.State == GameState.PAUSEMENU)
                     {
-                        Application.LoadLevel("GameScene");
+                        SceneManager.LoadScene("GameScene");
                     }
                     GameManager.instance.State = GameState.PLAYING;
                 }
