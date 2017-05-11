@@ -62,6 +62,7 @@ namespace UnityClusterPackage
                 InputSynchronizer.BuildMessage(inputMessage);
                 ParticleSynchronizer.BuildMessage(inputMessage);
                 AnimatorSynchronizer.BuildMessage(inputMessage);
+                TrackingSynchronizer.BuildMessage(inputMessage);
 
                 node.BroadcastMessage(inputMessage);
             }
@@ -74,6 +75,7 @@ namespace UnityClusterPackage
                 InputSynchronizer.ProcessMessage(inputMessage);
                 ParticleSynchronizer.ProcessMessage(inputMessage);
                 AnimatorSynchronizer.ProcessMessage(inputMessage);
+                TrackingSynchronizer.ProcessMessage(inputMessage);
             }
             
             StartCoroutine(EndOfFrame());

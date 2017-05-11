@@ -20,6 +20,16 @@ namespace UnityClusterPackage
         public float axisHorizontal;
         public float axisVertical;
         public float animatorTime;
+        public Vector3 cameraPosition = new Vector3();
+        public Vector3 flyStickPosition = new Vector3();
+        public Vector3 flyStickRotation = new Vector3();
+
+        private void SerializeVector3(Buffer buffer, Vector3 vector)
+        {
+            Buffer.Add(buffer, vector.x);
+            Buffer.Add(buffer, vector.y);
+            Buffer.Add(buffer, vector.z);
+        }
 
         public void Serialize(Buffer buffer)
         {
@@ -29,6 +39,18 @@ namespace UnityClusterPackage
             Buffer.Add(buffer, axisHorizontal);
             Buffer.Add(buffer, axisVertical);
             Buffer.Add(buffer, animatorTime);
+            SerializeVector3(buffer, cameraPosition);
+            SerializeVector3(buffer, flyStickPosition);
+            SerializeVector3(buffer, flyStickRotation);
+        }
+
+        private Vector3 DeserializeVector3(Buffer buffer)
+        {
+            Vector3 vector = new Vector3();
+            vector.x = Buffer.Get<float>(buffer);
+            vector.y = Buffer.Get<float>(buffer);
+            vector.z = Buffer.Get<float>(buffer);
+            return vector;
         }
 
         public void Deserialize(Buffer buffer)
@@ -39,11 +61,14 @@ namespace UnityClusterPackage
             axisHorizontal = Buffer.Get<float>(buffer);
             axisVertical = Buffer.Get<float>(buffer);
             animatorTime = Buffer.Get<float>(buffer);
+            cameraPosition = DeserializeVector3(buffer);
+            flyStickPosition = DeserializeVector3(buffer);
+            flyStickRotation = DeserializeVector3(buffer);
         }
 
         public int GetLength()
         {
-            return sizeof(float) * 6;
+            return sizeof(float) * (6 + 3 * 3);
         }
     }
 

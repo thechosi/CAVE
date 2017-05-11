@@ -38,7 +38,10 @@ namespace UnityClusterPackage
 
                 trackerSettings = (TrackerSettings) originSlave.transform.Find("CameraHolder").GetComponent("TrackerSettings");
                 trackerSettings.HostSettings = (TrackerHostSettings) GameObject.Find("NodeManager/TrackerHostSettings").GetComponent("TrackerHostSettings");
-                
+
+                trackerSettings = (TrackerSettings)originSlave.transform.Find("Flystick").GetComponent("TrackerSettings");
+                trackerSettings.HostSettings = (TrackerHostSettings)GameObject.Find("NodeManager/TrackerHostSettings").GetComponent("TrackerHostSettings");
+
             }
             else if (NodeInformation.type.Equals("slave"))
             {

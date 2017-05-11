@@ -13,11 +13,13 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile></CompilerResponseFile>
+    <CompilerResponseFile>
+    </CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
     <UnityVersion>5.5.2f1</UnityVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
     <LangVersion Condition=" '$(VisualStudioVersion)' != '10.0' ">4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -93,7 +95,6 @@
     <Compile Include="Assets\Cave\Unity Cluster Package\Scripts\Node\InstantiateNode.cs" />
     <Compile Include="Assets\Cave\Unity Cluster Package\Scripts\Node\NetworkNode.cs" />
     <Compile Include="Assets\Cave\Unity Cluster Package\Scripts\Node\NodeInformation.cs" />
-    <Compile Include="Assets\Cave\Unity Cluster Package\Scripts\Node\OffAxisPerspective.cs" />
     <Compile Include="Assets\Cave\Unity Cluster Package\Scripts\Node\ParticleSynchronizer.cs" />
     <Compile Include="Assets\Cave\Unity Cluster Package\Scripts\Node\RigidBodySynchronizer.cs" />
     <Compile Include="Assets\Cave\Unity Cluster Package\Scripts\Node\Server.cs" />
@@ -101,6 +102,7 @@
     <Compile Include="Assets\Cave\Unity Cluster Package\Scripts\Node\SynchroMessage.cs" />
     <Compile Include="Assets\Cave\Unity Cluster Package\Scripts\Node\Synchronizer.cs" />
     <Compile Include="Assets\Cave\Unity Cluster Package\Scripts\Node\TimeSynchronizer.cs" />
+    <Compile Include="Assets\Cave\Unity Cluster Package\Scripts\Node\TrackingSynchronizer.cs" />
     <Compile Include="Assets\Cave\Unity Cluster Package\Scripts\PhysicsDeformer.cs" />
     <Compile Include="Assets\Cave\Unity Cluster Package\Scripts\clickSpawn.cs" />
     <Compile Include="Assets\Cave\Unity Cluster Package\Scripts\spawnObject.cs" />
@@ -131,7 +133,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\StreamingAssets\node-config.xml" />
-    <None Include="Assets\StreamingAssets\node-config2.xml" />
+    <None Include="Assets\StreamingAssets\node-config_cave.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>
