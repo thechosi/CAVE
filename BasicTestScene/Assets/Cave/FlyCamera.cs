@@ -10,10 +10,14 @@ public class FlyCamera : MonoBehaviour {
     void Start () {
 
     }
-	
-	// Update is called once per frame
-	void Update () {
-        directionVector = new Vector3(InputSynchronizer.GetAxis("Horizontal"), 0, InputSynchronizer.GetAxis("Vertical"));
-        transform.position += directionVector * translateVelocity;
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (NodeInformation.type.Equals("master"))
+        {
+            directionVector = new Vector3(InputSynchronizer.GetAxis("Horizontal"), 0, InputSynchronizer.GetAxis("Vertical"));
+            transform.position += directionVector * translateVelocity;
+        }
     }
 }

@@ -10,12 +10,15 @@ namespace UnityClusterPackage
         private static XmlDocument xmlDocument;
 
         public static string name, type, serverIp;
+        public static Vector3 originPosition;
         public static Vector3 cameraRoation;
+        public static Vector3 screenplanePosition;
+        public static Vector3 screenplaneRotation;
+        public static Vector3 screenplaneScale;
         public static string cameraEye;
-        public static int id, nodes, serverPort;
+        public static int nodes, serverPort;
         public static bool stereo;
         public static int numberOfSlaves;
-        public static float paX, paY, paZ, pbX, pbY, pbZ, pcX, pcY, pcZ, peX, peY, peZ;
 
         static NodeInformation()
         {
@@ -46,7 +49,6 @@ namespace UnityClusterPackage
 
         static Vector3 getRotationOfNode(XmlNode node)
         {
-            int x, y, z;
             Vector3 rotation = new Vector3();
 
             foreach (XmlNode rotation_node in node.ChildNodes)
@@ -60,18 +62,53 @@ namespace UnityClusterPackage
             }
 
             return rotation;
+            
+        }
 
+        static Vector3 getPositionOfNode(XmlNode node)
+        {
+            Vector3 position = new Vector3();
+
+            foreach (XmlNode position_node in node.ChildNodes)
+            {
+
+                if (position_node.Name == "position")
+                {
+
+                    position = getXYZOfNode(position_node);
+                }
+            }
+
+            return position;
+
+        }
+
+        static Vector3 getScaleOfNode(XmlNode node)
+        {
+            Vector3 scale = new Vector3();
+
+            foreach (XmlNode scale_node in node.ChildNodes)
+            {
+
+                if (scale_node.Name == "scale")
+                {
+
+                    scale = getXYZOfNode(scale_node);
+                }
+            }
+
+            return scale;
 
         }
 
         static Vector3 getXYZOfNode(XmlNode node)
         {
-            int x, y, z;
+            float x, y, z;
             Vector3 v3 = new Vector3();
 
-            x = Convert.ToInt32(node.Attributes["x"].Value);
-            y = Convert.ToInt32(node.Attributes["y"].Value);
-            z = Convert.ToInt32(node.Attributes["z"].Value);
+            float.TryParse(node.Attributes["x"].Value, out x);
+            float.TryParse(node.Attributes["y"].Value, out y);
+            float.TryParse(node.Attributes["z"].Value, out z);
 
             v3 = new Vector3(x, y, z);
 
@@ -93,37 +130,9 @@ namespace UnityClusterPackage
 
         static void getScreenplane(XmlNode node)
         {
-            Vector3 tempVec;
-            foreach (XmlNode childNode in node.ChildNodes)
-            {
-                switch (childNode.Name)
-                {
-                    case "pa":
-                        tempVec = getXYZOfNode(childNode);
-                        paX = tempVec.x;
-                        paY = tempVec.y;
-                        paZ = tempVec.z;
-                        break;
-                    case "pb":
-                        tempVec = getXYZOfNode(childNode);
-                        pbX = tempVec.x;
-                        pbY = tempVec.y;
-                        pbZ = tempVec.z;
-                        break;
-                    case "pc":
-                        tempVec = getXYZOfNode(childNode);
-                        pcX = tempVec.x;
-                        pcY = tempVec.y;
-                        pcZ = tempVec.z;
-                        break;
-                    case "pe":
-                        tempVec = getXYZOfNode(childNode);
-                        peX = tempVec.x;
-                        peY = tempVec.y;
-                        peZ = tempVec.z;
-                        break;
-                }
-            }
+            screenplanePosition = getPositionOfNode(node);
+            screenplaneRotation = getRotationOfNode(node);
+            screenplaneScale= getScaleOfNode(node);
         }
 
         static void ReadNodeInformation()
@@ -147,8 +156,8 @@ namespace UnityClusterPackage
                             {
                                 switch (master_node.Name)
                                 {
-                                    case "relationToOrigin":
-                                        cameraRoation = getRotationOfNode(master_node);
+                                    case "origin":
+                                        originPosition = getPositionOfNode(master_node);
                                         break;
 
                                     case "screenplane":
