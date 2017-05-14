@@ -42,6 +42,7 @@ public class FlyStickSim : MonoBehaviour
 
                 interactingItem = closestItem;
                 closestItem = null;
+               
 
                 if (interactingItem)
                 {
@@ -51,6 +52,8 @@ public class FlyStickSim : MonoBehaviour
                     }
 
                     interactingItem.BeginInteraction(this);
+
+
                 }
 
             }

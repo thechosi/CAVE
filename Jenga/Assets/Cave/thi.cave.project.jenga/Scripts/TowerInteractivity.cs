@@ -60,22 +60,28 @@ public class TowerInteractivity : MonoBehaviour
             {
                 newBrick = Instantiate(brick, new Vector3(1, absolutDiff, 0), Quaternion.identity) as GameObject;
                 newBrick.transform.parent = row.transform;
+                newBrick.name = row.name + "Block1";
                 newBrick = Instantiate(brick, new Vector3(1, absolutDiff, 1), Quaternion.identity) as GameObject;
                 newBrick.transform.parent = row.transform;
+                newBrick.name = row.name + "Block2";
                 newBrick = Instantiate(brick, new Vector3(1, absolutDiff, 2), Quaternion.identity) as GameObject;
                 newBrick.transform.parent = row.transform;
+                newBrick.name = row.name + "Block3";
             }
             else
             {
                 newBrick = Instantiate(brick, new Vector3(0, absolutDiff, 1), Quaternion.identity) as GameObject;
                 newBrick.transform.Rotate(new Vector3(0, 90, 0));
                 newBrick.transform.parent = row.transform;
+                newBrick.name = row.name + "Block1";
                 newBrick = Instantiate(brick, new Vector3(1, absolutDiff, 1), Quaternion.identity) as GameObject;
                 newBrick.transform.Rotate(new Vector3(0, 90, 0));
                 newBrick.transform.parent = row.transform;
+                newBrick.name = row.name + "Block2";
                 newBrick = Instantiate(brick, new Vector3(2, absolutDiff, 1), Quaternion.identity) as GameObject;
                 newBrick.transform.Rotate(new Vector3(0, 90, 0));
                 newBrick.transform.parent = row.transform;
+                newBrick.name = row.name + "Block3";
             }
         }
     }
@@ -192,10 +198,14 @@ public class TowerInteractivity : MonoBehaviour
         }
     }
 
-    private void select(GameObject gameObject)
+    public void select(GameObject gameObject)
     {
-        deselect();
-        selectedObj = gameObject;
-        selectedObj.GetComponent<Renderer>().material.color = Color.green;
+        //if(selectedObj == null)
+        //{
+            deselect();
+            selectedObj = gameObject;
+            selectedObj.GetComponent<Renderer>().material.color = Color.green;
+        //}
+
     }
 }
