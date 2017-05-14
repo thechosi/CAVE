@@ -12,6 +12,7 @@ namespace UnityClusterPackage
         public GameObject origin;
         private GameObject originSlave;
         private TrackerSettings trackerSettings;
+        public Transform originParent;
 
         void Start()
         {
@@ -22,8 +23,8 @@ namespace UnityClusterPackage
             {
                 networkManager.StartServer();
                 //Instantiate the origin-GameObject
-                GameObject objOrigin = Instantiate(origin);
-                objOrigin.transform.position = NodeInformation.originPosition;
+                GameObject objOrigin = Instantiate(origin, originParent);
+                objOrigin.transform.localPosition = NodeInformation.originPosition;
                 //Spawn the object for the clients
                 NetworkServer.Spawn(objOrigin);
 
@@ -62,6 +63,7 @@ namespace UnityClusterPackage
                 {
                     //the origin-GameObject has the tag "MainCamera" to find it easily
                     originSlave = GameObject.FindGameObjectWithTag("MainCamera");
+                    originSlave.transform.parent = originParent;
                     //Since the client needs some time to get the object from the server, we can only continue if we have the origin
                     if (originSlave != null)
                     {

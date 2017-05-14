@@ -45,7 +45,7 @@ namespace UnityClusterPackage
 
         public static void InitializeFromServer(Server server, ISocket client)
         {
-            particleSystems = MonoBehaviour.FindObjectsOfType(typeof(ParticleSystem)) as ParticleSystem[];
+            particleSystems = Resources.FindObjectsOfTypeAll(typeof(ParticleSystem)) as ParticleSystem[];
             foreach (ParticleSystem particleSystem in particleSystems)
             {
                 EventMessage message = new EventMessage();
@@ -62,7 +62,7 @@ namespace UnityClusterPackage
 
         public static void InitializeFromClient(Client client)
         {
-            particleSystems = MonoBehaviour.FindObjectsOfType(typeof(ParticleSystem)) as ParticleSystem[];
+            particleSystems = Resources.FindObjectsOfTypeAll(typeof(ParticleSystem)) as ParticleSystem[];
             foreach (ParticleSystem particleSystem in particleSystems)
             {
                 EventMessage message = new EventMessage();
