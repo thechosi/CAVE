@@ -46,11 +46,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Cave\thi.cave.project.jenga\Scripts\EventArgs\BlockEventArgs.cs" />
-     <Compile Include="Assets\Cave\thi.cave.project.jenga\Scripts\EventArgs\TowerStateChangedEventArgs.cs" />
      <Compile Include="Assets\Cave\thi.cave.project.jenga\Scripts\FlyStickSim.cs" />
-     <Compile Include="Assets\Cave\thi.cave.project.jenga\Scripts\GUIManager.cs" />
-     <Compile Include="Assets\Cave\thi.cave.project.jenga\Scripts\GameManager.cs" />
      <Compile Include="Assets\Cave\thi.cave.project.jenga\Scripts\Interactable.cs" />
      <Compile Include="Assets\Cave\thi.cave.project.jenga\Scripts\InteractableItem.cs" />
      <Compile Include="Assets\Cave\thi.cave.project.jenga\Scripts\MoveCubes.cs" />
@@ -59,12 +55,7 @@
      <Compile Include="Assets\Cave\thi.cave.project.jenga\Scripts\RadialButton.cs" />
      <Compile Include="Assets\Cave\thi.cave.project.jenga\Scripts\RadialMenu.cs" />
      <Compile Include="Assets\Cave\thi.cave.project.jenga\Scripts\RadialMenuSpawner.cs" />
-     <Compile Include="Assets\Cave\thi.cave.project.jenga\Scripts\Tower\Blocks\ArrowDrag.cs" />
-     <Compile Include="Assets\Cave\thi.cave.project.jenga\Scripts\Tower\Blocks\BlockManager.cs" />
-     <Compile Include="Assets\Cave\thi.cave.project.jenga\Scripts\Tower\Blocks\SetupBlockBehaviour.cs" />
-     <Compile Include="Assets\Cave\thi.cave.project.jenga\Scripts\Tower\Blocks\TopBlockPlacer.cs" />
-     <Compile Include="Assets\Cave\thi.cave.project.jenga\Scripts\Tower\CenterMaintainer.cs" />
-     <Compile Include="Assets\Cave\thi.cave.project.jenga\Scripts\Tower\TowerManager.cs" />
+     <Compile Include="Assets\Cave\thi.cave.project.jenga\Scripts\TopBlockPlacer.cs" />
      <Compile Include="Assets\Cave\thi.cave.project.jenga\Scripts\TowerInteractivity.cs" />
      <None Include="Assets\Cave\thi.cave.project.jenga\Textures\Skyboxes\checkered\Note.txt" />
  <Reference Include="UnityEngine.UI">
