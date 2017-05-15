@@ -1,0 +1,7 @@
+﻿C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppBuild.targets(392,5): warning MSB8028: The intermediate directory (.\pc_win32/Release\) contains files shared from another project (make_vrpn_libs_build.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+  gpsnmealib.lib(nmeaParser.obj) : MSIL .netmodule or module compiled with /GL found; restarting link with /LTCG; add /LTCG to the link command line to improve linker performance
+     Creating library .\../pc_win32/server_src/vrpn_server/Release\vrpn_server.lib and object .\../pc_win32/server_src/vrpn_server/Release\vrpn_server.exp
+  Generating code
+  Finished generating code
+  vrpn_server.vcxproj -> C:\Users\becher\Documents\Unity\VRPNMiddleware\lib\VRPN\server_src\.\../pc_win32/server_src/vrpn_server/Release\vrpn_server.exe
+  vrpn_server.vcxproj -> .\../pc_win32/server_src/vrpn_server/Release/vrpn_server.pdb (Full PDB)
