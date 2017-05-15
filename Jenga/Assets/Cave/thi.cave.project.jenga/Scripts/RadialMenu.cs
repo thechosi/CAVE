@@ -21,6 +21,7 @@ public class RadialMenu : MonoBehaviour {
 			newButton.circle.color = obj.options [i].color;
 			newButton.icon.sprite = obj.options [i].sprite;
 			newButton.title.text = obj.options [i].title;
+			newButton.action = obj.options [i].action;
 			newButton.myMenu = this;
 		}
 	}

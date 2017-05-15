@@ -96,6 +96,11 @@ public class TowerInteractivity : MonoBehaviour
         }
     }
 
+	public void resetTower(){
+		destroyTower ();
+		createTower ();
+	}
+
     // Update is called once per frame
     void Update()
     {

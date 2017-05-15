@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using UnityEngine.Events;
 
 public class RadialButton : MonoBehaviour
 {
@@ -11,21 +12,23 @@ public class RadialButton : MonoBehaviour
     public Image icon;
     public Text title;
     public RadialMenu myMenu;
+	public UnityEvent action;
 
     public void ButtonPressed()
     {
+		action.Invoke ();
         Debug.Log("button " + title.text + " selected");
 
-        if (title.text == "Zurücksetzen")
-        {
-            GameObject towerObject = GameObject.Find("DynamicTower");
-            if (towerObject != null)
-            {
-                TowerInteractivity tower = towerObject.GetComponent<TowerInteractivity>();
-                tower.destroyTower();
-                tower.createTower();
-            }
-        }
+//        if (title.text == "Zurücksetzen")
+//        {
+//            GameObject towerObject = GameObject.Find("DynamicTower");
+//            if (towerObject != null)
+//            {
+//                TowerInteractivity tower = towerObject.GetComponent<TowerInteractivity>();
+//                tower.destroyTower();
+//                tower.createTower();
+//            }
+//        }
     }
 
     public void Update()
