@@ -8,6 +8,8 @@ public class TowerInteractivity : MonoBehaviour
 
     private GameObject selectedObj = null;
 
+    private GameObject firstSelected = null;
+
     public float force;
 
     private int rows;
@@ -22,6 +24,7 @@ public class TowerInteractivity : MonoBehaviour
 
 	private AudioSource destroyAudioSource;
 	private AudioSource buttonSelectAudioSource;
+    private int maxRow;
 
 
     // Use this for initialization
@@ -114,6 +117,13 @@ public class TowerInteractivity : MonoBehaviour
     void Update()
     {
 
+        if (Input.GetKey(KeyCode.O))
+        {
+            deselect();
+        }
+
+        maxRow = transform.childCount;
+
         if (Input.GetMouseButtonDown(0))
         {
             RaycastHit hitInfo = new RaycastHit();
@@ -138,7 +148,7 @@ public class TowerInteractivity : MonoBehaviour
         }
     }
 
-    void FixedUpdate()
+    /*void FixedUpdate()
     {
 
         if (selectedObj != null)
@@ -197,7 +207,7 @@ public class TowerInteractivity : MonoBehaviour
         }
 
 
-    }
+    }*/
 
     private void deselect()
     {
@@ -209,19 +219,62 @@ public class TowerInteractivity : MonoBehaviour
         }
     }
 
+
+
     public void select(GameObject gameObject)
     {
 
-		// Sound effect tower destroyed
-		destroyAudioSource = GetComponent<AudioSource>();
-		destroyAudioSource.Play ();
+        // Sound effect tower destroyed
+        destroyAudioSource = GetComponent<AudioSource>();
+        destroyAudioSource.Play();
 
-        //if(selectedObj == null)
-        //{
+
+        if (selectedObj == null && firstSelected == null)
+        {
+            firstSelected = gameObject;
+            selectedObj = gameObject;
+            selectedObj.GetComponent<Renderer>().material.color = Color.green;
+            changeRow(gameObject);
+        }
+        else if (gameObject == firstSelected)
+        {
             deselect();
             selectedObj = gameObject;
             selectedObj.GetComponent<Renderer>().material.color = Color.green;
-        //}
+        }
 
+    }
+
+    public void changeRow(GameObject gameObject)
+    {
+        if (transform.GetChild(maxRow - 1).childCount == 3)
+        {
+
+            GameObject row = new GameObject();
+            row.name = "Row#" + (maxRow + 1);
+            row.transform.parent = this.transform;
+            gameObject.transform.parent = row.transform;
+            gameObject.name = "Row#" + (maxRow + 1) + "Block1";
+
+
+        }
+        else if (transform.GetChild(maxRow - 1).childCount == 1)
+        {
+
+            gameObject.transform.parent = transform.GetChild(maxRow - 1).transform;
+            gameObject.name = "Row#" + (maxRow) + "Block2";
+
+        }
+        else if (transform.GetChild(maxRow - 1).childCount == 2)
+        {
+
+            gameObject.transform.parent = transform.GetChild(maxRow - 1).transform;
+            gameObject.name = "Row#" + (maxRow) + "Block3";
+
+        }
+        else
+        {
+            Debug.Log("else");
+        }
     }
 }

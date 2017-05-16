@@ -42,7 +42,15 @@ public class FlyStickSim : MonoBehaviour
 
                 interactingItem = closestItem;
                 closestItem = null;
-               
+
+                GameObject towerObject = GameObject.Find("DynamicTower");
+                if (towerObject != null)
+                {
+                    TowerInteractivity tower = towerObject.GetComponent<TowerInteractivity>();
+
+                    tower.select(interactingItem.transform.gameObject);
+                }
+
 
                 if (interactingItem)
                 {
