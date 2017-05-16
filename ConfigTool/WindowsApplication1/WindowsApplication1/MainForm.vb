@@ -343,7 +343,7 @@ Public Class MainForm
     Private Sub checkStartUnity()
         Dim fileBAT As File
         Dim path As String = ".\SLAVE_StartUnity.bat"
-        Dim content As String = "echo Startet Unityprojekt auf dem Slave-Rechner %computername% " + vbNewLine + "start C:\StudentenprojektCAVE\AktuellesProjekt\Testexe.exe"
+        Dim content As String = "echo Startet Unityprojekt auf dem Slave-Rechner %computername% " + vbNewLine + "start C:\StudentenprojektCAVE\AktuellesProjekt\" + projectname + ".exe"
         fileBAT.WriteAllText(path, content)
     End Sub
 
