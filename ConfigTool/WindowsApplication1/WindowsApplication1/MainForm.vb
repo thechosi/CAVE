@@ -319,21 +319,25 @@ Public Class MainForm
     End Sub
 
     Private Sub btn_startProject_Click(sender As Object, e As EventArgs) Handles btn_startProject.Click
-        Dim pfd As New ProjectForm
-        DisableButtons()
-        pf = pfd
-        pf.txt_projectForm.Text = ""
-        pf.Text = "Start Project"
-        pf.Visible = True
-        pf.ProgressBar1.Value = 20
-        opencmd_start()
-        pf.ProgressBar1.Value = 40
-        Dim CMDThread2 As New Threading.Thread(AddressOf CMDConfig)
-        CMDThread = CMDThread2
-        pf.ProgressBar1.Value = 60
-        'start cmd thread
-        CMDThread.Start()
-        pf.ProgressBar1.Value = 80
+        If File.Exists(".\MASTER_StartUnity.bat") Then
+            Dim pfd As New ProjectForm
+            DisableButtons()
+            pf = pfd
+            pf.txt_projectForm.Text = ""
+            pf.Text = "Start Project"
+            pf.Visible = True
+            pf.ProgressBar1.Value = 20
+            opencmd_start()
+            pf.ProgressBar1.Value = 40
+            Dim CMDThread2 As New Threading.Thread(AddressOf CMDConfig)
+            CMDThread = CMDThread2
+            pf.ProgressBar1.Value = 60
+            'start cmd thread
+            CMDThread.Start()
+            pf.ProgressBar1.Value = 80
+        Else
+            MsgBox("MASTER_StartUnity.bat not found", MsgBoxStyle.Critical, "Not Found")
+        End If
     End Sub
 
     Private Sub checkStartUnity()
@@ -344,22 +348,26 @@ Public Class MainForm
     End Sub
 
     Private Sub btn_deployProject_Click(sender As Object, e As EventArgs) Handles btn_deployProject.Click
-        Dim pfd As New ProjectForm
-        DisableButtons()
-        checkStartUnity()
-        pf = pfd
-        pf.txt_projectForm.Text = ""
-        pf.Text = "Deploy Project"
-        pf.Visible = True
-        pf.ProgressBar1.Value = 20
-        opencmd_deploy()
-        pf.ProgressBar1.Value = 40
-        Dim CMDThread2 As New Threading.Thread(AddressOf CMDConfig)
-        CMDThread = CMDThread2
-        pf.ProgressBar1.Value = 60
-        'start cmd thread
-        CMDThread.Start()
-        pf.ProgressBar1.Value = 80
+        If File.Exists(".\MASTER_StartUnity.bat") Then
+            Dim pfd As New ProjectForm
+            DisableButtons()
+            checkStartUnity()
+            pf = pfd
+            pf.txt_projectForm.Text = ""
+            pf.Text = "Deploy Project"
+            pf.Visible = True
+            pf.ProgressBar1.Value = 20
+            opencmd_deploy()
+            pf.ProgressBar1.Value = 40
+            Dim CMDThread2 As New Threading.Thread(AddressOf CMDConfig)
+            CMDThread = CMDThread2
+            pf.ProgressBar1.Value = 60
+            'start cmd thread
+            CMDThread.Start()
+            pf.ProgressBar1.Value = 80
+        Else
+            MsgBox("ProjektVerteilen.bat not found", MsgBoxStyle.Critical, "Not Found")
+        End If
     End Sub
 
     Private Sub ÜberDasToolToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ÜberDasToolToolStripMenuItem.Click
