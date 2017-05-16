@@ -88,7 +88,6 @@ Public Class MainForm
                 Dim xmlReader As New XMLReader
                 computers = xmlReader.GetAllComputers(fs)
 
-
                 For Each computer In computers
                     ListBox1.Items.Add(computer.ToString)
                 Next
@@ -169,8 +168,6 @@ Public Class MainForm
             ListBox1.Items.Add(computer.ToString)
         Next
         ListBox1.SelectedIndex = position_lb1
-
-
     End Sub
 
     Private Sub txt_port_TextChanged(sender As Object, e As EventArgs) Handles txt_port.TextChanged
@@ -287,8 +284,15 @@ Public Class MainForm
     End Sub
 
     Private Sub UpdateText()
-        pf.txt_projectForm.AppendText(System.Environment.NewLine() & Results)
-        pf.txt_projectForm.ScrollToCaret()
+        Try
+            pf.txt_projectForm.AppendText(System.Environment.NewLine() & Results)
+            pf.txt_projectForm.ScrollToCaret()
+        Catch ex As Exception
+            MsgBox("Error. Start or Deploy Process cancelled.", MsgBoxStyle.Critical, "Error")
+            P.Close()
+            Invoke(FinishedButtons)
+            CMDThread.Abort()
+        End Try
     End Sub
 
     Private Sub CMDConfig()
