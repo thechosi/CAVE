@@ -49,6 +49,9 @@ namespace UnityClusterPackage
                 networkManager.StartClient();
                 //The camera manipulation happens in Update()
 
+				// deactivate music and sound for clients
+				AudioListener.volume = 0f;
+
             }
 
         }

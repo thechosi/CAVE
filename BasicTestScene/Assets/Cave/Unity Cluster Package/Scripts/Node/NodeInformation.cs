@@ -170,6 +170,7 @@ namespace UnityClusterPackage
 
                     case "slave":
                         numberOfSlaves = numberOfSlaves + 1;
+
                         if (Network.player.ipAddress == node.Attributes["ip"].Value || node.Attributes["ip"].Value == "localhost")
                         {
 

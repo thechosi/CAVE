@@ -90,6 +90,7 @@ public class TowerInteractivity : MonoBehaviour
     public void destroyTower()
     {
 		// destroy sound
+		//if(NodeInformation.type.Equals("master“)){
 
 		AudioSource destroySound = GetComponent<AudioSource>();
 		destroySound.Play ();
