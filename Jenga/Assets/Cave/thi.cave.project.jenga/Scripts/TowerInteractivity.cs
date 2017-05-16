@@ -20,6 +20,8 @@ public class TowerInteractivity : MonoBehaviour
 
     public int nrOfRows;
 
+	private AudioSource destroyAudioSource;
+	private AudioSource buttonSelectAudioSource;
 
 
     // Use this for initialization
@@ -35,6 +37,10 @@ public class TowerInteractivity : MonoBehaviour
         }
         createTower();
         wood = this.transform.GetChild(0).GetChild(0).GetComponent<Renderer>().material;
+
+		destroyAudioSource = GetComponent<AudioSource>()[0];
+		buttonSelectAudioSource = GetComponent<AudioSource>()[1];
+
     }
 
     public void createTower()
@@ -89,11 +95,8 @@ public class TowerInteractivity : MonoBehaviour
 
     public void destroyTower()
     {
-		// destroy sound
-		//if(NodeInformation.type.Equals("master“)){
 
-		AudioSource destroySound = GetComponent<AudioSource>();
-		destroySound.Play ();
+		buttonSelectAudioSource.Play ();
 
         Debug.Log("Destroying Tower");
         foreach (Transform child in transform)
@@ -196,9 +199,6 @@ public class TowerInteractivity : MonoBehaviour
 
     }
 
-
-
-
     private void deselect()
     {
         if (selectedObj != null)
@@ -214,8 +214,7 @@ public class TowerInteractivity : MonoBehaviour
 
 		// Sound effect tower destroyed
 
-		AudioSource selctionSound = GetComponent<AudioSource>();
-		selctionSound.Play ();
+		destroyAudioSource.Play ();
 
         //if(selectedObj == null)
         //{
