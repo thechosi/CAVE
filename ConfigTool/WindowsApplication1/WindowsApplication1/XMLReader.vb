@@ -2,9 +2,6 @@
 
 Public Class XMLReader
 
-
-
-
     Private Function ReadVektor(data As XElement)
         Dim Vektor As New Vektor
 
@@ -16,17 +13,14 @@ Public Class XMLReader
 
     End Function
 
-    Private Function ReadRelationToOrigin(data As XElement)
-        Dim relation As New RelationToOrigin
+    Private Function ReadOrigin(data As XElement)
+        Dim origin As New Origin
         For Each child In data.Elements()
             If child.Name.ToString.Equals("position") Then
-                relation.position = ReadVektor(child)
-            ElseIf child.Name.ToString.Equals("rotation") Then
-                relation.rotation = ReadVektor(child)
+                origin.position = ReadVektor(child)
             End If
         Next
-
-        Return relation
+        Return origin
     End Function
 
     Private Function ReadCamera(data As XElement)
@@ -46,14 +40,12 @@ Public Class XMLReader
     Private Function ReadScreenPlane(data As XElement)
         Dim screenPlane As New ScreenPlane
         For Each child In data.Elements()
-            If child.Name.ToString.Equals("pa") Then
-                screenPlane.pa = ReadVektor(child)
-            ElseIf child.Name.ToString.Equals("pb") Then
-                screenPlane.pb = ReadVektor(child)
-            ElseIf child.Name.ToString.Equals("pc") Then
-                screenPlane.pc = ReadVektor(child)
-            ElseIf child.Name.ToString.Equals("pe") Then
-                screenPlane.pe = ReadVektor(child)
+            If child.Name.ToString.Equals("position") Then
+                screenPlane.position = ReadVektor(child)
+            ElseIf child.Name.ToString.Equals("rotation") Then
+                screenPlane.rotation = ReadVektor(child)
+            ElseIf child.Name.ToString.Equals("scale") Then
+                screenPlane.scale = ReadVektor(child)
             End If
         Next
 
@@ -72,8 +64,8 @@ Public Class XMLReader
                 Dim computer As New Master
 
                 For Each child In element.Elements()
-                    If child.Name.ToString.Equals("relationToOrigin") Then
-                        computer.relationToOrigin = ReadRelationToOrigin(child)
+                    If child.Name.ToString.Equals("origin") Then
+                        computer.origin = ReadOrigin(child)
                     End If
                     If child.Name.ToString.Equals("screenplane") Then
                         computer.screenplane = ReadScreenPlane(child)
@@ -84,7 +76,6 @@ Public Class XMLReader
                 computer.ip = element.Attribute("ip").Value.Trim()
 
                 computers.Add(computer)
-
 
                 'SlavePCs
             Else

@@ -141,7 +141,7 @@ Partial Class MainForm
         'ÜberDasToolToolStripMenuItem
         '
         Me.ÜberDasToolToolStripMenuItem.Name = "ÜberDasToolToolStripMenuItem"
-        Me.ÜberDasToolToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.ÜberDasToolToolStripMenuItem.Size = New System.Drawing.Size(116, 22)
         Me.ÜberDasToolToolStripMenuItem.Text = "About..."
         '
         'grp_computerInfo
@@ -293,7 +293,7 @@ Partial Class MainForm
         Me.grp_relation.Size = New System.Drawing.Size(231, 110)
         Me.grp_relation.TabIndex = 7
         Me.grp_relation.TabStop = False
-        Me.grp_relation.Text = "RelationToOrigin"
+        Me.grp_relation.Text = "Origin"
         '
         'txt_relat_z
         '
@@ -346,7 +346,7 @@ Partial Class MainForm
         'list_rela
         '
         Me.list_rela.FormattingEnabled = True
-        Me.list_rela.Items.AddRange(New Object() {"position", "rotation"})
+        Me.list_rela.Items.AddRange(New Object() {"position"})
         Me.list_rela.Location = New System.Drawing.Point(7, 20)
         Me.list_rela.Name = "list_rela"
         Me.list_rela.Size = New System.Drawing.Size(68, 82)
@@ -458,7 +458,7 @@ Partial Class MainForm
         'list_splane
         '
         Me.list_splane.FormattingEnabled = True
-        Me.list_splane.Items.AddRange(New Object() {"pa", "pb", "pc", "pe"})
+        Me.list_splane.Items.AddRange(New Object() {"position", "rotation", "scale"})
         Me.list_splane.Location = New System.Drawing.Point(7, 20)
         Me.list_splane.Name = "list_splane"
         Me.list_splane.Size = New System.Drawing.Size(68, 82)

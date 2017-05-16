@@ -14,9 +14,7 @@ Public Class XMLWriter
 
         For Each child In data.Elements()
             If child.Name.ToString.Equals("position") Then
-                WriteVektor(child, DirectCast(computer, Master).relationToOrigin.position)
-            ElseIf child.Name.ToString.Equals("rotation") Then
-                WriteVektor(child, DirectCast(computer, Master).relationToOrigin.rotation)
+                WriteVektor(child, DirectCast(computer, Master).origin.position)
             End If
         Next
 
@@ -36,14 +34,12 @@ Public Class XMLWriter
     Private Function WriteScreenPlane(data As XElement, computer As Computer)
         Dim screenPlane As New ScreenPlane
         For Each child In data.Elements()
-            If child.Name.ToString.Equals("pa") Then
-                WriteVektor(child, computer.screenplane.pa)
-            ElseIf child.Name.ToString.Equals("pb") Then
-                WriteVektor(child, computer.screenplane.pb)
-            ElseIf child.Name.ToString.Equals("pc") Then
-                WriteVektor(child, computer.screenplane.pc)
-            ElseIf child.Name.ToString.Equals("pe") Then
-                WriteVektor(child, computer.screenplane.pe)
+            If child.Name.ToString.Equals("position") Then
+                WriteVektor(child, computer.screenplane.position)
+            ElseIf child.Name.ToString.Equals("rotation") Then
+                WriteVektor(child, computer.screenplane.rotation)
+            ElseIf child.Name.ToString.Equals("scale") Then
+                WriteVektor(child, computer.screenplane.scale)
             End If
         Next
 

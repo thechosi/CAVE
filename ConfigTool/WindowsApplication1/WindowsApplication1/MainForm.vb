@@ -107,16 +107,12 @@ Public Class MainForm
 
     Private Sub list_rela_SelectedIndexChanged(sender As Object, e As EventArgs) Handles list_rela.SelectedIndexChanged
 
-        Dim relation As RelationToOrigin = DirectCast(act_computer, Master).relationToOrigin
+        Dim relation As Origin = DirectCast(act_computer, Master).origin
 
         If list_rela.SelectedItem.Equals("position") Then
             txt_relat_x.Text = relation.position.x
             txt_relat_y.Text = relation.position.y
             txt_relat_z.Text = relation.position.z
-        ElseIf list_rela.SelectedItem.Equals("rotation") Then
-            txt_relat_x.Text = relation.rotation.x
-            txt_relat_y.Text = relation.rotation.y
-            txt_relat_z.Text = relation.rotation.z
         End If
 
 
@@ -127,22 +123,18 @@ Public Class MainForm
 
         Dim screenplane As ScreenPlane = act_computer.screenplane
 
-        If list_splane.SelectedItem.Equals("pa") Then
-            txt_splane_x.Text = screenplane.pa.x
-            txt_splane_y.Text = screenplane.pa.y
-            txt_splane_z.Text = screenplane.pa.z
-        ElseIf list_splane.SelectedItem.Equals("pb") Then
-            txt_splane_x.Text = screenplane.pb.x
-            txt_splane_y.Text = screenplane.pb.y
-            txt_splane_z.Text = screenplane.pb.z
-        ElseIf list_splane.SelectedItem.Equals("pc") Then
-            txt_splane_x.Text = screenplane.pc.x
-            txt_splane_y.Text = screenplane.pc.y
-            txt_splane_z.Text = screenplane.pc.z
-        ElseIf list_splane.SelectedItem.Equals("pe") Then
-            txt_splane_x.Text = screenplane.pe.x
-            txt_splane_y.Text = screenplane.pe.y
-            txt_splane_z.Text = screenplane.pe.z
+        If list_splane.SelectedItem.Equals("position") Then
+            txt_splane_x.Text = screenplane.position.x
+            txt_splane_y.Text = screenplane.position.y
+            txt_splane_z.Text = screenplane.position.z
+        ElseIf list_splane.SelectedItem.Equals("rotation") Then
+            txt_splane_x.Text = screenplane.rotation.x
+            txt_splane_y.Text = screenplane.rotation.y
+            txt_splane_z.Text = screenplane.rotation.z
+        ElseIf list_splane.SelectedItem.Equals("scale") Then
+            txt_splane_x.Text = screenplane.scale.x
+            txt_splane_y.Text = screenplane.scale.y
+            txt_splane_z.Text = screenplane.scale.z
         End If
     End Sub
 
@@ -194,9 +186,7 @@ Public Class MainForm
     Private Sub txt_relat_x_TextChanged(sender As Object, e As EventArgs) Handles txt_relat_x.TextChanged
 
         If list_rela.SelectedItem.Equals("position") Then
-            DirectCast(act_computer, Master).relationToOrigin.position.x = txt_relat_x.Text
-        ElseIf list_rela.SelectedItem.Equals("rotation") Then
-            DirectCast(act_computer, Master).relationToOrigin.rotation.x = txt_relat_x.Text
+            DirectCast(act_computer, Master).origin.position.x = txt_relat_x.Text
         End If
 
     End Sub
@@ -206,30 +196,24 @@ Public Class MainForm
     End Sub
 
     Private Sub txt_splane_x_TextChanged(sender As Object, e As EventArgs) Handles txt_splane_x.TextChanged
-        If list_splane.SelectedItem.Equals("pa") Then
-            act_computer.screenplane.pa.x = txt_splane_x.Text
-        ElseIf list_splane.SelectedItem.Equals("pb") Then
-            act_computer.screenplane.pb.x = txt_splane_x.Text
-        ElseIf list_splane.SelectedItem.Equals("pc") Then
-            act_computer.screenplane.pc.x = txt_splane_x.Text
-        ElseIf list_splane.SelectedItem.Equals("pe") Then
-            act_computer.screenplane.pe.x = txt_splane_x.Text
+        If list_splane.SelectedItem.Equals("position") Then
+            act_computer.screenplane.position.x = txt_splane_x.Text
+        ElseIf list_splane.SelectedItem.Equals("rotation") Then
+            act_computer.screenplane.rotation.x = txt_splane_x.Text
+        ElseIf list_splane.SelectedItem.Equals("scale") Then
+            act_computer.screenplane.scale.x = txt_splane_x.Text
         End If
     End Sub
 
     Private Sub txt_relat_y_TextChanged(sender As Object, e As EventArgs) Handles txt_relat_y.TextChanged
         If list_rela.SelectedItem.Equals("position") Then
-            DirectCast(act_computer, Master).relationToOrigin.position.y = txt_relat_y.Text
-        ElseIf list_rela.SelectedItem.Equals("rotation") Then
-            DirectCast(act_computer, Master).relationToOrigin.rotation.y = txt_relat_y.Text
+            DirectCast(act_computer, Master).origin.position.y = txt_relat_y.Text
         End If
     End Sub
 
     Private Sub txt_relat_z_TextChanged(sender As Object, e As EventArgs) Handles txt_relat_z.TextChanged
         If list_rela.SelectedItem.Equals("position") Then
-            DirectCast(act_computer, Master).relationToOrigin.position.z = txt_relat_z.Text
-        ElseIf list_rela.SelectedItem.Equals("rotation") Then
-            DirectCast(act_computer, Master).relationToOrigin.rotation.z = txt_relat_z.Text
+            DirectCast(act_computer, Master).origin.position.z = txt_relat_z.Text
         End If
     End Sub
 
@@ -242,26 +226,22 @@ Public Class MainForm
     End Sub
 
     Private Sub txt_splane_y_TextChanged(sender As Object, e As EventArgs) Handles txt_splane_y.TextChanged
-        If list_splane.SelectedItem.Equals("pa") Then
-            act_computer.screenplane.pa.y = txt_splane_y.Text
-        ElseIf list_splane.SelectedItem.Equals("pb") Then
-            act_computer.screenplane.pb.y = txt_splane_y.Text
-        ElseIf list_splane.SelectedItem.Equals("pc") Then
-            act_computer.screenplane.pc.y = txt_splane_y.Text
-        ElseIf list_splane.SelectedItem.Equals("pe") Then
-            act_computer.screenplane.pe.y = txt_splane_y.Text
+        If list_splane.SelectedItem.Equals("position") Then
+            act_computer.screenplane.position.y = txt_splane_y.Text
+        ElseIf list_splane.SelectedItem.Equals("rotation") Then
+            act_computer.screenplane.rotation.y = txt_splane_y.Text
+        ElseIf list_splane.SelectedItem.Equals("scale") Then
+            act_computer.screenplane.scale.y = txt_splane_y.Text
         End If
     End Sub
 
     Private Sub txt_splane_z_TextChanged(sender As Object, e As EventArgs) Handles txt_splane_z.TextChanged
-        If list_splane.SelectedItem.Equals("pa") Then
-            act_computer.screenplane.pa.z = txt_splane_z.Text
-        ElseIf list_splane.SelectedItem.Equals("pb") Then
-            act_computer.screenplane.pb.z = txt_splane_z.Text
-        ElseIf list_splane.SelectedItem.Equals("pc") Then
-            act_computer.screenplane.pc.z = txt_splane_z.Text
-        ElseIf list_splane.SelectedItem.Equals("pe") Then
-            act_computer.screenplane.pe.z = txt_splane_z.Text
+        If list_splane.SelectedItem.Equals("position") Then
+            act_computer.screenplane.position.z = txt_splane_z.Text
+        ElseIf list_splane.SelectedItem.Equals("rotation") Then
+            act_computer.screenplane.rotation.z = txt_splane_z.Text
+        ElseIf list_splane.SelectedItem.Equals("scale") Then
+            act_computer.screenplane.scale.z = txt_splane_z.Text
         End If
     End Sub
 
@@ -302,7 +282,7 @@ Public Class MainForm
         P.StartInfo.RedirectStandardOutput = True
         P.StartInfo.RedirectStandardError = True
         P.StartInfo.FileName = ".\ProjektVerteilen.bat"
-
+        P.StartInfo.Arguments = foldername
         P.Start()
     End Sub
 

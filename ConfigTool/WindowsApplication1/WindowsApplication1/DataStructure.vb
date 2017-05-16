@@ -15,7 +15,7 @@ Public Class Computer
 End Class
 
 Public Class Master : Inherits Computer
-    Public relationToOrigin As New RelationToOrigin
+    Public origin As New Origin
     Public port As String = ""
 
     Public Overrides Function ToString()
@@ -32,9 +32,8 @@ Public Class Slave : Inherits Computer
     End Function
 End Class
 
-Public Class RelationToOrigin
+Public Class Origin
     Public position As New Vektor
-    Public rotation As New Vektor
 End Class
 
 Public Class Vektor
@@ -44,10 +43,9 @@ Public Class Vektor
 End Class
 
 Public Class ScreenPlane
-    Public pa As New Vektor
-    Public pb As New Vektor
-    Public pc As New Vektor
-    Public pe As New Vektor
+    Public position As New Vektor
+    Public rotation As New Vektor
+    Public scale As New Vektor
 End Class
 
 Public Class Camera
