@@ -89,6 +89,11 @@ public class TowerInteractivity : MonoBehaviour
 
     public void destroyTower()
     {
+		// destroy sound
+
+		AudioSource destroySound = GetComponent<AudioSource>();
+		destroySound.Play ();
+
         Debug.Log("Destroying Tower");
         foreach (Transform child in transform)
         {
@@ -205,6 +210,12 @@ public class TowerInteractivity : MonoBehaviour
 
     public void select(GameObject gameObject)
     {
+
+		// Sound effect tower destroyed
+
+		AudioSource selctionSound = GetComponent<AudioSource>();
+		selctionSound.Play ();
+
         //if(selectedObj == null)
         //{
             deselect();
