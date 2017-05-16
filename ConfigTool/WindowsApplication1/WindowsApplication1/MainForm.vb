@@ -348,7 +348,7 @@ Public Class MainForm
     End Sub
 
     Private Sub btn_deployProject_Click(sender As Object, e As EventArgs) Handles btn_deployProject.Click
-        If File.Exists(".\MASTER_StartUnity.bat") Then
+        If File.Exists(".\ProjektVerteilen.bat") Then
             Dim pfd As New ProjectForm
             DisableButtons()
             checkStartUnity()
