@@ -5,6 +5,17 @@ Public Class MainForm
     Dim act_computer As Computer
     Dim filename As String
     Dim foldername As String
+    Dim projectname As String
+
+    Private Results As String
+    Private Delegate Sub delUpdate()
+    Private Finished As New delUpdate(AddressOf UpdateText)
+    Private Delegate Sub buttonsUpdate()
+    Private FinishedButtons As New buttonsUpdate(AddressOf EnableButtons)
+    Dim button_click As Integer = 0
+    Dim pf As New ProjectForm
+    Dim P As Process
+    Dim CMDThread As Threading.Thread
 
     Private Function clearAllFields()
         txt_ipAddress.Text = ""
@@ -68,7 +79,8 @@ Public Class MainForm
     Private Sub ÖffnenToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ÖffnenToolStripMenuItem.Click
         If FolderBrowserDialog1.ShowDialog() = System.Windows.Forms.DialogResult.OK Then
             foldername = FolderBrowserDialog1.SelectedPath
-            filename = FolderBrowserDialog1.SelectedPath + "\Assets\StreamingAssets\node-config.xml"
+            projectname = FolderBrowserDialog1.SelectedPath.Substring(FolderBrowserDialog1.SelectedPath.LastIndexOf("\") + 1)
+            filename = FolderBrowserDialog1.SelectedPath + "\" + projectname + "_Data\StreamingAssets\node-config.xml"
             If File.Exists(filename) Then
                 Dim fs As New FileStream(filename, FileMode.Open, FileAccess.Read)
                 ListBox1.Items.Clear()
@@ -86,7 +98,7 @@ Public Class MainForm
                 btn_configSave.Enabled = True
                 btn_startProject.Enabled = True
                 btn_deployProject.Enabled = True
-                txt_projectname.Text = FolderBrowserDialog1.SelectedPath.Substring(FolderBrowserDialog1.SelectedPath.LastIndexOf("\") + 1)
+                txt_projectname.Text = projectname
             Else
                 MsgBox("Configuration file not found. Please choose correct directory")
             End If
@@ -269,65 +281,101 @@ Public Class MainForm
         txt_info.Text = "List of Computers to configure"
     End Sub
 
+    Private Sub opencmd_start()
+        Dim Pr As New Process
+        P = Pr
+        P.StartInfo.CreateNoWindow = True
+        P.StartInfo.UseShellExecute = False
+        P.StartInfo.RedirectStandardInput = True
+        P.StartInfo.RedirectStandardOutput = True
+        P.StartInfo.RedirectStandardError = True
+        P.StartInfo.FileName = ".\MASTER_StartUnity.bat"
+        P.Start()
+    End Sub
+
+    Private Sub opencmd_deploy()
+        Dim Pr As New Process
+        P = Pr
+        P.StartInfo.CreateNoWindow = True
+        P.StartInfo.UseShellExecute = False
+        P.StartInfo.RedirectStandardInput = True
+        P.StartInfo.RedirectStandardOutput = True
+        P.StartInfo.RedirectStandardError = True
+        P.StartInfo.FileName = ".\ProjektVerteilen.bat"
+
+        P.Start()
+    End Sub
+
+    Private Sub UpdateText()
+        pf.txt_projectForm.AppendText(System.Environment.NewLine() & Results)
+        pf.txt_projectForm.ScrollToCaret()
+    End Sub
+
+    Private Sub CMDConfig()
+        While P.StandardOutput.EndOfStream = False
+            Results = P.StandardOutput.ReadLine()
+            Invoke(Finished)
+        End While
+        P.Close()
+        Invoke(FinishedButtons)
+        CMDThread.Abort()
+    End Sub
+
+    Private Sub EnableButtons()
+        btn_deployProject.Enabled = True
+        btn_startProject.Enabled = True
+        pf.btn_OK.Enabled = True
+        pf.ProgressBar1.Value = 100
+    End Sub
+
+    Private Sub DisableButtons()
+        btn_deployProject.Enabled = False
+        btn_startProject.Enabled = False
+        pf.btn_OK.Enabled = False
+    End Sub
+
     Private Sub btn_startProject_Click(sender As Object, e As EventArgs) Handles btn_startProject.Click
-        Dim pf As New ProjectForm
+        Dim pfd As New ProjectForm
+        DisableButtons()
+        pf = pfd
+        pf.txt_projectForm.Text = ""
         pf.Text = "Start Project"
         pf.Visible = True
         pf.ProgressBar1.Value = 20
-        Using P As Process = New Process
-            P.StartInfo.CreateNoWindow = True
-            P.StartInfo.UseShellExecute = False
-            P.StartInfo.RedirectStandardInput = True
-            P.StartInfo.RedirectStandardOutput = True
-            P.StartInfo.RedirectStandardError = True
-            P.StartInfo.FileName = foldername + "\start.bat"
-            P.Start()
-            pf.ProgressBar1.Value = 50
-            Dim sOutput As String
-            Using oStreamReader As System.IO.StreamReader = P.StandardOutput
-                sOutput = oStreamReader.ReadToEnd()
-            End Using
-            pf.ProgressBar1.Value = 90
-            pf.txt_projectForm.Text = sOutput
-            'Cursor ans Ende setzen:
-            pf.txt_projectForm.SelectionStart = pf.txt_projectForm.Text.Length
-            'Bis zum Cursor scrollen:
-            pf.txt_projectForm.ScrollToCaret()
-            P.Close()
-            pf.ProgressBar1.Value = 100
+        opencmd_start()
+        pf.ProgressBar1.Value = 40
+        Dim CMDThread2 As New Threading.Thread(AddressOf CMDConfig)
+        CMDThread = CMDThread2
+        pf.ProgressBar1.Value = 60
+        'start cmd thread
+        CMDThread.Start()
+        pf.ProgressBar1.Value = 80
+    End Sub
 
-        End Using
-
+    Private Sub checkStartUnity()
+        Dim fileBAT As File
+        Dim path As String = ".\SLAVE_StartUnity.bat"
+        Dim content As String = "echo Startet Unityprojekt auf dem Slave-Rechner %computername% " + vbNewLine + "start C:\StudentenprojektCAVE\AktuellesProjekt\Testexe.exe"
+        fileBAT.WriteAllText(path, content)
     End Sub
 
     Private Sub btn_deployProject_Click(sender As Object, e As EventArgs) Handles btn_deployProject.Click
-        Dim pf As New ProjectForm
+        Dim pfd As New ProjectForm
+        DisableButtons()
+        checkStartUnity()
+        pf = pfd
+        pf.txt_projectForm.Text = ""
         pf.Text = "Deploy Project"
         pf.Visible = True
         pf.ProgressBar1.Value = 20
-        Using P As Process = New Process
-            P.StartInfo.CreateNoWindow = True
-            P.StartInfo.UseShellExecute = False
-            P.StartInfo.RedirectStandardInput = True
-            P.StartInfo.RedirectStandardOutput = True
-            P.StartInfo.RedirectStandardError = True
-            P.StartInfo.FileName = foldername + "\deploy.bat"
-            P.Start()
-            pf.ProgressBar1.Value = 50
-            Dim sOutput As String
-            Using oStreamReader As System.IO.StreamReader = P.StandardOutput
-                sOutput = oStreamReader.ReadToEnd()
-            End Using
-            pf.ProgressBar1.Value = 80
-            pf.txt_projectForm.Text = sOutput
-            'Cursor ans Ende setzen:
-            pf.txt_projectForm.SelectionStart = pf.txt_projectForm.Text.Length
-            'Bis zum Cursor scrollen:
-            pf.txt_projectForm.ScrollToCaret()
-            P.Close()
-            pf.ProgressBar1.Value = 100
-
-        End Using
+        opencmd_deploy()
+        pf.ProgressBar1.Value = 40
+        Dim CMDThread2 As New Threading.Thread(AddressOf CMDConfig)
+        CMDThread = CMDThread2
+        pf.ProgressBar1.Value = 60
+        'start cmd thread
+        CMDThread.Start()
+        pf.ProgressBar1.Value = 80
     End Sub
 
     Private Sub ÜberDasToolToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ÜberDasToolToolStripMenuItem.Click

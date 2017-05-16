@@ -38,6 +38,7 @@ Partial Class ProjectForm
         '
         'btn_OK
         '
+        Me.btn_OK.Enabled = False
         Me.btn_OK.Location = New System.Drawing.Point(599, 315)
         Me.btn_OK.Name = "btn_OK"
         Me.btn_OK.Size = New System.Drawing.Size(55, 23)

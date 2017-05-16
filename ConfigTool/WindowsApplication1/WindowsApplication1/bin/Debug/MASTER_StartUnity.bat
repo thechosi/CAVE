@@ -12,6 +12,4 @@ perl perl\IC-X_StartUnity.pl ic-7
 perl perl\IC-X_StartUnity.pl ic-8
 ::timeout 10
 
-pause
-
 
