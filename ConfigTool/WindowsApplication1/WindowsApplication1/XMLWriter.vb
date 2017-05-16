@@ -10,7 +10,7 @@ Public Class XMLWriter
 
     End Function
 
-    Private Function WriteRelationToOrigin(data As XElement, computer As Computer)
+    Private Function WriteOrigin(data As XElement, computer As Computer)
 
         For Each child In data.Elements()
             If child.Name.ToString.Equals("position") Then
@@ -56,8 +56,8 @@ Public Class XMLWriter
 
                 If TypeOf computers.Item(counter) Is Master Then
                     For Each child In element.Elements()
-                        If child.Name.ToString.Equals("relationToOrigin") Then
-                            WriteRelationToOrigin(child, computers.Item(counter))
+                        If child.Name.ToString.Equals("origin") Then
+                            WriteOrigin(child, computers.Item(counter))
                         End If
                         If child.Name.ToString.Equals("screenplane") Then
                             WriteScreenPlane(child, computers.Item(counter))
