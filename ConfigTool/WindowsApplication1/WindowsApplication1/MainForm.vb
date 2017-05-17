@@ -97,6 +97,7 @@ Public Class MainForm
                 btn_configSave.Enabled = True
                 btn_startProject.Enabled = True
                 btn_deployProject.Enabled = True
+                btn_update.Enabled = True
                 txt_projectname.Text = projectname
             Else
                 MsgBox("Configuration file not found. Please choose correct directory")
@@ -312,6 +313,7 @@ Public Class MainForm
     Private Sub EnableButtons()
         btn_deployProject.Enabled = True
         btn_startProject.Enabled = True
+        btn_update.Enabled = True
         pf.btn_OK.Enabled = True
         pf.ProgressBar1.Value = 100
     End Sub
@@ -319,6 +321,7 @@ Public Class MainForm
     Private Sub DisableButtons()
         btn_deployProject.Enabled = False
         btn_startProject.Enabled = False
+        btn_update.Enabled = False
         pf.btn_OK.Enabled = False
     End Sub
 
