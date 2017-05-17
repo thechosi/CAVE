@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
+using System;
 
 public class TowerInteractivity : MonoBehaviour
 {
@@ -10,7 +11,7 @@ public class TowerInteractivity : MonoBehaviour
 
     private GameObject firstSelected = null;
 
-    public float force;
+    private float force;
 
     private int rows;
 
@@ -18,13 +19,16 @@ public class TowerInteractivity : MonoBehaviour
 
     public GameObject brick;
 
-    public int diffBetweenBlocks;
+    public float diffBetweenBlocks;
 
     public int nrOfRows;
 
 	private AudioSource destroyAudioSource;
 	private AudioSource buttonSelectAudioSource;
     private int maxRow;
+
+    private Vector3 blockSize;
+    private float planeHeight;
 
 
     // Use this for initialization
@@ -34,67 +38,85 @@ public class TowerInteractivity : MonoBehaviour
         {
             diffBetweenBlocks = 0;
         }
-        if (nrOfRows < 1)
-        {
-            nrOfRows = 1;
-        }
+        force = 1f;
         createTower();
-        wood = this.transform.GetChild(0).GetChild(0).GetComponent<Renderer>().material;
 
 		//destroyAudioSource = GetComponent<AudioSource>()[0];
 		//buttonSelectAudioSource = GetComponent<AudioSource>()[1];
 
     }
 
+    private void setSizes()
+    {
+        GameObject newBrick;
+        newBrick = Instantiate(brick) as GameObject;
+        wood = newBrick.GetComponent<Renderer>().material;
+
+        blockSize = newBrick.GetComponent<Renderer>().bounds.size;
+        Destroy(newBrick);
+
+        GameObject plane = GameObject.Find("Plane");
+        plane.transform.position = new Vector3(0,-blockSize.y,0);
+        planeHeight = plane.transform.position.y;
+    }
+
     public void createTower()
     {
         Debug.Log("creating Tower");
 
-        // to get the height of the prefab
-        GameObject newBrick;
-        newBrick = Instantiate(brick) as GameObject;
-        float height = newBrick.GetComponent<Renderer>().bounds.size.y;
-        Destroy(newBrick);
+        setSizes();
 
-
+        
         for (int i = 0; i < nrOfRows; i++)
         {
-            GameObject row = new GameObject();
-            row.name = "Row#" + (i + 1);
-            row.transform.parent = this.transform;
+            addRow();
+        }
 
-            float absolutDiff = (height + diffBetweenBlocks) * i;
+        Debug.Log("Tower created");
+    }
 
-            if (i % 2 == 1)
-            {
-                newBrick = Instantiate(brick, new Vector3(1, absolutDiff, 0), Quaternion.identity) as GameObject;
-                newBrick.transform.parent = row.transform;
-                newBrick.name = row.name + "Block1";
-                newBrick = Instantiate(brick, new Vector3(1, absolutDiff, 1), Quaternion.identity) as GameObject;
-                newBrick.transform.parent = row.transform;
-                newBrick.name = row.name + "Block2";
-                newBrick = Instantiate(brick, new Vector3(1, absolutDiff, 2), Quaternion.identity) as GameObject;
-                newBrick.transform.parent = row.transform;
-                newBrick.name = row.name + "Block3";
-            }
-            else
-            {
-                newBrick = Instantiate(brick, new Vector3(0, absolutDiff, 1), Quaternion.identity) as GameObject;
-                newBrick.transform.Rotate(new Vector3(0, 90, 0));
-                newBrick.transform.parent = row.transform;
-                newBrick.name = row.name + "Block1";
-                newBrick = Instantiate(brick, new Vector3(1, absolutDiff, 1), Quaternion.identity) as GameObject;
-                newBrick.transform.Rotate(new Vector3(0, 90, 0));
-                newBrick.transform.parent = row.transform;
-                newBrick.name = row.name + "Block2";
-                newBrick = Instantiate(brick, new Vector3(2, absolutDiff, 1), Quaternion.identity) as GameObject;
-                newBrick.transform.Rotate(new Vector3(0, 90, 0));
-                newBrick.transform.parent = row.transform;
-                newBrick.name = row.name + "Block3";
-            }
+    private void addRow()
+    {
+        maxRow = transform.childCount;
+        GameObject row = new GameObject();
+        row.name = "Row#" + (maxRow + 1);
+        row.transform.parent = this.transform;
+
+        float absolutDiff = (blockSize.y + diffBetweenBlocks) * maxRow;
+        GameObject newBrick;
+        if ((maxRow + 1) % 2 == 1)
+        {
+            newBrick = Instantiate(brick, new Vector3(blockSize.z, absolutDiff, 0), Quaternion.identity) as GameObject;
+            newBrick.transform.parent = row.transform;
+            newBrick.name = row.name + "Block1";
+            newBrick = Instantiate(brick, new Vector3(blockSize.z, absolutDiff, blockSize.z), Quaternion.identity) as GameObject;
+            newBrick.transform.parent = row.transform;
+            newBrick.name = row.name + "Block2";
+            newBrick = Instantiate(brick, new Vector3(blockSize.z, absolutDiff, 2 * blockSize.z), Quaternion.identity) as GameObject;
+            newBrick.transform.parent = row.transform;
+            newBrick.name = row.name + "Block3";
+        }
+        else
+        {
+            newBrick = Instantiate(brick, new Vector3(0, absolutDiff, blockSize.z), Quaternion.identity) as GameObject;
+            newBrick.transform.Rotate(new Vector3(0, 90, 0));
+            newBrick.transform.parent = row.transform;
+            newBrick.name = row.name + "Block1";
+            newBrick = Instantiate(brick, new Vector3(blockSize.z, absolutDiff, blockSize.z), Quaternion.identity) as GameObject;
+            newBrick.transform.Rotate(new Vector3(0, 90, 0));
+            newBrick.transform.parent = row.transform;
+            newBrick.name = row.name + "Block2";
+            newBrick = Instantiate(brick, new Vector3(2 * blockSize.z, absolutDiff, blockSize.z), Quaternion.identity) as GameObject;
+            newBrick.transform.Rotate(new Vector3(0, 90, 0));
+            newBrick.transform.parent = row.transform;
+            newBrick.name = row.name + "Block3";
         }
     }
 
+    private void await(int v, Func<object> p)
+    {
+        throw new NotImplementedException();
+    }
 
     public void destroyTower()
     {
@@ -120,6 +142,10 @@ public class TowerInteractivity : MonoBehaviour
         if (Input.GetKey(KeyCode.O))
         {
             deselect();
+        }
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            addRow();
         }
 
         maxRow = transform.childCount;
@@ -205,8 +231,6 @@ public class TowerInteractivity : MonoBehaviour
                 rigidbody.velocity = moveVector;
             }
         }
-
-
     }*/
 
     private void deselect()

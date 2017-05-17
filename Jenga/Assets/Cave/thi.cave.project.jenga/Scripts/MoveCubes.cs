@@ -16,61 +16,6 @@ public class MoveCubes : MonoBehaviour
         // initCubes();
     }
 
-    void initCubes()
-    {
-        GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
-        cube.transform.position = new Vector3(-5, 0, -1);
-        cube.transform.localScale = new Vector3(3, 1, 1);
-        NetworkServer.Spawn(cube);
-        cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
-        cube.transform.position = new Vector3(-5, 0, 0);
-        cube.transform.localScale = new Vector3(3, 1, 1);
-        NetworkServer.Spawn(cube);
-        cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
-        cube.transform.position = new Vector3(-5, 0, 1);
-        cube.transform.localScale = new Vector3(3, 1, 1);
-        NetworkServer.Spawn(cube);
-
-        cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
-        cube.transform.position = new Vector3(-6, 1, 0);
-        cube.transform.localScale = new Vector3(1, 1, 3);
-        NetworkServer.Spawn(cube);
-        cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
-        cube.transform.position = new Vector3(-5, 1, 0);
-        cube.transform.localScale = new Vector3(1, 1, 3);
-        NetworkServer.Spawn(cube);
-        cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
-        cube.transform.position = new Vector3(-4, 1, 0);
-        cube.transform.localScale = new Vector3(1, 1, 3);
-        NetworkServer.Spawn(cube);
-
-        cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
-        cube.transform.position = new Vector3(-5, 2, -1);
-        cube.transform.localScale = new Vector3(3, 1, 1);
-        NetworkServer.Spawn(cube);
-        cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
-        cube.transform.position = new Vector3(-5, 2, 0);
-        cube.transform.localScale = new Vector3(3, 1, 1);
-        NetworkServer.Spawn(cube);
-        cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
-        cube.transform.position = new Vector3(-5, 2, 1);
-        cube.transform.localScale = new Vector3(3, 1, 1);
-        NetworkServer.Spawn(cube);
-
-        cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
-        cube.transform.position = new Vector3(-6, 3, 0);
-        cube.transform.localScale = new Vector3(1, 1, 3);
-        NetworkServer.Spawn(cube);
-        cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
-        cube.transform.position = new Vector3(-5, 3, 0);
-        cube.transform.localScale = new Vector3(1, 1, 3);
-        NetworkServer.Spawn(cube);
-        cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
-        cube.transform.position = new Vector3(-4, 3, 0);
-        cube.transform.localScale = new Vector3(1, 1, 3);
-        NetworkServer.Spawn(cube);
-    }
-
     // Update is called once per frame
     void FixedUpdate()
     {

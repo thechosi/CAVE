@@ -12,6 +12,7 @@ public class InteractableItem : MonoBehaviour
 
     private FlyStickSim attachedWand;
 
+
     private Transform interactionPoint;
 
     private Vector3 posDelta;
@@ -23,16 +24,26 @@ public class InteractableItem : MonoBehaviour
     private Vector3 axis;
 
     public float rotationFactor = 400f;
-    public float velocityFactor = 20000f;
+    public float velocityFactor = 200f;
 
 
     // Use this for initialization
     void Start()
     {
         rigidbody = GetComponent<Rigidbody>();
-        interactionPoint = new GameObject().transform;
         velocityFactor /= rigidbody.mass;
         rotationFactor /= rigidbody.mass;
+
+        GameObject interactionObject = GameObject.Find("InteractionObject");
+
+        if (interactionObject != null)
+        {
+            interactionPoint = interactionObject.transform;
+        }
+        else
+        {
+            Debug.Log("InteractionObject is missing!");
+        }
     }
 
     // Update is called once per frame
@@ -41,6 +52,7 @@ public class InteractableItem : MonoBehaviour
         if (attachedWand && currentlyInteracting)
         {
             posDelta = attachedWand.transform.position - interactionPoint.position;
+            Debug.Log((posDelta * velocityFactor * Time.fixedDeltaTime).sqrMagnitude);
             this.rigidbody.velocity = posDelta * velocityFactor * Time.fixedDeltaTime; //TODO change to networkTime
 
             rotationDelta = attachedWand.transform.rotation * Quaternion.Inverse(interactionPoint.rotation);
@@ -50,7 +62,6 @@ public class InteractableItem : MonoBehaviour
             {
                 angle -= 360;
             }
-
             this.rigidbody.angularVelocity = (Time.fixedDeltaTime * angle * axis) * rotationFactor;
         }
     }
@@ -81,9 +92,10 @@ public class InteractableItem : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.collider.name == "Plane" && transform.parent.name != "Row#1")
+
+        if (collision.collider.name == "Plane" && this.transform.parent.name != "Row#1")
         {
-            if (transform.GetComponent<Renderer>().material.color != Color.green)
+            if (this.transform.GetComponent<Renderer>().material.color != Color.green)
             {
                 Debug.Log("Turm fällt");
             }
