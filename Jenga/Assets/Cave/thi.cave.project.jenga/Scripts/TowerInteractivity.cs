@@ -11,8 +11,6 @@ public class TowerInteractivity : MonoBehaviour
 
     private GameObject firstSelected = null;
 
-    private float force;
-
     private int rows;
 
     private Material wood;
@@ -28,7 +26,6 @@ public class TowerInteractivity : MonoBehaviour
     private int maxRow;
 
     private Vector3 blockSize;
-    private float planeHeight;
 
 
     // Use this for initialization
@@ -38,7 +35,6 @@ public class TowerInteractivity : MonoBehaviour
         {
             diffBetweenBlocks = 0;
         }
-        force = 1f;
         createTower();
 
 		//destroyAudioSource = GetComponent<AudioSource>()[0];
@@ -57,7 +53,6 @@ public class TowerInteractivity : MonoBehaviour
 
         GameObject plane = GameObject.Find("Plane");
         plane.transform.position = new Vector3(0,-blockSize.y,0);
-        planeHeight = plane.transform.position.y;
     }
 
     public void createTower()
