@@ -270,7 +270,7 @@ Public Class MainForm
         P.Start()
     End Sub
 
-    Private Sub opencmd_deploy()
+    Private Sub opencmd_deployupdate(update As Boolean)
         Dim Pr As New Process
         P = Pr
         P.StartInfo.CreateNoWindow = True
@@ -279,7 +279,11 @@ Public Class MainForm
         P.StartInfo.RedirectStandardOutput = True
         P.StartInfo.RedirectStandardError = True
         P.StartInfo.FileName = ".\ProjektVerteilen.bat"
-        P.StartInfo.Arguments = foldername
+        If update Then
+            P.StartInfo.Arguments = foldername + " update"
+        Else
+            P.StartInfo.Arguments = foldername
+        End If
         P.Start()
     End Sub
 
@@ -357,7 +361,7 @@ Public Class MainForm
             pf.Text = "Deploy Project"
             pf.Visible = True
             pf.ProgressBar1.Value = 20
-            opencmd_deploy()
+            opencmd_deployupdate(False)
             pf.ProgressBar1.Value = 40
             Dim CMDThread2 As New Threading.Thread(AddressOf CMDConfig)
             CMDThread = CMDThread2
@@ -372,5 +376,32 @@ Public Class MainForm
 
     Private Sub ÜberDasToolToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ÜberDasToolToolStripMenuItem.Click
         MsgBox("ConfigTool Version 0.0.1", MsgBoxStyle.Information, "ConfigTool")
+    End Sub
+
+    Private Sub btn_update_Click(sender As Object, e As EventArgs) Handles btn_update.Click
+        If File.Exists(".\ProjektVerteilen.bat") Then
+            Dim pfd As New ProjectForm
+            DisableButtons()
+            checkStartUnity()
+            pf = pfd
+            pf.txt_projectForm.Text = ""
+            pf.Text = "Update Project"
+            pf.Visible = True
+            pf.ProgressBar1.Value = 20
+            opencmd_deployupdate(True)
+            pf.ProgressBar1.Value = 40
+            Dim CMDThread2 As New Threading.Thread(AddressOf CMDConfig)
+            CMDThread = CMDThread2
+            pf.ProgressBar1.Value = 60
+            'start cmd thread
+            CMDThread.Start()
+            pf.ProgressBar1.Value = 80
+        Else
+            MsgBox("ProjektVerteilen.bat not found", MsgBoxStyle.Critical, "Not Found")
+        End If
+    End Sub
+
+    Private Sub opencmd_deploy(v As String)
+        Throw New NotImplementedException()
     End Sub
 End Class
