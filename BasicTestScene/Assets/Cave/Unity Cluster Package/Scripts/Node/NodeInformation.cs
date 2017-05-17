@@ -135,6 +135,19 @@ namespace UnityClusterPackage
             screenplaneScale= getScaleOfNode(node);
         }
 
+		static bool isOwnIP(String ip)
+		{
+			var host = System.Net.Dns.GetHostEntry(System.Net.Dns.GetHostName());
+			foreach (var ownIp in host.AddressList)
+			{
+				if (ownIp.ToString().Equals(ip))
+				{
+					return true;
+				}
+			}
+			return false;
+		}
+
         static void ReadNodeInformation()
         {
 
@@ -146,7 +159,8 @@ namespace UnityClusterPackage
                 {
                     case "master":
                         getServerInfosOfNode(node);
-                        if (Network.player.ipAddress == node.Attributes["ip"].Value || node.Attributes["ip"].Value == "localhost")
+
+						if (isOwnIP(node.Attributes["ip"].Value) || node.Attributes["ip"].Value == "localhost")
                         {
                             type = "master";
                             Debug.Log("Wir sind master");
@@ -170,8 +184,7 @@ namespace UnityClusterPackage
 
                     case "slave":
                         numberOfSlaves = numberOfSlaves + 1;
-
-                        if (Network.player.ipAddress == node.Attributes["ip"].Value || node.Attributes["ip"].Value == "localhost")
+					if (isOwnIP(node.Attributes["ip"].Value) || node.Attributes["ip"].Value == "localhost")
                         {
 
                             type = "slave";
