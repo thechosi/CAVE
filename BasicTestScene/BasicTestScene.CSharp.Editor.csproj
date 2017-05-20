@@ -120,8 +120,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Tracking\Plugins\UnityVRPN\Editor\TrackerHostSettingsEditor.cs" />
-    <Compile Include="Assets\Tracking\Plugins\UnityVRPN\Editor\TrackerSettingsEditor.cs" />
+    <Compile Include="Assets\Cave\Tracking\Plugins\UnityVRPN\Editor\TrackerHostSettingsEditor.cs" />
+    <Compile Include="Assets\Cave\Tracking\Plugins\UnityVRPN\Editor\TrackerSettingsEditor.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\StreamingAssets\node-config.xml" />

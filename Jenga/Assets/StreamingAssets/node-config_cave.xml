@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<config>
+  <master ip="192.168.0.10" port="25000">
+    <origin>
+      <position x="-9" y="0" z="-5" />
+    </origin>
+    <screenplane>
+      <position x="0" y="1.5" z="1.5"/>
+      <rotation x="90" y="0" z="0"/>
+      <scale x="3" y="3" z="3"/>
+    </screenplane>
+  </master>
+  <slave ip="192.168.0.11">
+    <camera eye="left">
+      <rotation x="0" y="0" z="0" />
+    </camera>
+    <screenplane>
+      <position x="0" y="1.5" z="1.5"/>
+      <rotation x="90" y="0" z="0"/>
+      <scale x="3" y="3" z="3"/>
+    </screenplane>
+  </slave>
+  <slave ip="192.168.0.12">
+    <camera eye="right">
+      <rotation x="0" y="0" z="0" />
+    </camera>
+    <screenplane>
+      <position x="0" y="1.5" z="1.5"/>
+      <rotation x="90" y="0" z="0"/>
+      <scale x="3" y="3" z="3"/>
+    </screenplane>
+  </slave>
+  <slave ip="192.168.0.13">
+    <camera eye="left">
+      <rotation x="0" y="-90" z="0" />
+    </camera>
+    <screenplane>
+      <position x="-1.5" y="1.5" z="0"/>
+      <rotation x="90" y="90" z="0"/>
+      <scale x="3" y="3" z="3"/>
+    </screenplane>
+  </slave>
+  <slave ip="192.168.0.14">
+    <camera eye="right">
+      <rotation x="0" y="-90" z="0" />
+    </camera>
+    <screenplane>
+      <position x="-1.5" y="1.5" z="0"/>
+      <rotation x="90" y="90" z="0"/>
+      <scale x="3" y="3" z="3"/>
+    </screenplane>
+  </slave>
+  <slave ip="192.168.0.15">
+    <camera eye="left">
+      <rotation x="0" y="90" z="0" />
+    </camera>
+    <screenplane>
+      <position x="1.5" y="1.5" z="0"/>
+      <rotation x="90" y="90" z="0"/>
+      <scale x="3" y="3" z="3"/>
+    </screenplane>
+  </slave>
+  <slave ip="192.168.0.16">
+    <camera eye="right">
+      <rotation x="0" y="90" z="0" />
+    </camera>
+    <screenplane>
+      <position x="1.5" y="1.5" z="0"/>
+      <rotation x="90" y="90" z="0"/>
+      <scale x="3" y="3" z="3"/>
+    </screenplane>
+  </slave>
+  <slave ip="192.168.0.17">
+    <camera eye="left">
+      <rotation x="90" y="0" z="0" />
+    </camera>
+    <screenplane>
+      <position x="0" y="0" z="0"/>
+      <rotation x="0" y="0" z="0"/>
+      <scale x="3" y="3" z="3"/>
+    </screenplane>
+  </slave>
+  <slave ip="192.168.0.18">
+    <camera eye="right">
+      <rotation x="90" y="0" z="0" />
+    </camera>
+    <screenplane>
+      <position x="0" y="0" z="0"/>
+      <rotation x="0" y="0" z="0"/>
+      <scale x="3" y="3" z="3"/>
+    </screenplane>
+  </slave>
+</config>
