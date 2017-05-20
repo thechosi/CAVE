@@ -128,6 +128,8 @@
     <Compile Include="Assets\Scripts\TowerInteractivity.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\StreamingAssets\node-config.xml" />
+    <None Include="Assets\StreamingAssets\node-config_cave.xml" />
     <None Include="Assets\Textures\Skyboxes\checkered\Note.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />

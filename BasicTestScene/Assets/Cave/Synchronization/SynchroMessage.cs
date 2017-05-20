@@ -23,6 +23,7 @@ namespace Cave
         public Vector3 cameraPosition = new Vector3();
         public Vector3 flyStickPosition = new Vector3();
         public Vector3 flyStickRotation = new Vector3();
+        public bool objectsSpawned;
 
         private void SerializeVector3(Buffer buffer, Vector3 vector)
         {
@@ -42,6 +43,7 @@ namespace Cave
             SerializeVector3(buffer, cameraPosition);
             SerializeVector3(buffer, flyStickPosition);
             SerializeVector3(buffer, flyStickRotation);
+            Buffer.Add(buffer, objectsSpawned);
         }
 
         private Vector3 DeserializeVector3(Buffer buffer)
@@ -64,11 +66,12 @@ namespace Cave
             cameraPosition = DeserializeVector3(buffer);
             flyStickPosition = DeserializeVector3(buffer);
             flyStickRotation = DeserializeVector3(buffer);
+            objectsSpawned = Buffer.Get<bool>(buffer);
         }
 
         public int GetLength()
         {
-            return sizeof(float) * (6 + 3 * 3);
+            return sizeof(float) * (6 + 3 * 3) + sizeof(bool);
         }
     }
 

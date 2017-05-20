@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
 using System;
+using Cave;
 
 public class TowerInteractivity : MonoBehaviour
 {
@@ -31,6 +32,12 @@ public class TowerInteractivity : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        if (NodeInformation.type.Equals("slave"))
+        {
+            enabled = false;
+            return;
+        }
+
         if (diffBetweenBlocks < 0)
         {
             diffBetweenBlocks = 0;
@@ -84,12 +91,17 @@ public class TowerInteractivity : MonoBehaviour
             newBrick = Instantiate(brick, new Vector3(blockSize.z, absolutDiff, 0), Quaternion.identity) as GameObject;
             newBrick.transform.parent = row.transform;
             newBrick.name = row.name + "Block1";
+            RigidBodySynchronizer.Spawn(newBrick);
+
             newBrick = Instantiate(brick, new Vector3(blockSize.z, absolutDiff, blockSize.z), Quaternion.identity) as GameObject;
             newBrick.transform.parent = row.transform;
             newBrick.name = row.name + "Block2";
+            RigidBodySynchronizer.Spawn(newBrick);
+
             newBrick = Instantiate(brick, new Vector3(blockSize.z, absolutDiff, 2 * blockSize.z), Quaternion.identity) as GameObject;
             newBrick.transform.parent = row.transform;
             newBrick.name = row.name + "Block3";
+            RigidBodySynchronizer.Spawn(newBrick);
         }
         else
         {
@@ -97,14 +109,19 @@ public class TowerInteractivity : MonoBehaviour
             newBrick.transform.Rotate(new Vector3(0, 90, 0));
             newBrick.transform.parent = row.transform;
             newBrick.name = row.name + "Block1";
+            RigidBodySynchronizer.Spawn(newBrick);
+
             newBrick = Instantiate(brick, new Vector3(blockSize.z, absolutDiff, blockSize.z), Quaternion.identity) as GameObject;
             newBrick.transform.Rotate(new Vector3(0, 90, 0));
             newBrick.transform.parent = row.transform;
             newBrick.name = row.name + "Block2";
+            RigidBodySynchronizer.Spawn(newBrick);
+
             newBrick = Instantiate(brick, new Vector3(2 * blockSize.z, absolutDiff, blockSize.z), Quaternion.identity) as GameObject;
             newBrick.transform.Rotate(new Vector3(0, 90, 0));
             newBrick.transform.parent = row.transform;
             newBrick.name = row.name + "Block3";
+            RigidBodySynchronizer.Spawn(newBrick);
         }
     }
 

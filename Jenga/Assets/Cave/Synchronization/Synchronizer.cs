@@ -63,6 +63,7 @@ namespace Cave
                 ParticleSynchronizer.BuildMessage(inputMessage);
                 AnimatorSynchronizer.BuildMessage(inputMessage);
                 TrackingSynchronizer.BuildMessage(inputMessage);
+                RigidBodySynchronizer.BuildMessage(inputMessage);
 
                 node.BroadcastMessage(inputMessage);
             }
@@ -76,6 +77,7 @@ namespace Cave
                 ParticleSynchronizer.ProcessMessage(inputMessage);
                 AnimatorSynchronizer.ProcessMessage(inputMessage);
                 TrackingSynchronizer.ProcessMessage(inputMessage);
+                RigidBodySynchronizer.ProcessMessage(inputMessage);
             }
             
             StartCoroutine(EndOfFrame());
