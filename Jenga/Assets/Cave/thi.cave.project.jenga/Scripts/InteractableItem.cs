@@ -52,7 +52,7 @@ public class InteractableItem : MonoBehaviour
         if (attachedWand && currentlyInteracting)
         {
             posDelta = attachedWand.transform.position - interactionPoint.position;
-            Debug.Log((posDelta * velocityFactor * Time.fixedDeltaTime).sqrMagnitude);
+            // Debug.Log((posDelta * velocityFactor * Time.fixedDeltaTime).sqrMagnitude);
             this.rigidbody.velocity = posDelta * velocityFactor * Time.fixedDeltaTime; //TODO change to networkTime
 
             rotationDelta = attachedWand.transform.rotation * Quaternion.Inverse(interactionPoint.rotation);
@@ -97,6 +97,9 @@ public class InteractableItem : MonoBehaviour
         {
             if (this.transform.GetComponent<Renderer>().material.color != Color.green)
             {
+                TowerInteractivity tower = FindObjectOfType<TowerInteractivity>();
+                TopBlockPlacer.PlayerChangeable = false;
+                tower.Players[Player.ActivePlayer].Score++;
                 Debug.Log("Turm fällt");
             }
 

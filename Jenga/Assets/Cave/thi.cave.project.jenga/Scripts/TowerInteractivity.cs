@@ -21,24 +21,68 @@ public class TowerInteractivity : MonoBehaviour
 
     public int nrOfRows;
 
-	private AudioSource destroyAudioSource;
-	private AudioSource buttonSelectAudioSource;
-    private int maxRow;
+    public int nrOfPlayers;
+    private List<Player> players = new List<Player>();
+
+    private AudioSource destroyAudioSource;
+    private AudioSource buttonSelectAudioSource;
+    private static int maxRow;
 
     private Vector3 blockSize;
 
+    public static int MaxRow
+    {
+        get
+        {
+            return maxRow;
+        }
+    }
+
+    public List<Player> Players
+    {
+        get
+        {
+            return players;
+        }
+
+        set
+        {
+            players = value;
+        }
+    }
+
+    public int NrOfPlayers
+    {
+        get
+        {
+            return nrOfPlayers;
+        }
+
+        set
+        {
+            nrOfPlayers = value;
+        }
+    }
 
     // Use this for initialization
     void Start()
     {
+        for (int i = 0; i < NrOfPlayers; i++)
+        {
+            Players.Add(ScriptableObject.CreateInstance<Player>());
+            Players[i].Score = 0;
+            Players[i].PlayerNumber = i;
+        }
+        Players[0].IsActive = true;
+
         if (diffBetweenBlocks < 0)
         {
             diffBetweenBlocks = 0;
         }
         createTower();
 
-		//destroyAudioSource = GetComponent<AudioSource>()[0];
-		//buttonSelectAudioSource = GetComponent<AudioSource>()[1];
+        //destroyAudioSource = GetComponent<AudioSource>()[0];
+        //buttonSelectAudioSource = GetComponent<AudioSource>()[1];
 
     }
 
@@ -52,7 +96,7 @@ public class TowerInteractivity : MonoBehaviour
         Destroy(newBrick);
 
         GameObject plane = GameObject.Find("Plane");
-        plane.transform.position = new Vector3(0,-blockSize.y,0);
+        plane.transform.position = new Vector3(0, -blockSize.y, 0);
     }
 
     public void createTower()
@@ -61,7 +105,7 @@ public class TowerInteractivity : MonoBehaviour
 
         setSizes();
 
-        
+
         for (int i = 0; i < nrOfRows; i++)
         {
             addRow();
@@ -115,8 +159,8 @@ public class TowerInteractivity : MonoBehaviour
 
     public void destroyTower()
     {
-		buttonSelectAudioSource = GetComponent<AudioSource> ();
-		buttonSelectAudioSource.Play ();
+        buttonSelectAudioSource = GetComponent<AudioSource>();
+        buttonSelectAudioSource.Play();
 
         Debug.Log("Destroying Tower");
         foreach (Transform child in transform)
@@ -125,10 +169,11 @@ public class TowerInteractivity : MonoBehaviour
         }
     }
 
-	public void resetTower(){
-		destroyTower ();
-		createTower ();
-	}
+    public void resetTower()
+    {
+        destroyTower();
+        createTower();
+    }
 
     // Update is called once per frame
     void Update()
@@ -136,7 +181,13 @@ public class TowerInteractivity : MonoBehaviour
 
         if (Input.GetKey(KeyCode.O))
         {
-            deselect();
+            if (TopBlockPlacer.PlayerChangeable == true)
+            {
+                TopBlockPlacer.PlayerChangeable = false;
+                deselect();
+                Player.changeActivePlayer();
+                Debug.Log("Spieler " + (Player.ActivePlayer + 1) + " ist jetzt am Zug und hat " + Players[Player.ActivePlayer].Score + " Punkte");
+            }
         }
         if (Input.GetKeyDown(KeyCode.E))
         {
@@ -235,6 +286,7 @@ public class TowerInteractivity : MonoBehaviour
             selectedObj.GetComponent<Renderer>().material = wood;
             selectedObj.GetComponent<Renderer>().material.color = Color.white;
             selectedObj = null;
+            firstSelected = null;
         }
     }
 
