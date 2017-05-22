@@ -7,6 +7,7 @@ using Cave;
 
 public class TowerInteractivity : MonoBehaviour
 {
+    public float gravity = 10;
 
     private GameObject selectedObj = null;
 
@@ -30,6 +31,8 @@ public class TowerInteractivity : MonoBehaviour
     private static int maxRow;
 
     private Vector3 blockSize;
+
+    private Camera cam;
 
     public static int MaxRow
     {
@@ -68,11 +71,15 @@ public class TowerInteractivity : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        Physics.gravity = new Vector3(0, -gravity, 0);
+
         if (NodeInformation.type.Equals("slave"))
         {
             enabled = false;
             return;
         }
+
+        cam = GameObject.Find("Camera").GetComponent<Camera>();
 
         for (int i = 0; i < NrOfPlayers; i++)
         {
@@ -184,6 +191,10 @@ public class TowerInteractivity : MonoBehaviour
         {
             Destroy(child.gameObject);
         }
+
+        // children aren't destroyed this frame! (but will be destroyed next frame)
+        // to get the right childcount, we detach all Children
+        transform.DetachChildren();
     }
 
     public void resetTower()
@@ -216,7 +227,7 @@ public class TowerInteractivity : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             RaycastHit hitInfo = new RaycastHit();
-            bool hit = Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo);
+            bool hit = Physics.Raycast(cam.ScreenPointToRay(Input.mousePosition), out hitInfo);
             if (hit)
             {
 
@@ -226,10 +237,12 @@ public class TowerInteractivity : MonoBehaviour
                     if (hitInfo.transform.gameObject != selectedObj && hitInfo.transform.parent.name != "Row#" + rows)
                     {
                         select(hitInfo.transform.gameObject);
+                        Debug.Log("select");
                     }
                     else
                     {
                         deselect();
+                        Debug.Log("deselect");
                     }
 
                 }
