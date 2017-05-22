@@ -24,14 +24,15 @@ Partial Class ProjectForm
     Private Sub InitializeComponent()
         Me.ProgressBar1 = New System.Windows.Forms.ProgressBar()
         Me.btn_OK = New System.Windows.Forms.Button()
-        Me.txt_projectForm = New System.Windows.Forms.TextBox()
         Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.txt_projectForm = New System.Windows.Forms.RichTextBox()
         Me.Panel1.SuspendLayout()
         Me.SuspendLayout()
         '
         'ProgressBar1
         '
-        Me.ProgressBar1.Location = New System.Drawing.Point(12, 315)
+        Me.ProgressBar1.Location = New System.Drawing.Point(12, 331)
+        Me.ProgressBar1.Maximum = 160
         Me.ProgressBar1.Name = "ProgressBar1"
         Me.ProgressBar1.Size = New System.Drawing.Size(581, 23)
         Me.ProgressBar1.TabIndex = 0
@@ -39,22 +40,12 @@ Partial Class ProjectForm
         'btn_OK
         '
         Me.btn_OK.Enabled = False
-        Me.btn_OK.Location = New System.Drawing.Point(599, 315)
+        Me.btn_OK.Location = New System.Drawing.Point(599, 331)
         Me.btn_OK.Name = "btn_OK"
         Me.btn_OK.Size = New System.Drawing.Size(55, 23)
         Me.btn_OK.TabIndex = 1
         Me.btn_OK.Text = "OK"
         Me.btn_OK.UseVisualStyleBackColor = True
-        '
-        'txt_projectForm
-        '
-        Me.txt_projectForm.Location = New System.Drawing.Point(12, 12)
-        Me.txt_projectForm.Multiline = True
-        Me.txt_projectForm.Name = "txt_projectForm"
-        Me.txt_projectForm.ReadOnly = True
-        Me.txt_projectForm.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
-        Me.txt_projectForm.Size = New System.Drawing.Size(642, 297)
-        Me.txt_projectForm.TabIndex = 2
         '
         'Panel1
         '
@@ -66,19 +57,28 @@ Partial Class ProjectForm
         Me.Panel1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Panel1.Location = New System.Drawing.Point(0, 0)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(666, 350)
+        Me.Panel1.Size = New System.Drawing.Size(666, 366)
         Me.Panel1.TabIndex = 3
+        '
+        'txt_projectForm
+        '
+        Me.txt_projectForm.Location = New System.Drawing.Point(12, 12)
+        Me.txt_projectForm.Name = "txt_projectForm"
+        Me.txt_projectForm.ReadOnly = True
+        Me.txt_projectForm.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical
+        Me.txt_projectForm.Size = New System.Drawing.Size(642, 313)
+        Me.txt_projectForm.TabIndex = 3
+        Me.txt_projectForm.Text = ""
         '
         'ProjectForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(666, 350)
+        Me.ClientSize = New System.Drawing.Size(666, 366)
         Me.Controls.Add(Me.Panel1)
         Me.Name = "ProjectForm"
         Me.Text = "ProjectForm"
         Me.Panel1.ResumeLayout(False)
-        Me.Panel1.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -86,6 +86,6 @@ Partial Class ProjectForm
 
     Friend WithEvents ProgressBar1 As ProgressBar
     Friend WithEvents btn_OK As Button
-    Friend WithEvents txt_projectForm As TextBox
     Friend WithEvents Panel1 As Panel
+    Friend WithEvents txt_projectForm As RichTextBox
 End Class
