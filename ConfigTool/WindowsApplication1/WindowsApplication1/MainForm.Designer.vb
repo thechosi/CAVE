@@ -75,6 +75,7 @@ Partial Class MainForm
         Me.lbl_projectname = New System.Windows.Forms.Label()
         Me.txt_projectname = New System.Windows.Forms.TextBox()
         Me.FolderBrowserDialog1 = New System.Windows.Forms.FolderBrowserDialog()
+        Me.btn_update = New System.Windows.Forms.Button()
         Me.grp_computerList.SuspendLayout()
         Me.MenuStrip1.SuspendLayout()
         Me.grp_computerInfo.SuspendLayout()
@@ -518,21 +519,21 @@ Partial Class MainForm
         'btn_deployProject
         '
         Me.btn_deployProject.Enabled = False
-        Me.btn_deployProject.Location = New System.Drawing.Point(526, 32)
+        Me.btn_deployProject.Location = New System.Drawing.Point(469, 34)
         Me.btn_deployProject.Name = "btn_deployProject"
-        Me.btn_deployProject.Size = New System.Drawing.Size(126, 23)
+        Me.btn_deployProject.Size = New System.Drawing.Size(57, 23)
         Me.btn_deployProject.TabIndex = 5
-        Me.btn_deployProject.Text = "&Deploy Project"
+        Me.btn_deployProject.Text = "&Deploy"
         Me.btn_deployProject.UseVisualStyleBackColor = True
         '
         'btn_startProject
         '
         Me.btn_startProject.Enabled = False
-        Me.btn_startProject.Location = New System.Drawing.Point(394, 32)
+        Me.btn_startProject.Location = New System.Drawing.Point(595, 34)
         Me.btn_startProject.Name = "btn_startProject"
-        Me.btn_startProject.Size = New System.Drawing.Size(126, 23)
+        Me.btn_startProject.Size = New System.Drawing.Size(57, 23)
         Me.btn_startProject.TabIndex = 6
-        Me.btn_startProject.Text = "&Start Project"
+        Me.btn_startProject.Text = "&Start"
         Me.btn_startProject.UseVisualStyleBackColor = True
         '
         'lbl_projectname
@@ -549,14 +550,25 @@ Partial Class MainForm
         Me.txt_projectname.Location = New System.Drawing.Point(107, 34)
         Me.txt_projectname.Name = "txt_projectname"
         Me.txt_projectname.ReadOnly = True
-        Me.txt_projectname.Size = New System.Drawing.Size(281, 20)
+        Me.txt_projectname.Size = New System.Drawing.Size(356, 20)
         Me.txt_projectname.TabIndex = 8
+        '
+        'btn_update
+        '
+        Me.btn_update.Enabled = False
+        Me.btn_update.Location = New System.Drawing.Point(532, 34)
+        Me.btn_update.Name = "btn_update"
+        Me.btn_update.Size = New System.Drawing.Size(57, 23)
+        Me.btn_update.TabIndex = 9
+        Me.btn_update.Text = "&Update"
+        Me.btn_update.UseVisualStyleBackColor = True
         '
         'MainForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(664, 387)
+        Me.Controls.Add(Me.btn_update)
         Me.Controls.Add(Me.txt_projectname)
         Me.Controls.Add(Me.lbl_projectname)
         Me.Controls.Add(Me.btn_startProject)
@@ -640,4 +652,5 @@ Partial Class MainForm
     Friend WithEvents lbl_projectname As Label
     Friend WithEvents txt_projectname As TextBox
     Friend WithEvents FolderBrowserDialog1 As FolderBrowserDialog
+    Friend WithEvents btn_update As Button
 End Class

@@ -18,7 +18,7 @@
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
     <UnityVersion>5.5.2f1</UnityVersion>
     <RootNamespace></RootNamespace>
-    <LangVersion Condition=" '$(VisualStudioVersion)' != '10.0' ">4</LangVersion>
+    <LangVersion>4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -75,29 +75,63 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Cave\thi.cave.project.jenga\Scripts\EventArgs\BlockEventArgs.cs" />
-    <Compile Include="Assets\Cave\thi.cave.project.jenga\Scripts\EventArgs\TowerStateChangedEventArgs.cs" />
-    <Compile Include="Assets\Cave\thi.cave.project.jenga\Scripts\FlyStickSim.cs" />
-    <Compile Include="Assets\Cave\thi.cave.project.jenga\Scripts\GUIManager.cs" />
-    <Compile Include="Assets\Cave\thi.cave.project.jenga\Scripts\GameManager.cs" />
-    <Compile Include="Assets\Cave\thi.cave.project.jenga\Scripts\Interactable.cs" />
-    <Compile Include="Assets\Cave\thi.cave.project.jenga\Scripts\InteractableItem.cs" />
-    <Compile Include="Assets\Cave\thi.cave.project.jenga\Scripts\MoveCubes.cs" />
-    <Compile Include="Assets\Cave\thi.cave.project.jenga\Scripts\Moving.cs" />
-    <Compile Include="Assets\Cave\thi.cave.project.jenga\Scripts\OrbitCamera.cs" />
-    <Compile Include="Assets\Cave\thi.cave.project.jenga\Scripts\RadialButton.cs" />
-    <Compile Include="Assets\Cave\thi.cave.project.jenga\Scripts\RadialMenu.cs" />
-    <Compile Include="Assets\Cave\thi.cave.project.jenga\Scripts\RadialMenuSpawner.cs" />
-    <Compile Include="Assets\Cave\thi.cave.project.jenga\Scripts\Tower\Blocks\ArrowDrag.cs" />
-    <Compile Include="Assets\Cave\thi.cave.project.jenga\Scripts\Tower\Blocks\BlockManager.cs" />
-    <Compile Include="Assets\Cave\thi.cave.project.jenga\Scripts\Tower\Blocks\SetupBlockBehaviour.cs" />
-    <Compile Include="Assets\Cave\thi.cave.project.jenga\Scripts\Tower\Blocks\TopBlockPlacer.cs" />
-    <Compile Include="Assets\Cave\thi.cave.project.jenga\Scripts\Tower\CenterMaintainer.cs" />
-    <Compile Include="Assets\Cave\thi.cave.project.jenga\Scripts\Tower\TowerManager.cs" />
-    <Compile Include="Assets\Cave\thi.cave.project.jenga\Scripts\TowerInteractivity.cs" />
+    <Compile Include="Assets\Cave\Synchronization\AnimatorSynchronizer.cs" />
+    <Compile Include="Assets\Cave\Synchronization\AwesomeSockets\Buffers\Buffer.cs" />
+    <Compile Include="Assets\Cave\Synchronization\AwesomeSockets\Domain\Enumerations.cs" />
+    <Compile Include="Assets\Cave\Synchronization\AwesomeSockets\Domain\SocketModifiers\ISocketModifier.cs" />
+    <Compile Include="Assets\Cave\Synchronization\AwesomeSockets\Domain\SocketModifiers\MulticastSocketModifier.cs" />
+    <Compile Include="Assets\Cave\Synchronization\AwesomeSockets\Domain\Sockets\AwesomeSocket.cs" />
+    <Compile Include="Assets\Cave\Synchronization\AwesomeSockets\Domain\Sockets\ISocket.cs" />
+    <Compile Include="Assets\Cave\Synchronization\AwesomeSockets\Properties\AssemblyInfo.cs" />
+    <Compile Include="Assets\Cave\Synchronization\AwesomeSockets\Sockets\AweSock.cs" />
+    <Compile Include="Assets\Cave\Synchronization\Client.cs" />
+    <Compile Include="Assets\Cave\Synchronization\InputSynchronizer.cs" />
+    <Compile Include="Assets\Cave\Synchronization\InstantiateNode.cs" />
+    <Compile Include="Assets\Cave\Synchronization\NetworkNode.cs" />
+    <Compile Include="Assets\Cave\Synchronization\NodeInformation.cs" />
+    <Compile Include="Assets\Cave\Synchronization\ParticleSynchronizer.cs" />
+    <Compile Include="Assets\Cave\Synchronization\RigidBodySynchronizer.cs" />
+    <Compile Include="Assets\Cave\Synchronization\Server.cs" />
+    <Compile Include="Assets\Cave\Synchronization\Statistics.cs" />
+    <Compile Include="Assets\Cave\Synchronization\SynchroMessage.cs" />
+    <Compile Include="Assets\Cave\Synchronization\Synchronizer.cs" />
+    <Compile Include="Assets\Cave\Synchronization\TimeSynchronizer.cs" />
+    <Compile Include="Assets\Cave\Synchronization\TrackingSynchronizer.cs" />
+    <Compile Include="Assets\Cave\Tracking\Plugins\UnityVRPN\Scripts\LeftHandedVRPN.cs" />
+    <Compile Include="Assets\Cave\Tracking\Plugins\UnityVRPN\Scripts\TrackerHostSettings.cs" />
+    <Compile Include="Assets\Cave\Tracking\Plugins\UnityVRPN\Scripts\TrackerPreset.cs" />
+    <Compile Include="Assets\Cave\Tracking\Plugins\UnityVRPN\Scripts\TrackerSettings.cs" />
+    <Compile Include="Assets\Cave\Tracking\Plugins\UnityVRPN\Scripts\VRPN.cs" />
+    <Compile Include="Assets\Cave\Tracking\Plugins\UnityVRPN\Scripts\ViconVRPN.cs" />
+    <Compile Include="Assets\Cave\Tracking\Scripts\ActivateDisplays.cs" />
+    <Compile Include="Assets\Cave\Tracking\Scripts\ApplicationManager.cs" />
+    <Compile Include="Assets\Cave\Tracking\Scripts\AsymmetricFrustum.cs" />
+    <Compile Include="Assets\Cave\Tracking\Scripts\FixedMoveDirection.cs" />
+    <Compile Include="Assets\Cave\Tracking\Scripts\FixedRotation.cs" />
+    <Compile Include="Assets\Cave\Tracking\Scripts\FlyStickInteraction.cs" />
+    <Compile Include="Assets\Cave\Tracking\Scripts\Flystick.cs" />
+    <Compile Include="Assets\Cave\Tracking\Scripts\InterpupillaryDistance.cs" />
+    <Compile Include="Assets\Cave\Tracking\Scripts\VRInteractiveItem.cs" />
+    <Compile Include="Assets\Cave\Tracking\Scripts\flystickNavigation.cs" />
+    <Compile Include="Assets\Cave\Tracking\Scripts\interactionTrigger.cs" />
+    <Compile Include="Assets\Cave\Tracking\Scripts\manageTracking.cs" />
+    <Compile Include="Assets\Cave\thi.cave.project.jenga\Scripts\Player.cs" />
+    <Compile Include="Assets\Scripts\FlyStickSim.cs" />
+    <Compile Include="Assets\Scripts\Interactable.cs" />
+    <Compile Include="Assets\Scripts\InteractableItem.cs" />
+    <Compile Include="Assets\Scripts\MoveCubes.cs" />
+    <Compile Include="Assets\Scripts\Moving.cs" />
+    <Compile Include="Assets\Scripts\OrbitCamera.cs" />
+    <Compile Include="Assets\Scripts\RadialButton.cs" />
+    <Compile Include="Assets\Scripts\RadialMenu.cs" />
+    <Compile Include="Assets\Scripts\RadialMenuSpawner.cs" />
+    <Compile Include="Assets\Scripts\TopBlockPlacer.cs" />
+    <Compile Include="Assets\Scripts\TowerInteractivity.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\Cave\thi.cave.project.jenga\Textures\Skyboxes\checkered\Note.txt" />
+    <None Include="Assets\StreamingAssets\node-config.xml" />
+    <None Include="Assets\StreamingAssets\node-config_cave.xml" />
+    <None Include="Assets\Textures\Skyboxes\checkered\Note.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />
