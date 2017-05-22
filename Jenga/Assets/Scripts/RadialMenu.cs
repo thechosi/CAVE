@@ -32,7 +32,7 @@ public class RadialMenu : MonoBehaviour {
 			// fade music if in menu modus
 			GameObject BackgroundMusic = GameObject.Find ("BackgroundMusic");
 			AudioSource backgroundMusicSource = BackgroundMusic.GetComponent<AudioSource>();
-			backgroundMusicSource.volume = 0.5;
+			backgroundMusicSource.volume = 0.5f;
 
 			if (selected) {
 				
@@ -40,7 +40,7 @@ public class RadialMenu : MonoBehaviour {
 			}
 
 			// music back to full volume
-			backgroundMusicSource.volume = 1.0;
+			backgroundMusicSource.volume = 1.0f;
 			Destroy (gameObject);
 		}
 
