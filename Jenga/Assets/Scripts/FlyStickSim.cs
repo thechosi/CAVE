@@ -48,7 +48,26 @@ public class FlyStickSim : MonoBehaviour
                 {
                     TowerInteractivity tower = towerObject.GetComponent<TowerInteractivity>();
 
-                    tower.select(interactingItem.transform.gameObject);
+                    Debug.Log(interactingItem.name);
+                    if (interactingItem.name.Contains(TowerInteractivity.MaxRow.ToString()) && interactingItem.GetComponent<Renderer>().material.color != Color.green)
+                    {
+                        return;
+                    }
+
+                    if(interactingItem.GetComponent<Renderer>().material.color != Color.green)
+                    {
+                        if (tower.FirstSelected == null)
+                        {
+                            tower.select(interactingItem.transform.gameObject);
+                        } else
+                        {
+                            return;
+                        }
+                  
+                    }
+                
+
+                    
                 }
 
 
