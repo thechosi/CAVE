@@ -109,7 +109,7 @@ Public Class MainForm
 
         Dim relation As Origin = DirectCast(act_computer, Master).origin
 
-        If list_rela.SelectedItem.Equals("position") Then
+        If list_rela.SelectedItem.Equals("Position") Then
             txt_relat_x.Text = relation.position.x
             txt_relat_y.Text = relation.position.y
             txt_relat_z.Text = relation.position.z
@@ -123,18 +123,28 @@ Public Class MainForm
 
         Dim screenplane As ScreenPlane = act_computer.screenplane
 
-        If list_splane.SelectedItem.Equals("position") Then
+        If list_splane.SelectedItem.Equals("Position") Then
+            txt_splane_x.Enabled = True
+            txt_splane_y.Enabled = True
+            txt_splane_z.Enabled = True
+            txt_scale.Enabled = False
             txt_splane_x.Text = screenplane.position.x
             txt_splane_y.Text = screenplane.position.y
             txt_splane_z.Text = screenplane.position.z
-        ElseIf list_splane.SelectedItem.Equals("rotation") Then
+        ElseIf list_splane.SelectedItem.Equals("Rotation") Then
+            txt_splane_x.Enabled = True
+            txt_splane_y.Enabled = True
+            txt_splane_z.Enabled = True
+            txt_scale.Enabled = False
             txt_splane_x.Text = screenplane.rotation.x
             txt_splane_y.Text = screenplane.rotation.y
             txt_splane_z.Text = screenplane.rotation.z
-        ElseIf list_splane.SelectedItem.Equals("scale") Then
-            txt_splane_x.Text = screenplane.scale.x
-            txt_splane_y.Text = screenplane.scale.y
-            txt_splane_z.Text = screenplane.scale.z
+        ElseIf list_splane.SelectedItem.Equals("Scale") Then
+            txt_splane_x.Enabled = False
+            txt_splane_y.Enabled = False
+            txt_splane_z.Enabled = False
+            txt_scale.Enabled = True
+            txt_scale.Text = screenplane.scale.x
         End If
     End Sub
 
@@ -142,7 +152,7 @@ Public Class MainForm
 
         Dim camera As Camera = DirectCast(act_computer, Slave).camera
 
-        If list_cam.SelectedItem.Equals("rotation") Then
+        If list_cam.SelectedItem.Equals("Rotation") Then
             txt_cam_x.Text = camera.rotation.x
             txt_cam_y.Text = camera.rotation.y
             txt_cam_z.Text = camera.rotation.z
@@ -183,7 +193,7 @@ Public Class MainForm
 
     Private Sub txt_relat_x_TextChanged(sender As Object, e As EventArgs) Handles txt_relat_x.TextChanged
 
-        If list_rela.SelectedItem.Equals("position") Then
+        If list_rela.SelectedItem.Equals("Position") Then
             DirectCast(act_computer, Master).origin.position.x = txt_relat_x.Text
         End If
 
@@ -194,23 +204,21 @@ Public Class MainForm
     End Sub
 
     Private Sub txt_splane_x_TextChanged(sender As Object, e As EventArgs) Handles txt_splane_x.TextChanged
-        If list_splane.SelectedItem.Equals("position") Then
+        If list_splane.SelectedItem.Equals("Position") Then
             act_computer.screenplane.position.x = txt_splane_x.Text
-        ElseIf list_splane.SelectedItem.Equals("rotation") Then
+        ElseIf list_splane.SelectedItem.Equals("Rotation") Then
             act_computer.screenplane.rotation.x = txt_splane_x.Text
-        ElseIf list_splane.SelectedItem.Equals("scale") Then
-            act_computer.screenplane.scale.x = txt_splane_x.Text
         End If
     End Sub
 
     Private Sub txt_relat_y_TextChanged(sender As Object, e As EventArgs) Handles txt_relat_y.TextChanged
-        If list_rela.SelectedItem.Equals("position") Then
+        If list_rela.SelectedItem.Equals("Position") Then
             DirectCast(act_computer, Master).origin.position.y = txt_relat_y.Text
         End If
     End Sub
 
     Private Sub txt_relat_z_TextChanged(sender As Object, e As EventArgs) Handles txt_relat_z.TextChanged
-        If list_rela.SelectedItem.Equals("position") Then
+        If list_rela.SelectedItem.Equals("Position") Then
             DirectCast(act_computer, Master).origin.position.z = txt_relat_z.Text
         End If
     End Sub
@@ -224,22 +232,18 @@ Public Class MainForm
     End Sub
 
     Private Sub txt_splane_y_TextChanged(sender As Object, e As EventArgs) Handles txt_splane_y.TextChanged
-        If list_splane.SelectedItem.Equals("position") Then
+        If list_splane.SelectedItem.Equals("Position") Then
             act_computer.screenplane.position.y = txt_splane_y.Text
-        ElseIf list_splane.SelectedItem.Equals("rotation") Then
+        ElseIf list_splane.SelectedItem.Equals("Rotation") Then
             act_computer.screenplane.rotation.y = txt_splane_y.Text
-        ElseIf list_splane.SelectedItem.Equals("scale") Then
-            act_computer.screenplane.scale.y = txt_splane_y.Text
         End If
     End Sub
 
     Private Sub txt_splane_z_TextChanged(sender As Object, e As EventArgs) Handles txt_splane_z.TextChanged
-        If list_splane.SelectedItem.Equals("position") Then
+        If list_splane.SelectedItem.Equals("Position") Then
             act_computer.screenplane.position.z = txt_splane_z.Text
-        ElseIf list_splane.SelectedItem.Equals("rotation") Then
+        ElseIf list_splane.SelectedItem.Equals("Rotation") Then
             act_computer.screenplane.rotation.z = txt_splane_z.Text
-        ElseIf list_splane.SelectedItem.Equals("scale") Then
-            act_computer.screenplane.scale.z = txt_splane_z.Text
         End If
     End Sub
 
@@ -291,9 +295,21 @@ Public Class MainForm
     Private Sub UpdateText()
         Try
             pf.txt_projectForm.AppendText(System.Environment.NewLine() & Results)
+            If Results.Contains("kopiert") Then
+                pf.txt_projectForm.Select(pf.txt_projectForm.TextLength - Results.Length, Results.Length)
+                pf.txt_projectForm.SelectionColor = Color.Green
+            End If
+            If Results.Contains("Fehler") Then
+                pf.txt_projectForm.Select(pf.txt_projectForm.TextLength - Results.Length, Results.Length)
+                pf.txt_projectForm.SelectionColor = Color.Red
+            End If
+            If Results.Contains("ic-") Then
+                pf.ProgressBar1.PerformStep()
+            End If
             pf.txt_projectForm.ScrollToCaret()
+
         Catch ex As Exception
-            MsgBox("Error. Start or Deploy Process cancelled.", MsgBoxStyle.Critical, "Error")
+            MsgBox("Error. Process cancelled.", MsgBoxStyle.Critical, "Error")
             P.Close()
             Invoke(FinishedButtons)
             CMDThread.Abort()
@@ -315,7 +331,6 @@ Public Class MainForm
         btn_startProject.Enabled = True
         btn_update.Enabled = True
         pf.btn_OK.Enabled = True
-        pf.ProgressBar1.Value = 100
     End Sub
 
     Private Sub DisableButtons()
@@ -333,15 +348,12 @@ Public Class MainForm
             pf.txt_projectForm.Text = ""
             pf.Text = "Start Project"
             pf.Visible = True
-            pf.ProgressBar1.Value = 20
+            pf.ProgressBar1.Maximum = 80
             opencmd_start()
-            pf.ProgressBar1.Value = 40
             Dim CMDThread2 As New Threading.Thread(AddressOf CMDConfig)
             CMDThread = CMDThread2
-            pf.ProgressBar1.Value = 60
             'start cmd thread
             CMDThread.Start()
-            pf.ProgressBar1.Value = 80
         Else
             MsgBox("MASTER_StartUnity.bat not found", MsgBoxStyle.Critical, "Not Found")
         End If
@@ -363,15 +375,12 @@ Public Class MainForm
             pf.txt_projectForm.Text = ""
             pf.Text = "Deploy Project"
             pf.Visible = True
-            pf.ProgressBar1.Value = 20
+            pf.ProgressBar1.Maximum = 160
             opencmd_deployupdate(False)
-            pf.ProgressBar1.Value = 40
             Dim CMDThread2 As New Threading.Thread(AddressOf CMDConfig)
             CMDThread = CMDThread2
-            pf.ProgressBar1.Value = 60
             'start cmd thread
             CMDThread.Start()
-            pf.ProgressBar1.Value = 80
         Else
             MsgBox("ProjektVerteilen.bat not found", MsgBoxStyle.Critical, "Not Found")
         End If
@@ -390,15 +399,12 @@ Public Class MainForm
             pf.txt_projectForm.Text = ""
             pf.Text = "Update Project"
             pf.Visible = True
-            pf.ProgressBar1.Value = 20
+            pf.ProgressBar1.Maximum = 160
             opencmd_deployupdate(True)
-            pf.ProgressBar1.Value = 40
             Dim CMDThread2 As New Threading.Thread(AddressOf CMDConfig)
             CMDThread = CMDThread2
-            pf.ProgressBar1.Value = 60
             'start cmd thread
             CMDThread.Start()
-            pf.ProgressBar1.Value = 80
         Else
             MsgBox("ProjektVerteilen.bat not found", MsgBoxStyle.Critical, "Not Found")
         End If
@@ -406,5 +412,13 @@ Public Class MainForm
 
     Private Sub opencmd_deploy(v As String)
         Throw New NotImplementedException()
+    End Sub
+
+    Private Sub txt_scale_TextChanged(sender As Object, e As EventArgs) Handles txt_scale.TextChanged
+        If list_splane.SelectedItem.Equals("Scale") Then
+            act_computer.screenplane.scale.x = txt_scale.Text
+            act_computer.screenplane.scale.y = txt_scale.Text
+            act_computer.screenplane.scale.z = txt_scale.Text
+        End If
     End Sub
 End Class

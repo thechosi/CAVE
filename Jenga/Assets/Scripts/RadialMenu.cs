@@ -28,9 +28,19 @@ public class RadialMenu : MonoBehaviour {
 
 	void Update(){
 		if (Input.GetKeyUp(KeyCode.Escape)) {
+
+			// fade music if in menu modus
+			GameObject BackgroundMusic = GameObject.Find ("BackgroundMusic");
+			AudioSource backgroundMusicSource = BackgroundMusic.GetComponent<AudioSource>();
+			backgroundMusicSource.volume = 0.5f;
+
 			if (selected) {
+				
 				selected.ButtonPressed ();
 			}
+
+			// music back to full volume
+			backgroundMusicSource.volume = 1.0f;
 			Destroy (gameObject);
 		}
 

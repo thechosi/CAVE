@@ -2,7 +2,7 @@
 <config>
   <master ip="localhost" port="25000">
     <origin>
-      <position x="0" y="0" z="-1" />
+      <position x="0.961" y="0.34" z="-0.736" />
     </origin>
     <screenplane>
       <position x="0" y="1.5" z="1.5"/>
@@ -11,16 +11,16 @@
     </screenplane>
   </master>
   <!-- Use for client on same machine: -->  
-  <!--<slave ip="127.0.0.2">
+   <slave ip="192.168.0.11">
     <camera eye="left">
       <rotation x="0" y="0" z="0" />
     </camera>
     <screenplane>
-      <position x="0" y="1.5" z="1.5"/>
-      <rotation x="90" y="0" z="0"/>
-      <scale x="3" y="3" z="3"/>
+		<position x="0" y="1.5" z="1.5"/>
+		<rotation x="0" y="0" z="0"/>
+		<scale x="3" y="3" z="3"/>
     </screenplane>
-  </slave>-->
+  </slave>
   
   <!--
   <slave ip="192.168.0.11">

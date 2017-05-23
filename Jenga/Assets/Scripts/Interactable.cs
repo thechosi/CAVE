@@ -16,9 +16,23 @@ public class Interactable : MonoBehaviour {
 
 	public Action[] options;
 
-	void Update(){
+    void Start()
+    {
+        GameObject flyStick = GameObject.Find("Flystick");
+        TrackerSettings trackerSettings = flyStick.GetComponent<TrackerSettings>();
+        UnityEvent ev = new UnityEvent();
+        ev.AddListener(createMenu);
+        trackerSettings.middleButton = ev;
+    }
+
+    void Update(){
 		if (Input.GetKeyDown(KeyCode.Escape)){
 			RadialMenuSpawner.ins.SpawnMenu (this);
 		}
 	}
+
+    private void createMenu()
+    {
+        RadialMenuSpawner.ins.SpawnMenu(this);
+    }
 }
