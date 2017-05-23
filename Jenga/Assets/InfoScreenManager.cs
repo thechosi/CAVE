@@ -1,67 +1,78 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class InfoScreenManager : MonoBehaviour {
-	public Text timer;
-	public Text playerInfo;
-	public Text loseInfo;
+public class InfoScreenManager : MonoBehaviour
+{
+    public Text timer;
+    public Text playerInfo;
+    public Text loseInfo;
 
-	Animator anim;
+    Animator anim;
 
-	// Use this for initialization
-	void Start () {
-		anim = GetComponent<Animator> ();
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		int time = (int) Cave.TimeSynchronizer.time;
-		timer.text = CreateTimerText (time);
-		playerInfo.text = CreatePlayerText ();
-	}
+    // Use this for initialization
+    void Start()
+    {
+        anim = GetComponent<Animator>();
+    }
 
-	string CreateTimerText(int time){
-		int minutes = time / 60;
-		int seconds = time % 60;
+    // Update is called once per frame
+    void Update()
+    {
+        int time = (int)Cave.TimeSynchronizer.time;
+        timer.text = CreateTimerText(time);
+        playerInfo.text = CreatePlayerText();
+    }
 
-		string timerText = "";
-		if (minutes < 10){
-			timerText += "0";
-		}
-		timerText += minutes;
+    string CreateTimerText(int time)
+    {
+        int minutes = time / 60;
+        int seconds = time % 60;
 
-		timerText += ":";
+        string timerText = "";
+        if (minutes < 10)
+        {
+            timerText += "0";
+        }
+        timerText += minutes;
 
-		if (seconds < 10){
-			timerText += "0";
-		}
-		timerText += seconds;
+        timerText += ":";
 
-		return timerText;
-	}
+        if (seconds < 10)
+        {
+            timerText += "0";
+        }
+        timerText += seconds;
 
-	int FindActivePlayer(){
-		TowerInteractivity tower = FindObjectOfType<TowerInteractivity>();
-		foreach (Player p in tower.Players)
+        return timerText;
+    }
+
+    int FindActivePlayer()
+    {
+        TowerInteractivity tower = FindObjectOfType<TowerInteractivity>();
+        /*foreach (Player p in tower.Players)
 		{
 			if (p.IsActive){
 				return p.PlayerNumber + 1;
 			}
 		}
 
-		return 0;
-	}
+		return 0;*/
+        return Player.ActivePlayer + 1;
+    }
 
-	string CreatePlayerText(){
-		return "Spieler " + FindActivePlayer() + " ist dran!";
-	}
+    string CreatePlayerText()
+    {
+        return "Spieler " + FindActivePlayer() + " ist dran!";
+    }
 
-	public void LoserView(int playerNumber){
-		loseInfo.text = "Spieler " + playerNumber + "\nhat verloren!";
-		anim.CrossFade ("LoserView", 0);
-	}
+    public void LoserView(int playerNumber)
+    {
+        loseInfo.text = "Spieler " + playerNumber + "\nhat verloren!";
+        anim.CrossFade("LoserView", 0);
+    }
 
-	public void InfoView(){
-		anim.CrossFade ("InfoView", 0);
-	}
+    public void InfoView()
+    {
+        anim.CrossFade("InfoView", 0);
+    }
 }
