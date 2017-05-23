@@ -68,6 +68,32 @@ public class TowerInteractivity : MonoBehaviour
         }
     }
 
+    public GameObject FirstSelected
+    {
+        get
+        {
+            return firstSelected;
+        }
+
+        set
+        {
+            firstSelected = value;
+        }
+    }
+
+    public GameObject SelectedObj
+    {
+        get
+        {
+            return selectedObj;
+        }
+
+        set
+        {
+            selectedObj = value;
+        }
+    }
+
     // Use this for initialization
     void Start()
     {
@@ -234,7 +260,7 @@ public class TowerInteractivity : MonoBehaviour
                 if (hitInfo.transform.gameObject.tag == "Brick")
                 {
                     rows = hitInfo.transform.parent.parent.childCount;
-                    if (hitInfo.transform.gameObject != selectedObj && hitInfo.transform.parent.name != "Row#" + rows)
+                    if (hitInfo.transform.gameObject != SelectedObj && hitInfo.transform.parent.name != "Row#" + rows)
                     {
                         select(hitInfo.transform.gameObject);
                         Debug.Log("select");
@@ -311,12 +337,12 @@ public class TowerInteractivity : MonoBehaviour
 
     private void deselect()
     {
-        if (selectedObj != null)
+        if (SelectedObj != null)
         {
-            selectedObj.GetComponent<Renderer>().material = wood;
-            selectedObj.GetComponent<Renderer>().material.color = Color.white;
-            selectedObj = null;
-            firstSelected = null;
+            SelectedObj.GetComponent<Renderer>().material = wood;
+            SelectedObj.GetComponent<Renderer>().material.color = Color.white;
+            SelectedObj = null;
+            FirstSelected = null;
         }
     }
 
@@ -330,18 +356,18 @@ public class TowerInteractivity : MonoBehaviour
         destroyAudioSource.Play();
 
 
-        if (selectedObj == null && firstSelected == null)
+        if (SelectedObj == null && FirstSelected == null)
         {
-            firstSelected = gameObject;
-            selectedObj = gameObject;
-            selectedObj.GetComponent<Renderer>().material.color = Color.green;
+            FirstSelected = gameObject;
+            SelectedObj = gameObject;
+            SelectedObj.GetComponent<Renderer>().material.color = Color.green;
             changeRow(gameObject);
         }
-        else if (gameObject == firstSelected)
+        else if (gameObject == FirstSelected)
         {
             deselect();
-            selectedObj = gameObject;
-            selectedObj.GetComponent<Renderer>().material.color = Color.green;
+            SelectedObj = gameObject;
+            SelectedObj.GetComponent<Renderer>().material.color = Color.green;
         }
 
     }
