@@ -116,6 +116,7 @@
     <Compile Include="Assets\Cave\Tracking\Scripts\interactionTrigger.cs" />
     <Compile Include="Assets\Cave\Tracking\Scripts\manageTracking.cs" />
     <Compile Include="Assets\Cave\thi.cave.project.jenga\Scripts\Player.cs" />
+    <Compile Include="Assets\InfoScreenManager.cs" />
     <Compile Include="Assets\Scripts\FlyStickSim.cs" />
     <Compile Include="Assets\Scripts\Interactable.cs" />
     <Compile Include="Assets\Scripts\InteractableItem.cs" />
