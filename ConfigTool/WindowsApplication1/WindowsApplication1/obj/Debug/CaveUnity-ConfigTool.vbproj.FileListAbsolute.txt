@@ -22,3 +22,15 @@ C:\Users\marco\Source\Repos\NewRepo\ConfigTool\WindowsApplication1\WindowsApplic
 C:\Users\marco\Source\Repos\NewRepo\ConfigTool\WindowsApplication1\WindowsApplication1\obj\Debug\ConfigTool.ProjectForm.resources
 D:\CAVE\ConfigTool\WindowsApplication1\WindowsApplication1\obj\Debug\ConfigTool.MainForm.resources
 D:\CAVE\ConfigTool\WindowsApplication1\WindowsApplication1\obj\Debug\ConfigTool.ProjectForm.resources
+C:\Users\mal6442\Source\Repos\CAVE\ConfigTool\WindowsApplication1\WindowsApplication1\bin\Debug\ConfigTool (CaveUnity).exe.config
+C:\Users\mal6442\Source\Repos\CAVE\ConfigTool\WindowsApplication1\WindowsApplication1\obj\Debug\ConfigTool (CaveUnity).exe
+C:\Users\mal6442\Source\Repos\CAVE\ConfigTool\WindowsApplication1\WindowsApplication1\obj\Debug\ConfigTool (CaveUnity).xml
+C:\Users\mal6442\Source\Repos\CAVE\ConfigTool\WindowsApplication1\WindowsApplication1\obj\Debug\ConfigTool (CaveUnity).pdb
+C:\Users\mal6442\Source\Repos\CAVE\ConfigTool\WindowsApplication1\WindowsApplication1\bin\Debug\ConfigTool (CaveUnity).exe
+C:\Users\mal6442\Source\Repos\CAVE\ConfigTool\WindowsApplication1\WindowsApplication1\bin\Debug\ConfigTool (CaveUnity).pdb
+C:\Users\mal6442\Source\Repos\CAVE\ConfigTool\WindowsApplication1\WindowsApplication1\bin\Debug\ConfigTool (CaveUnity).xml
+C:\Users\mal6442\Source\Repos\CAVE\ConfigTool\WindowsApplication1\WindowsApplication1\obj\Debug\CaveUnity-ConfigTool.vbprojResolveAssemblyReference.cache
+C:\Users\mal6442\Source\Repos\CAVE\ConfigTool\WindowsApplication1\WindowsApplication1\obj\Debug\ConfigTool.MainForm.resources
+C:\Users\mal6442\Source\Repos\CAVE\ConfigTool\WindowsApplication1\WindowsApplication1\obj\Debug\ConfigTool.Resources.resources
+C:\Users\mal6442\Source\Repos\CAVE\ConfigTool\WindowsApplication1\WindowsApplication1\obj\Debug\ConfigTool.ProjectForm.resources
+C:\Users\mal6442\Source\Repos\CAVE\ConfigTool\WindowsApplication1\WindowsApplication1\obj\Debug\CaveUnity-ConfigTool.vbproj.GenerateResource.Cache

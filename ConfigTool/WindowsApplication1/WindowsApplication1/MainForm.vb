@@ -295,19 +295,10 @@ Public Class MainForm
     Private Sub UpdateText()
         Try
             pf.txt_projectForm.AppendText(System.Environment.NewLine() & Results)
-            If Results.Contains("kopiert") Then
-                pf.txt_projectForm.Select(pf.txt_projectForm.TextLength - Results.Length, Results.Length)
-                pf.txt_projectForm.SelectionColor = Color.Green
-            End If
-            If Results.Contains("Fehler") Then
-                pf.txt_projectForm.Select(pf.txt_projectForm.TextLength - Results.Length, Results.Length)
-                pf.txt_projectForm.SelectionColor = Color.Red
-            End If
-            If Results.Contains("ic-") Then
+            If Results.Contains(">xcopy") Or Results.Contains(">RMDIR") Or Results.Contains(">copy") Or Results.Contains(">perl") Then
                 pf.ProgressBar1.PerformStep()
             End If
             pf.txt_projectForm.ScrollToCaret()
-
         Catch ex As Exception
             MsgBox("Error. Process cancelled.", MsgBoxStyle.Critical, "Error")
             P.Close()
@@ -348,7 +339,7 @@ Public Class MainForm
             pf.txt_projectForm.Text = ""
             pf.Text = "Start Project"
             pf.Visible = True
-            pf.ProgressBar1.Maximum = 80
+            pf.ProgressBar1.Maximum = (ListBox1.Items.Count - 1) * 1 * 10
             opencmd_start()
             Dim CMDThread2 As New Threading.Thread(AddressOf CMDConfig)
             CMDThread = CMDThread2
@@ -375,7 +366,7 @@ Public Class MainForm
             pf.txt_projectForm.Text = ""
             pf.Text = "Deploy Project"
             pf.Visible = True
-            pf.ProgressBar1.Maximum = 160
+            pf.ProgressBar1.Maximum = (ListBox1.Items.Count - 1) * 3 * 10
             opencmd_deployupdate(False)
             Dim CMDThread2 As New Threading.Thread(AddressOf CMDConfig)
             CMDThread = CMDThread2
@@ -399,7 +390,7 @@ Public Class MainForm
             pf.txt_projectForm.Text = ""
             pf.Text = "Update Project"
             pf.Visible = True
-            pf.ProgressBar1.Maximum = 160
+            pf.ProgressBar1.Maximum = (ListBox1.Items.Count - 1) * 2 * 10
             opencmd_deployupdate(True)
             Dim CMDThread2 As New Threading.Thread(AddressOf CMDConfig)
             CMDThread = CMDThread2
