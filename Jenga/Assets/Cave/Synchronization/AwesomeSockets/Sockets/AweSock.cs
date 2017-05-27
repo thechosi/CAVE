@@ -103,7 +103,7 @@ namespace AwesomeSockets.Sockets
             return socket.SendMessage(ip, port, buffer);
         }
 
-        public static int ReceiveMessage(ISocket socket, Buffer buffer, SocketCommunicationTypes type = SocketCommunicationTypes.Blocking, 
+        public static int ReceiveMessage(ISocket socket, Buffer buffer, int offset = 0, SocketCommunicationTypes type = SocketCommunicationTypes.Blocking, 
             MessageThreadCallback callback = null)
         {
             if (type == SocketCommunicationTypes.Blocking)
@@ -111,10 +111,10 @@ namespace AwesomeSockets.Sockets
                 switch (socket.GetSocket().ProtocolType)
                 {
                     case ProtocolType.Tcp:
-                        return socket.GetSocket().Receive(Buffer.GetBufferRef(buffer));
+                        return socket.GetSocket().Receive(Buffer.GetBufferRef(buffer), offset, Buffer.GetSize(buffer) - offset, 0);
                     case ProtocolType.Udp:
                         EndPoint remoteEndPoint = new IPEndPoint(IPAddress.Any, 0);
-                        return socket.GetSocket().ReceiveFrom(Buffer.GetBufferRef(buffer), ref remoteEndPoint);
+                        return socket.GetSocket().ReceiveFrom(Buffer.GetBufferRef(buffer), offset, Buffer.GetSize(buffer) - offset, 0, ref remoteEndPoint);
                     default:
                         throw new InvalidOperationException("Socket must be of type TCP or UDP.");
                 }

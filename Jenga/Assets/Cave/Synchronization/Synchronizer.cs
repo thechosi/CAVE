@@ -58,12 +58,13 @@ namespace Cave
             {
                 InputMessage inputMessage = new InputMessage();
 
-                TimeSynchronizer.BuildMessage(inputMessage);
-                InputSynchronizer.BuildMessage(inputMessage);
-                ParticleSynchronizer.BuildMessage(inputMessage);
-                AnimatorSynchronizer.BuildMessage(inputMessage);
-                TrackingSynchronizer.BuildMessage(inputMessage);
-                RigidBodySynchronizer.BuildMessage(inputMessage);
+                TimeSynchronizer.BuildMessage(inputMessage.inputTimeMessage);
+                InputSynchronizer.BuildMessage(inputMessage.inputInputMessage);
+                ParticleSynchronizer.BuildMessage(inputMessage.inputParticleMessage);
+                AnimatorSynchronizer.BuildMessage(inputMessage.inputAnimatorMessage);
+                TrackingSynchronizer.BuildMessage(inputMessage.inputTrackingMessage);
+                RigidBodySynchronizer.BuildMessage(inputMessage.inputRigidBodyMessage);
+                TransformationSynchronizer.BuildMessage(inputMessage.inputTransformationMessage);
 
                 node.BroadcastMessage(inputMessage);
             }
@@ -72,12 +73,13 @@ namespace Cave
                 InputMessage inputMessage = new InputMessage();
                 ((Client)node).WaitForNextMessage(inputMessage);
 
-                TimeSynchronizer.ProcessMessage(inputMessage);
-                InputSynchronizer.ProcessMessage(inputMessage);
-                ParticleSynchronizer.ProcessMessage(inputMessage);
-                AnimatorSynchronizer.ProcessMessage(inputMessage);
-                TrackingSynchronizer.ProcessMessage(inputMessage);
-                RigidBodySynchronizer.ProcessMessage(inputMessage);
+                TimeSynchronizer.ProcessMessage(inputMessage.inputTimeMessage);
+                InputSynchronizer.ProcessMessage(inputMessage.inputInputMessage);
+                ParticleSynchronizer.ProcessMessage(inputMessage.inputParticleMessage);
+                AnimatorSynchronizer.ProcessMessage(inputMessage.inputAnimatorMessage);
+                TrackingSynchronizer.ProcessMessage(inputMessage.inputTrackingMessage);
+                RigidBodySynchronizer.ProcessMessage(inputMessage.inputRigidBodyMessage);
+                TransformationSynchronizer.ProcessMessage(inputMessage.inputTransformationMessage);
             }
             
             StartCoroutine(EndOfFrame());

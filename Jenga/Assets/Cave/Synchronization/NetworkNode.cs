@@ -15,8 +15,8 @@ namespace Cave
 
         public NetworkNode()
         {
-            inBuf = Buffer.New(4 + 8 + 4 * 100);
-            outBuf = Buffer.New(4 + 8 + 4 * 100);
+            inBuf = Buffer.New(64);
+            outBuf = Buffer.New(64);
 
             connections = new List<ISocket>();
         }
@@ -26,10 +26,20 @@ namespace Cave
         {
             try
             {
-                inBuf = Buffer.New(targetMessage.GetLength());
-                int received = AweSock.ReceiveMessage(connection, inBuf);
-                if (received == 0)
-                    throw new SocketException();
+                Buffer.Resize(inBuf, sizeof(int));
+                AweSock.ReceiveMessage(connection, inBuf);
+                int messageLength = Buffer.Get<int>(inBuf);
+
+                Buffer.Resize(inBuf, messageLength);
+                int received = 0;
+
+                do
+                {
+                    received += AweSock.ReceiveMessage(connection, inBuf, received);
+                    if (received == 0)
+                        throw new SocketException();
+                } while (received < messageLength);
+
                 targetMessage.Deserialize(inBuf);
             }
             catch (SocketException e)
@@ -52,8 +62,8 @@ namespace Cave
 
         public void BroadcastMessage(ISynchroMessage message)
         {
-            outBuf = Buffer.New(message.GetLength());
-            Buffer.ClearBuffer(outBuf);
+            Buffer.Resize(outBuf, message.GetLength() + sizeof(int));
+            Buffer.Add(outBuf, message.GetLength());
             message.Serialize(outBuf);
             Buffer.FinalizeBuffer(outBuf);
 
@@ -75,8 +85,8 @@ namespace Cave
 
         public void SendMessage(ISynchroMessage message, ISocket connection)
         {
-            outBuf = Buffer.New(message.GetLength());
-            Buffer.ClearBuffer(outBuf);
+            Buffer.Resize(outBuf, message.GetLength() + sizeof(int));
+            Buffer.Add(outBuf, message.GetLength());
             message.Serialize(outBuf);
             Buffer.FinalizeBuffer(outBuf);
 

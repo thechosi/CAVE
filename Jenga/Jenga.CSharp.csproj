@@ -97,6 +97,7 @@
     <Compile Include="Assets\Cave\Synchronization\Synchronizer.cs" />
     <Compile Include="Assets\Cave\Synchronization\TimeSynchronizer.cs" />
     <Compile Include="Assets\Cave\Synchronization\TrackingSynchronizer.cs" />
+    <Compile Include="Assets\Cave\Synchronization\TransformationSynchronizer.cs" />
     <Compile Include="Assets\Cave\Tracking\Plugins\UnityVRPN\Scripts\LeftHandedVRPN.cs" />
     <Compile Include="Assets\Cave\Tracking\Plugins\UnityVRPN\Scripts\TrackerHostSettings.cs" />
     <Compile Include="Assets\Cave\Tracking\Plugins\UnityVRPN\Scripts\TrackerPreset.cs" />

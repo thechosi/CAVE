@@ -22,8 +22,8 @@ public class FlyStickInteraction : MonoBehaviour {
 	void Update () {
 	    if (model == null)
 	    {
-	        //model = GameObject.FindWithTag("InteractiveModel");
-	        //print(model.name);
+	        model = GameObject.FindWithTag("InteractiveModel");
+	        print(model.name);
 	    }
 	    drawLaser();
 		rotateSelectedObject ();
