@@ -1,9 +1,30 @@
 ﻿using AwesomeSockets.Domain.Sockets;
 using UnityEngine;
 using UnityEngine.Networking;
+using AwesomeSockets.Buffers;
 
 namespace Cave
 {
+    public class InputRigidBodyMessage : ISynchroMessage
+    {
+        public bool objectsSpawned;
+
+        public void Serialize(Buffer buffer)
+        {
+            Buffer.Add(buffer, objectsSpawned);
+        }
+
+        public void Deserialize(Buffer buffer)
+        {
+            objectsSpawned = Buffer.Get<bool>(buffer);
+        }
+
+        public int GetLength()
+        {
+            return sizeof(bool) * 1;
+        }
+    }
+
     public class RigidBodySynchronizer : MonoBehaviour
     {
         private static bool objectsSpawned;
@@ -22,7 +43,7 @@ namespace Cave
             Rigidbody[] rigidbodies = Resources.FindObjectsOfTypeAll(typeof(Rigidbody)) as Rigidbody[];
             foreach (Rigidbody rigidbody in rigidbodies)
             {
-                if (rigidbody.gameObject.GetComponent<NetworkIdentity>() != null)
+                if (rigidbody.gameObject.GetComponent<NetworkIdentity>() != null && rigidbody.gameObject.tag == "NetworkTransformSynchro")
                 {
                     rigidbody.gameObject.AddComponent<NetworkTransform>();
                 }
@@ -31,8 +52,7 @@ namespace Cave
 
         private static void InitializeNetworkTransforms()
         {
-            NetworkTransform[] networkTransforms =
-                Resources.FindObjectsOfTypeAll(typeof(NetworkTransform)) as NetworkTransform[];
+            NetworkTransform[] networkTransforms = Resources.FindObjectsOfTypeAll(typeof(NetworkTransform)) as NetworkTransform[];
             foreach (NetworkTransform networkTransform in networkTransforms)
             {
                 InitializeNetworkTransform(networkTransform);
@@ -58,11 +78,12 @@ namespace Cave
             Rigidbody[] rigidbodies = Resources.FindObjectsOfTypeAll(typeof(Rigidbody)) as Rigidbody[];
             foreach (Rigidbody rigidbody in rigidbodies)
             {
-                Destroy(rigidbody);
+                if (rigidbody.gameObject.GetComponent<NetworkTransform>() != null)
+                    Destroy(rigidbody);
             }
         }
 
-        public static void ProcessMessage(InputMessage message)
+        public static void ProcessMessage(InputRigidBodyMessage message)
         {
             if (message.objectsSpawned)
                 framesToSearchForSpawnedObjects = 60;
@@ -72,13 +93,14 @@ namespace Cave
                 Rigidbody[] rigidbodies = Resources.FindObjectsOfTypeAll(typeof(Rigidbody)) as Rigidbody[];
                 foreach (Rigidbody rigidbody in rigidbodies)
                 {
-                    Destroy(rigidbody);
+                    if (rigidbody.gameObject.GetComponent<NetworkTransform>() != null)
+                        Destroy(rigidbody);
                 }
                 framesToSearchForSpawnedObjects--;
             }
         }
 
-        public static void BuildMessage(InputMessage message)
+        public static void BuildMessage(InputRigidBodyMessage message)
         {
             message.objectsSpawned = objectsSpawned;
             objectsSpawned = false;

@@ -14,64 +14,39 @@ namespace Cave
 
     public class InputMessage : ISynchroMessage
     {
-        public float deltaTime;
-        public float particleDeltaTime;
-        public float time;
-        public float axisHorizontal;
-        public float axisVertical;
-        public float animatorTime;
-        public Vector3 cameraPosition = new Vector3();
-        public Vector3 flyStickPosition = new Vector3();
-        public Vector3 flyStickRotation = new Vector3();
-        public bool objectsSpawned;
-
-        private void SerializeVector3(Buffer buffer, Vector3 vector)
-        {
-            Buffer.Add(buffer, vector.x);
-            Buffer.Add(buffer, vector.y);
-            Buffer.Add(buffer, vector.z);
-        }
+        public InputTimeMessage inputTimeMessage = new InputTimeMessage();
+        public InputParticleMessage inputParticleMessage = new InputParticleMessage();
+        public InputInputMessage inputInputMessage = new InputInputMessage();
+        public InputAnimatorMessage inputAnimatorMessage = new InputAnimatorMessage();
+        public InputTrackingMessage inputTrackingMessage = new InputTrackingMessage();
+        public InputRigidBodyMessage inputRigidBodyMessage = new InputRigidBodyMessage();
+        public InputTransformationMessage inputTransformationMessage = new InputTransformationMessage();
 
         public void Serialize(Buffer buffer)
         {
-            Buffer.Add(buffer, deltaTime);
-            Buffer.Add(buffer, particleDeltaTime);
-            Buffer.Add(buffer, time);
-            Buffer.Add(buffer, axisHorizontal);
-            Buffer.Add(buffer, axisVertical);
-            Buffer.Add(buffer, animatorTime);
-            SerializeVector3(buffer, cameraPosition);
-            SerializeVector3(buffer, flyStickPosition);
-            SerializeVector3(buffer, flyStickRotation);
-            Buffer.Add(buffer, objectsSpawned);
-        }
-
-        private Vector3 DeserializeVector3(Buffer buffer)
-        {
-            Vector3 vector = new Vector3();
-            vector.x = Buffer.Get<float>(buffer);
-            vector.y = Buffer.Get<float>(buffer);
-            vector.z = Buffer.Get<float>(buffer);
-            return vector;
+            inputTimeMessage.Serialize(buffer);
+            inputParticleMessage.Serialize(buffer);
+            inputInputMessage.Serialize(buffer);
+            inputAnimatorMessage.Serialize(buffer);
+            inputTrackingMessage.Serialize(buffer);
+            inputRigidBodyMessage.Serialize(buffer);
+            inputTransformationMessage.Serialize(buffer);
         }
 
         public void Deserialize(Buffer buffer)
         {
-            deltaTime = Buffer.Get<float>(buffer);
-            particleDeltaTime = Buffer.Get<float>(buffer);
-            time = Buffer.Get<float>(buffer);
-            axisHorizontal = Buffer.Get<float>(buffer);
-            axisVertical = Buffer.Get<float>(buffer);
-            animatorTime = Buffer.Get<float>(buffer);
-            cameraPosition = DeserializeVector3(buffer);
-            flyStickPosition = DeserializeVector3(buffer);
-            flyStickRotation = DeserializeVector3(buffer);
-            objectsSpawned = Buffer.Get<bool>(buffer);
+            inputTimeMessage.Deserialize(buffer);
+            inputParticleMessage.Deserialize(buffer);
+            inputInputMessage.Deserialize(buffer);
+            inputAnimatorMessage.Deserialize(buffer);
+            inputTrackingMessage.Deserialize(buffer);
+            inputRigidBodyMessage.Deserialize(buffer);
+            inputTransformationMessage.Deserialize(buffer);
         }
 
         public int GetLength()
         {
-            return sizeof(float) * (6 + 3 * 3) + sizeof(bool);
+            return inputTimeMessage.GetLength() + inputParticleMessage.GetLength() + inputInputMessage.GetLength() + inputAnimatorMessage.GetLength() + inputTrackingMessage.GetLength() + inputRigidBodyMessage.GetLength() + inputTransformationMessage.GetLength();
         }
     }
 

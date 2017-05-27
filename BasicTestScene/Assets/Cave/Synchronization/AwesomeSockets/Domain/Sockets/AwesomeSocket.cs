@@ -55,14 +55,14 @@ namespace AwesomeSockets.Domain.Sockets
 
         public int SendMessage(Buffer buffer)
         {
-            return InternalSocket.Send(Buffer.GetBuffer(buffer));
+            return InternalSocket.Send(Buffer.GetBuffer(buffer), 0, (int)Buffer.GetWrittenBytes(buffer), 0);
         }
 
         public int SendMessage(string ip, int port, Buffer buffer)
         {
             var ipAddress = IPAddress.Parse(ip);
             var remoteEndpoint = new IPEndPoint(ipAddress, port);
-            return InternalSocket.SendTo(Buffer.GetBuffer(buffer), remoteEndpoint);
+            return InternalSocket.SendTo(Buffer.GetBuffer(buffer), 0, (int)Buffer.GetWrittenBytes(buffer), 0, remoteEndpoint);
         }
 
         public int ReceiveMessage(Buffer buffer)

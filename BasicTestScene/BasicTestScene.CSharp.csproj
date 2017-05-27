@@ -99,6 +99,7 @@
     <Compile Include="Assets\Cave\Synchronization\Synchronizer.cs" />
     <Compile Include="Assets\Cave\Synchronization\TimeSynchronizer.cs" />
     <Compile Include="Assets\Cave\Synchronization\TrackingSynchronizer.cs" />
+    <Compile Include="Assets\Cave\Synchronization\TransformationSynchronizer.cs" />
     <Compile Include="Assets\MoveCubes\MoveCubes.cs" />
     <Compile Include="Assets\MoveCubes\V_Motor_interaction.cs" />
     <Compile Include="Assets\MovingBall\CircularMovement.cs" />

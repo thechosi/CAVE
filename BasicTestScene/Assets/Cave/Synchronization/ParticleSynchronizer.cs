@@ -1,18 +1,38 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using UnityEngine;
 using AwesomeSockets.Domain.Sockets;
+using AwesomeSockets.Buffers;
 
 namespace Cave
 {
+    public class InputParticleMessage : ISynchroMessage
+    {
+        public float particleDeltaTime;
+
+        public void Serialize(Buffer buffer)
+        {
+            Buffer.Add(buffer, particleDeltaTime);
+        }
+
+        public void Deserialize(Buffer buffer)
+        {
+            particleDeltaTime = Buffer.Get<float>(buffer);
+        }
+
+        public int GetLength()
+        {
+            return sizeof(float) * 1;
+        }
+    }
+
     class ParticleSynchronizer
     {
         private static float lastParticleTime = 0;
         private static bool firstSyncTime = true;
         private static Dictionary<ParticleSystem, float> target = new Dictionary<ParticleSystem, float>(0);
         private static ParticleSystem[] particleSystems;
-        public static void ProcessMessage(InputMessage message)
+        public static void ProcessMessage(InputParticleMessage message)
         {
             if (particleSystems != null && particleSystems.Length > 0)
             {
@@ -30,7 +50,7 @@ namespace Cave
             }
         }
 
-        public static void BuildMessage(InputMessage message)
+        public static void BuildMessage(InputParticleMessage message)
         {
             if (particleSystems != null && particleSystems.Length > 0)
             {
