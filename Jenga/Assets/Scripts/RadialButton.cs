@@ -24,7 +24,6 @@ public class RadialButton : MonoBehaviour
 		AudioSource pressedButtonSound = GetComponent<AudioSource>();
 		pressedButtonSound.Play ();
 
-
 //        if (title.text == "Zurücksetzen")
 //        {
 //            GameObject towerObject = GameObject.Find("DynamicTower");
