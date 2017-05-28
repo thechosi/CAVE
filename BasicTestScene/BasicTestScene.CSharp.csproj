@@ -13,13 +13,11 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile>
-    </CompilerResponseFile>
+    <CompilerResponseFile></CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
     <UnityVersion>5.5.2f1</UnityVersion>
-    <RootNamespace>
-    </RootNamespace>
+    <RootNamespace></RootNamespace>
     <LangVersion Condition=" '$(VisualStudioVersion)' != '10.0' ">4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -77,6 +75,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Cave\Prefabs\CollisionSynchronization.cs" />
+    <Compile Include="Assets\Cave\Synchronization\AnimatorSynchronizer.cs" />
     <Compile Include="Assets\Cave\Synchronization\AwesomeSockets\Buffers\Buffer.cs" />
     <Compile Include="Assets\Cave\Synchronization\AwesomeSockets\Domain\Enumerations.cs" />
     <Compile Include="Assets\Cave\Synchronization\AwesomeSockets\Domain\SocketModifiers\ISocketModifier.cs" />
@@ -85,8 +85,8 @@
     <Compile Include="Assets\Cave\Synchronization\AwesomeSockets\Domain\Sockets\ISocket.cs" />
     <Compile Include="Assets\Cave\Synchronization\AwesomeSockets\Properties\AssemblyInfo.cs" />
     <Compile Include="Assets\Cave\Synchronization\AwesomeSockets\Sockets\AweSock.cs" />
-    <Compile Include="Assets\Cave\Synchronization\AnimatorSynchronizer.cs" />
     <Compile Include="Assets\Cave\Synchronization\Client.cs" />
+    <Compile Include="Assets\Cave\Synchronization\CollisionSynchronizer.cs" />
     <Compile Include="Assets\Cave\Synchronization\InputSynchronizer.cs" />
     <Compile Include="Assets\Cave\Synchronization\InstantiateNode.cs" />
     <Compile Include="Assets\Cave\Synchronization\NetworkNode.cs" />
@@ -100,11 +100,6 @@
     <Compile Include="Assets\Cave\Synchronization\TimeSynchronizer.cs" />
     <Compile Include="Assets\Cave\Synchronization\TrackingSynchronizer.cs" />
     <Compile Include="Assets\Cave\Synchronization\TransformationSynchronizer.cs" />
-    <Compile Include="Assets\MoveCubes\MoveCubes.cs" />
-    <Compile Include="Assets\MoveCubes\V_Motor_interaction.cs" />
-    <Compile Include="Assets\MovingBall\CircularMovement.cs" />
-    <Compile Include="Assets\SpawnSpheres\Reset.cs" />
-    <Compile Include="Assets\SpawnSpheres\SpawnSphere.cs" />
     <Compile Include="Assets\Cave\Tracking\Plugins\UnityVRPN\Scripts\LeftHandedVRPN.cs" />
     <Compile Include="Assets\Cave\Tracking\Plugins\UnityVRPN\Scripts\TrackerHostSettings.cs" />
     <Compile Include="Assets\Cave\Tracking\Plugins\UnityVRPN\Scripts\TrackerPreset.cs" />
@@ -123,11 +118,16 @@
     <Compile Include="Assets\Cave\Tracking\Scripts\flystickNavigation.cs" />
     <Compile Include="Assets\Cave\Tracking\Scripts\interactionTrigger.cs" />
     <Compile Include="Assets\Cave\Tracking\Scripts\manageTracking.cs" />
+    <Compile Include="Assets\CollisionTest.cs" />
+    <Compile Include="Assets\MoveCubes\MoveCubes.cs" />
+    <Compile Include="Assets\MoveCubes\V_Motor_interaction.cs" />
+    <Compile Include="Assets\MovingBall\CircularMovement.cs" />
+    <Compile Include="Assets\SpawnSpheres\Reset.cs" />
+    <Compile Include="Assets\SpawnSpheres\SpawnSphere.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\StreamingAssets\node-config.xml" />
     <None Include="Assets\StreamingAssets\node-config_cave.xml" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>

@@ -65,6 +65,7 @@ namespace Cave
                 TrackingSynchronizer.BuildMessage(inputMessage.inputTrackingMessage);
                 RigidBodySynchronizer.BuildMessage(inputMessage.inputRigidBodyMessage);
                 TransformationSynchronizer.BuildMessage(inputMessage.inputTransformationMessage);
+                CollisionSynchronizer.BuildMessage(inputMessage.inputCollisionMessage);
 
                 node.BroadcastMessage(inputMessage);
             }
@@ -80,6 +81,7 @@ namespace Cave
                 TrackingSynchronizer.ProcessMessage(inputMessage.inputTrackingMessage);
                 RigidBodySynchronizer.ProcessMessage(inputMessage.inputRigidBodyMessage);
                 TransformationSynchronizer.ProcessMessage(inputMessage.inputTransformationMessage);
+                CollisionSynchronizer.ProcessMessage(inputMessage.inputCollisionMessage);
             }
             
             StartCoroutine(EndOfFrame());
