@@ -28,6 +28,8 @@ Partial Class MainForm
         Me.DateiToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ÖffnenToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.BeendenToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.EditToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.SlaveConfigToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
         Me.ÜberDasToolToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.grp_computerInfo = New System.Windows.Forms.GroupBox()
@@ -108,10 +110,11 @@ Partial Class MainForm
         '
         'MenuStrip1
         '
-        Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.DateiToolStripMenuItem, Me.ToolStripMenuItem1})
+        Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.DateiToolStripMenuItem, Me.EditToolStripMenuItem, Me.ToolStripMenuItem1})
         Me.MenuStrip1.Location = New System.Drawing.Point(0, 0)
         Me.MenuStrip1.Name = "MenuStrip1"
         Me.MenuStrip1.Size = New System.Drawing.Size(664, 24)
+        Me.MenuStrip1.Stretch = False
         Me.MenuStrip1.TabIndex = 2
         Me.MenuStrip1.Text = "MenuStrip1"
         '
@@ -120,19 +123,32 @@ Partial Class MainForm
         Me.DateiToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ÖffnenToolStripMenuItem, Me.BeendenToolStripMenuItem})
         Me.DateiToolStripMenuItem.Name = "DateiToolStripMenuItem"
         Me.DateiToolStripMenuItem.Size = New System.Drawing.Size(37, 20)
-        Me.DateiToolStripMenuItem.Text = "File"
+        Me.DateiToolStripMenuItem.Text = "&File"
         '
         'ÖffnenToolStripMenuItem
         '
         Me.ÖffnenToolStripMenuItem.Name = "ÖffnenToolStripMenuItem"
-        Me.ÖffnenToolStripMenuItem.Size = New System.Drawing.Size(103, 22)
-        Me.ÖffnenToolStripMenuItem.Text = "Open"
+        Me.ÖffnenToolStripMenuItem.Size = New System.Drawing.Size(151, 22)
+        Me.ÖffnenToolStripMenuItem.Text = "&Open Config..."
         '
         'BeendenToolStripMenuItem
         '
         Me.BeendenToolStripMenuItem.Name = "BeendenToolStripMenuItem"
-        Me.BeendenToolStripMenuItem.Size = New System.Drawing.Size(103, 22)
-        Me.BeendenToolStripMenuItem.Text = "Close"
+        Me.BeendenToolStripMenuItem.Size = New System.Drawing.Size(151, 22)
+        Me.BeendenToolStripMenuItem.Text = "&Close"
+        '
+        'EditToolStripMenuItem
+        '
+        Me.EditToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SlaveConfigToolStripMenuItem})
+        Me.EditToolStripMenuItem.Name = "EditToolStripMenuItem"
+        Me.EditToolStripMenuItem.Size = New System.Drawing.Size(39, 20)
+        Me.EditToolStripMenuItem.Text = "&Edit"
+        '
+        'SlaveConfigToolStripMenuItem
+        '
+        Me.SlaveConfigToolStripMenuItem.Name = "SlaveConfigToolStripMenuItem"
+        Me.SlaveConfigToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.SlaveConfigToolStripMenuItem.Text = "&Path to Slave..."
         '
         'ToolStripMenuItem1
         '
@@ -145,7 +161,7 @@ Partial Class MainForm
         '
         Me.ÜberDasToolToolStripMenuItem.Name = "ÜberDasToolToolStripMenuItem"
         Me.ÜberDasToolToolStripMenuItem.Size = New System.Drawing.Size(116, 22)
-        Me.ÜberDasToolToolStripMenuItem.Text = "About..."
+        Me.ÜberDasToolToolStripMenuItem.Text = "&About..."
         '
         'grp_computerInfo
         '
@@ -599,6 +615,8 @@ Partial Class MainForm
         Me.Controls.Add(Me.MenuStrip1)
         Me.HelpButton = True
         Me.MainMenuStrip = Me.MenuStrip1
+        Me.MaximumSize = New System.Drawing.Size(680, 446)
+        Me.MinimumSize = New System.Drawing.Size(680, 446)
         Me.Name = "MainForm"
         Me.Text = "Config Tool"
         Me.grp_computerList.ResumeLayout(False)
@@ -675,4 +693,6 @@ Partial Class MainForm
     Friend WithEvents btn_update As Button
     Friend WithEvents txt_scale As TextBox
     Friend WithEvents Label7 As Label
+    Friend WithEvents EditToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents SlaveConfigToolStripMenuItem As ToolStripMenuItem
 End Class

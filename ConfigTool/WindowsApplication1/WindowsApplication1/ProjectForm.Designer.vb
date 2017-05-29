@@ -75,7 +75,10 @@ Partial Class ProjectForm
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(666, 366)
+        Me.ControlBox = False
         Me.Controls.Add(Me.Panel1)
+        Me.MaximumSize = New System.Drawing.Size(682, 405)
+        Me.MinimumSize = New System.Drawing.Size(682, 405)
         Me.Name = "ProjectForm"
         Me.Text = "ProjectForm"
         Me.Panel1.ResumeLayout(False)

@@ -1,4 +1,5 @@
 ﻿Imports System.IO
+Imports System.Net
 
 Public Class MainForm
     Dim computers As New List(Of Computer)
@@ -15,6 +16,7 @@ Public Class MainForm
     Dim button_click As Integer = 0
     Dim pf As New ProjectForm
     Dim P As Process
+    Dim pathToSlave As String = "C:\StudentenprojektCAVE\AktuellesProjekt\"
     Dim CMDThread As Threading.Thread
 
     Private Function clearAllFields()
@@ -99,6 +101,7 @@ Public Class MainForm
                 btn_deployProject.Enabled = True
                 btn_update.Enabled = True
                 txt_projectname.Text = projectname
+                ListBox1.SelectedIndex = 0
             Else
                 MsgBox("Configuration file not found. Please choose correct directory")
             End If
@@ -266,6 +269,7 @@ Public Class MainForm
     Private Sub opencmd_start()
         Dim Pr As New Process
         P = Pr
+        Pr.Close()
         P.StartInfo.CreateNoWindow = True
         P.StartInfo.UseShellExecute = False
         P.StartInfo.RedirectStandardInput = True
@@ -278,6 +282,7 @@ Public Class MainForm
     Private Sub opencmd_deployupdate(update As Boolean)
         Dim Pr As New Process
         P = Pr
+        Pr.Close()
         P.StartInfo.CreateNoWindow = True
         P.StartInfo.UseShellExecute = False
         P.StartInfo.RedirectStandardInput = True
@@ -353,7 +358,7 @@ Public Class MainForm
     Private Sub checkStartUnity()
         Dim fileBAT As File
         Dim path As String = ".\SLAVE_StartUnity.bat"
-        Dim content As String = "echo Startet Unityprojekt auf dem Slave-Rechner %computername% " + vbNewLine + "start C:\StudentenprojektCAVE\AktuellesProjekt\" + projectname + ".exe"
+        Dim content As String = "echo Startet Unityprojekt auf dem Slave-Rechner %computername% " + vbNewLine + "start " + pathToSlave + projectname + ".exe"
         fileBAT.WriteAllText(path, content)
     End Sub
 
@@ -378,7 +383,7 @@ Public Class MainForm
     End Sub
 
     Private Sub ÜberDasToolToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ÜberDasToolToolStripMenuItem.Click
-        MsgBox("ConfigTool Version 0.0.1", MsgBoxStyle.Information, "ConfigTool")
+        MsgBox("ConfigTool Version 0.0.1" + vbNewLine + "GitHub: http://www.github.com/thechosi/CAVE/", MsgBoxStyle.Information, "ConfigTool")
     End Sub
 
     Private Sub btn_update_Click(sender As Object, e As EventArgs) Handles btn_update.Click
@@ -412,4 +417,11 @@ Public Class MainForm
             act_computer.screenplane.scale.z = txt_scale.Text
         End If
     End Sub
+
+    Private Sub SlaveConfigToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SlaveConfigToolStripMenuItem.Click
+
+        pathToSlave = InputBox("Please enter the path to the folder where the .exe-file is located:", "Slave Path", pathToSlave)
+
+    End Sub
+
 End Class
