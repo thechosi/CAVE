@@ -92,7 +92,6 @@ public class InteractableItem : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-
         if (collision.collider.name == "Plane" && this.transform.parent.name != "Row#1")
         {
             if (this.transform.GetComponent<Renderer>().material.color != Color.green)
@@ -101,9 +100,11 @@ public class InteractableItem : MonoBehaviour
                 TopBlockPlacer.PlayerChangeable = false;
                 tower.Players[Player.ActivePlayer].Score++;
                 Debug.Log("Turm fällt");
-            }
 
+
+				InfoScreenManager infoScreen = FindObjectOfType<InfoScreenManager>();
+				infoScreen.LoserView ();
+            }
         }
     }
-
 }
