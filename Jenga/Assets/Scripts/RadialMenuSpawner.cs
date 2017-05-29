@@ -6,6 +6,7 @@ public class RadialMenuSpawner : MonoBehaviour {
 
 	public static RadialMenuSpawner ins;
 	public RadialMenu menuPrefab;
+	public float distanceFromFlystick;
 
 	void Awake(){
 		ins = this;
@@ -15,14 +16,18 @@ public class RadialMenuSpawner : MonoBehaviour {
 		RadialMenu newMenu = Instantiate(menuPrefab) as RadialMenu;
 		newMenu.transform.SetParent(transform, false);
 
-		GameObject Flystick = GameObject.Find ("FlystickSim");
+		GameObject Flystick = GameObject.Find ("Flystick");
 
-		newMenu.transform.position = Flystick.transform.position;
-		newMenu.transform.rotation = Flystick.transform.rotation;
+		if (Flystick != null) {
+			newMenu.transform.position = Flystick.transform.position;
+			newMenu.transform.rotation = Flystick.transform.rotation;
 
-		newMenu.transform.Rotate (270f,0f,0f);
-		newMenu.transform.Translate (Flystick.transform.up*2, Space.World);
+			//newMenu.transform.Rotate (270f,0f,0f);
+			newMenu.transform.Translate (Flystick.transform.forward * distanceFromFlystick, Space.World);
 
-		newMenu.SpawnButtons (obj);
+			newMenu.SpawnButtons (obj);
+		} else {
+			Debug.Log ("Flystick not found");
+		}
 	}
 }
