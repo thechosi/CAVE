@@ -35,6 +35,10 @@ public class FlyStickInteraction : MonoBehaviour {
 		}
 	}
 
+	public void TestLog(string Button){
+		Debug.Log ("Button Pressed "+ Button );
+	}
+
 	private void drawLaser(){
 		lineRender.SetPosition (0, origin.position);
 		lineRender.SetPosition (1, dest.position);

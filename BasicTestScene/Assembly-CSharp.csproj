@@ -39,13 +39,14 @@
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="UnityEngine">
-      <HintPath>D:/Program Files/Unity5.5/Editor/Data/Managed/UnityEngine.dll</HintPath>
+      <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor">
-      <HintPath>D:/Program Files/Unity5.5/Editor/Data/Managed/UnityEditor.dll</HintPath>
+      <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEditor.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Cave\Prefabs\CollisionSynchronization.cs" />
      <Compile Include="Assets\Cave\Synchronization\AnimatorSynchronizer.cs" />
      <Compile Include="Assets\Cave\Synchronization\AwesomeSockets\Buffers\Buffer.cs" />
      <Compile Include="Assets\Cave\Synchronization\AwesomeSockets\Domain\Enumerations.cs" />
@@ -56,6 +57,7 @@
      <Compile Include="Assets\Cave\Synchronization\AwesomeSockets\Properties\AssemblyInfo.cs" />
      <Compile Include="Assets\Cave\Synchronization\AwesomeSockets\Sockets\AweSock.cs" />
      <Compile Include="Assets\Cave\Synchronization\Client.cs" />
+     <Compile Include="Assets\Cave\Synchronization\CollisionSynchronizer.cs" />
      <Compile Include="Assets\Cave\Synchronization\InputSynchronizer.cs" />
      <Compile Include="Assets\Cave\Synchronization\InstantiateNode.cs" />
      <Compile Include="Assets\Cave\Synchronization\NetworkNode.cs" />
@@ -68,6 +70,7 @@
      <Compile Include="Assets\Cave\Synchronization\Synchronizer.cs" />
      <Compile Include="Assets\Cave\Synchronization\TimeSynchronizer.cs" />
      <Compile Include="Assets\Cave\Synchronization\TrackingSynchronizer.cs" />
+     <Compile Include="Assets\Cave\Synchronization\TransformationSynchronizer.cs" />
      <Compile Include="Assets\Cave\Tracking\Plugins\UnityVRPN\Scripts\LeftHandedVRPN.cs" />
      <Compile Include="Assets\Cave\Tracking\Plugins\UnityVRPN\Scripts\TrackerHostSettings.cs" />
      <Compile Include="Assets\Cave\Tracking\Plugins\UnityVRPN\Scripts\TrackerPreset.cs" />
@@ -86,6 +89,7 @@
      <Compile Include="Assets\Cave\Tracking\Scripts\flystickNavigation.cs" />
      <Compile Include="Assets\Cave\Tracking\Scripts\interactionTrigger.cs" />
      <Compile Include="Assets\Cave\Tracking\Scripts\manageTracking.cs" />
+     <Compile Include="Assets\CollisionTest.cs" />
      <Compile Include="Assets\MoveCubes\MoveCubes.cs" />
      <Compile Include="Assets\MoveCubes\V_Motor_interaction.cs" />
      <Compile Include="Assets\MovingBall\CircularMovement.cs" />
@@ -94,22 +98,34 @@
      <None Include="Assets\StreamingAssets\node-config.xml" />
      <None Include="Assets\StreamingAssets\node-config_cave.xml" />
  <Reference Include="UnityEngine.UI">
- <HintPath>D:/Program Files/Unity5.5/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
+ <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.Networking">
- <HintPath>D:/Program Files/Unity5.5/Editor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
+ <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.PlaymodeTestsRunner">
- <HintPath>D:/Program Files/Unity5.5/Editor/Data/UnityExtensions/Unity/PlaymodeTestsRunner/UnityEngine.PlaymodeTestsRunner.dll</HintPath>
+ <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/PlaymodeTestsRunner/UnityEngine.PlaymodeTestsRunner.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.Analytics">
- <HintPath>D:/Program Files/Unity5.5/Editor/Data/UnityExtensions/Unity/UnityAnalytics/UnityEngine.Analytics.dll</HintPath>
+ <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityAnalytics/UnityEngine.Analytics.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.HoloLens">
- <HintPath>D:/Program Files/Unity5.5/Editor/Data/UnityExtensions/Unity/UnityHoloLens/RuntimeEditor/UnityEngine.HoloLens.dll</HintPath>
+ <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityHoloLens/RuntimeEditor/UnityEngine.HoloLens.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.VR">
- <HintPath>D:/Program Files/Unity5.5/Editor/Data/UnityExtensions/Unity/UnityVR/RuntimeEditor/UnityEngine.VR.dll</HintPath>
+ <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityVR/RuntimeEditor/UnityEngine.VR.dll</HintPath>
+ </Reference>
+ <Reference Include="Mono.Cecil">
+ <HintPath>C:/Program Files/Unity/Editor/Data/Managed/Mono.Cecil.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEditor.iOS.Extensions.Xcode">
+ <HintPath>C:/Program Files/Unity/Editor/Data/PlaybackEngines/AppleTVSupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEditor.iOS.Extensions.Xcode">
+ <HintPath>C:/Program Files/Unity/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEditor.iOS.Extensions.Common">
+ <HintPath>C:/Program Files/Unity/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Common.dll</HintPath>
  </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

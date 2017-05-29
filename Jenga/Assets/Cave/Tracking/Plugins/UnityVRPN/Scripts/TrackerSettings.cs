@@ -131,10 +131,12 @@ public class TrackerSettings : MonoBehaviour
 	//private IEnumerator GetAnalog()
 	public Vector2 getAnalog()
 	{
-		Vector2 analogStick;
+		Vector2 analogStick = new Vector2();
 		//while (true) {
 		analogStick.x = (float)hostSettings.GetAnalog (objectName, 0);
 		analogStick.y = (float)hostSettings.GetAnalog (objectName, 1);
+		transform.parent.position = new Vector3 (transform.parent.position.x, transform.parent.position.y + analogStick.y, transform.parent.position.z +analogStick.x); 
+
 		//	yield return null;
 		//}
 		return analogStick;

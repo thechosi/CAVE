@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
 public class RadialMenuSpawner : MonoBehaviour {
 
@@ -26,6 +27,7 @@ public class RadialMenuSpawner : MonoBehaviour {
 			newMenu.transform.Translate (Flystick.transform.forward * distanceFromFlystick, Space.World);
 
 			newMenu.SpawnButtons (obj);
+			NetworkServer.Spawn (newMenu.gameObject);
 		} else {
 			Debug.Log ("Flystick not found");
 		}
