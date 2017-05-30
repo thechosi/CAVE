@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class InfoScreenManager : MonoBehaviour
@@ -6,8 +7,51 @@ public class InfoScreenManager : MonoBehaviour
     public Text timer;
     public Text playerInfo;
     public Text loseInfo;
+    private static int time;
+    private static Boolean isPlaying = false;
+    private int startTime;
 
+    private TopBlockPlacer topBlockPlacer;
     Animator anim;
+
+    public static int Time
+    {
+        get
+        {
+            return time;
+        }
+
+        set
+        {
+            time = value;
+        }
+    }
+
+    public int StartTime
+    {
+        get
+        {
+            return startTime;
+        }
+
+        set
+        {
+            startTime = value;
+        }
+    }
+
+    public static bool IsPlaying
+    {
+        get
+        {
+            return isPlaying;
+        }
+
+        set
+        {
+            isPlaying = value;
+        }
+    }
 
     // Use this for initialization
     void Start()
@@ -15,12 +59,21 @@ public class InfoScreenManager : MonoBehaviour
         anim = GetComponent<Animator>();
     }
 
+    public void ButtonStart()
+    {
+        IsPlaying = true;
+        StartTime = (int)Cave.TimeSynchronizer.time;
+    }
+
     // Update is called once per frame
     void Update()
     {
-        int time = (int)Cave.TimeSynchronizer.time;
-        timer.text = CreateTimerText(time);
-        playerInfo.text = CreatePlayerText();
+        if (IsPlaying)
+        {
+           time = (int)Cave.TimeSynchronizer.time - StartTime;
+            timer.text = CreateTimerText(time);
+           playerInfo.text = CreatePlayerText();
+        }
     }
 
     string CreateTimerText(int time)

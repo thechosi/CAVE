@@ -33,7 +33,7 @@ public class TopBlockPlacer : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (Time.realtimeSinceStartup > 3 && collision.collider.transform.parent != null && collision.collider.transform.parent.parent.childCount - 1 == TowerInteractivity.MaxRow - 1)
+        if (InfoScreenManager.IsPlaying && InfoScreenManager.Time > 3)
         {
             if (Mathf.Abs(collision.collider.transform.eulerAngles.y - transform.eulerAngles.y) <= 120 && Mathf.Abs(collision.collider.transform.eulerAngles.y - transform.eulerAngles.y) >= 60 ||
                 Mathf.Abs(collision.collider.transform.eulerAngles.y - transform.eulerAngles.y) <= 300 && Mathf.Abs(collision.collider.transform.eulerAngles.y - transform.eulerAngles.y) >= 240)
