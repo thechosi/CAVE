@@ -11,7 +11,7 @@
     </screenplane>
   </master>
   <!-- Use for client on same machine: -->  
-   <slave ip="127.0.0.2">
+   <!--<slave ip="127.0.0.2">
     <camera eye="left">
       <rotation x="0" y="0" z="0" />
     </camera>
@@ -20,7 +20,7 @@
 		<rotation x="0" y="0" z="0"/>
 		<scale x="3" y="3" z="3"/>
     </screenplane>
-  </slave>
+  </slave>-->
   
   <!--
   <slave ip="192.168.0.11">

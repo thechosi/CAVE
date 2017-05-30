@@ -4,9 +4,15 @@ using UnityEngine.UI;
 using UnityEngine;
 using System;
 using Cave;
+using UnityEngine.Events;
 
 public class TowerInteractivity : MonoBehaviour
 {
+
+
+    InteractableItem interactingItem;
+    TrackerHostSettings trackerHostSettings;
+
     public float gravity = 10;
 
     private GameObject selectedObj = null;
@@ -33,6 +39,8 @@ public class TowerInteractivity : MonoBehaviour
     private Vector3 blockSize;
 
     private Camera cam;
+
+    private FlyStickInteraction flyStickInteraction;
 
     public static int MaxRow
     {
@@ -124,6 +132,8 @@ public class TowerInteractivity : MonoBehaviour
         //destroyAudioSource = GetComponent<AudioSource>()[0];
         //buttonSelectAudioSource = GetComponent<AudioSource>()[1];
 
+        initFlyStickEvents();
+
     }
 
     private void setSizes()
@@ -156,15 +166,15 @@ public class TowerInteractivity : MonoBehaviour
 
     private void addRow()
     {
-		GameObject plane = GameObject.Find ("Plane");
-		float planeHeight = plane.transform.position.y;
+        GameObject plane = GameObject.Find("Plane");
+        float planeHeight = plane.transform.position.y;
         maxRow = transform.childCount;
         GameObject row = new GameObject();
         row.name = "Row#" + (maxRow + 1);
         row.transform.parent = this.transform;
 
-		float absolutDiff = (blockSize.y + diffBetweenBlocks) * maxRow + planeHeight;
-		Debug.Log(absolutDiff);
+        float absolutDiff = (blockSize.y + diffBetweenBlocks) * maxRow + planeHeight;
+        Debug.Log(absolutDiff);
         GameObject newBrick;
         if ((maxRow + 1) % 2 == 1)
         {
@@ -235,6 +245,19 @@ public class TowerInteractivity : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // if Button is not pressed anymore!
+        // TODO: maybe make a method onButtonReleased? 
+        if (interactingItem)
+        {
+            if (trackerHostSettings)
+            {
+                if (!trackerHostSettings.GetButton(flyStickInteraction.TrackerSettings.ObjectName, 0))
+                {
+                    interactingItem.EndInteraction(flyStickInteraction);
+                    interactingItem = null;
+                }
+            }
+        }
 
         if (Input.GetKey(KeyCode.O))
         {
@@ -279,65 +302,6 @@ public class TowerInteractivity : MonoBehaviour
         }
     }
 
-    /*void FixedUpdate()
-    {
-
-        if (selectedObj != null)
-        {
-            Rigidbody rigidbody = selectedObj.GetComponent<Rigidbody>();
-
-            // as of now, only the cubes with the "+" material have this script, so only they move!
-            Vector3 moveVector = new Vector3();
-            // up
-            if (Input.GetKey(KeyCode.Y))
-            {
-                //rigidbody.velocity = new Vector3(0, force, 0);
-                moveVector.y = force;
-            }
-
-            // down
-            if (Input.GetKey(KeyCode.X))
-            {
-                //rigidbody.velocity = new Vector3(0, -force, 0);
-                moveVector.y = -force;
-            }
-
-            // forward
-            if (Input.GetKey(KeyCode.W))
-            {
-                //rigidbody.velocity = new Vector3(0, 0, force);
-                moveVector.z = force;
-            }
-
-            // backward
-            if (Input.GetKey(KeyCode.S))
-            {
-                //rigidbody.velocity = new Vector3(0, 0, -force);
-                moveVector.z = -force;
-            }
-
-            // left
-            if (Input.GetKey(KeyCode.A))
-            {
-                //rigidbody.velocity = new Vector3(-force, 0, 0);
-                moveVector.x = -force;
-            }
-
-            // right
-            if (Input.GetKey(KeyCode.D))
-            {
-                //rigidbody.velocity = new Vector3(force, 0, 0);
-                moveVector.x = force;
-            }
-
-            // if no force is applied, dont change velocity (so gravity can work)
-            if (moveVector.sqrMagnitude > 0)
-            {
-                rigidbody.velocity = moveVector;
-            }
-        }
-    }*/
-
     private void deselect()
     {
         if (SelectedObj != null)
@@ -348,8 +312,6 @@ public class TowerInteractivity : MonoBehaviour
             FirstSelected = null;
         }
     }
-
-
 
     public void select(GameObject gameObject)
     {
@@ -407,4 +369,88 @@ public class TowerInteractivity : MonoBehaviour
             Debug.Log("else");
         }
     }
+
+    public void initFlyStickEvents()
+    {
+        GameObject flyStick = GameObject.Find("Flystick");
+        if (flyStick)
+        {
+            FlyStickInteraction flyStickInteractionLocal = flyStick.GetComponent<FlyStickInteraction>();
+            if (flyStickInteractionLocal)
+            {
+                flyStickInteraction = flyStickInteractionLocal;
+            }
+
+            TrackerHostSettings trackerHostSettingslocal = flyStick.GetComponent<TrackerHostSettings>();
+            if (trackerHostSettingslocal)
+            {
+                trackerHostSettings = trackerHostSettingslocal;
+            }
+
+            TrackerSettings trackerSettings = flyStick.GetComponent<TrackerSettings>();
+            if (trackerSettings)
+            {
+                UnityEvent ev = new UnityEvent();
+                //ev.AddListener(createMenu);
+                trackerSettings.middleButton = ev;
+            }
+            else
+            {
+                Debug.LogError("FlyStick has no TrackerSettings");
+            }
+        }
+        else
+        {
+            Debug.LogError("Didn't find the FlyStick");
+        }
+    }
+
+    private void grabBrick()
+    {
+        GameObject selectedItem = flyStickInteraction.SelectedPart;
+        interactingItem = selectedItem.GetComponent<InteractableItem>();
+        if (interactingItem)
+        {
+
+            GameObject towerObject = GameObject.Find("DynamicTower");
+            if (towerObject)
+            {
+                TowerInteractivity tower = towerObject.GetComponent<TowerInteractivity>();
+
+                Debug.Log(interactingItem.name);
+                if (interactingItem.name.Contains(TowerInteractivity.MaxRow.ToString()) && interactingItem.GetComponent<Renderer>().material.color != Color.green)
+                {
+                    return;
+                }
+                if (interactingItem.GetComponent<Renderer>().material.color != Color.green)
+                {
+                    if (tower.FirstSelected == null)
+                    {
+                        tower.select(interactingItem.transform.gameObject);
+                    }
+                    else
+                    {
+                        return;
+                    }
+                }
+            }
+                if (interactingItem.isInteracting())
+                {
+                    interactingItem.EndInteraction(flyStickInteraction);
+                    interactingItem = null;
+                }
+                interactingItem.BeginInteraction(flyStickInteraction);
+            
+
+        }
+
+
+        if (Input.GetKeyUp(KeyCode.Space) && interactingItem != null)
+        {
+            interactingItem.EndInteraction(flyStickInteraction);
+        }
+
+    }
+
+        
 }

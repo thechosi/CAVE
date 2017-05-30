@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2017
+# Visual Studio 2015
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jenga", "Jenga.csproj", "{8B64B8A9-16F1-5BC3-125C-CA68F461079C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jenga.Editor", "Jenga.Editor.csproj", "{A9D3611B-49F8-577C-C4F1-266553B29BC0}"

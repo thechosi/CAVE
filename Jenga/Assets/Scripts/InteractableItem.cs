@@ -10,7 +10,8 @@ public class InteractableItem : MonoBehaviour
 
     private bool currentlyInteracting;
 
-    private FlyStickSim attachedWand;
+    private FlyStickSim attachedWandSim;
+    private FlyStickInteraction attachedWand;
 
 
     private Transform interactionPoint;
@@ -68,7 +69,7 @@ public class InteractableItem : MonoBehaviour
 
     public void BeginInteraction(FlyStickSim wand)
     {
-        attachedWand = wand;
+        attachedWandSim = wand;
         interactionPoint.position = wand.transform.position;
         interactionPoint.rotation = wand.transform.rotation;
         interactionPoint.SetParent(transform, true);
@@ -77,6 +78,25 @@ public class InteractableItem : MonoBehaviour
     }
 
     public void EndInteraction(FlyStickSim wand)
+    {
+        if (wand == attachedWandSim) //not needed for us
+        {
+            attachedWandSim = null;
+            currentlyInteracting = false;
+        }
+    }
+
+    public void BeginInteraction(FlyStickInteraction wand)
+    {
+        attachedWand = wand;
+        interactionPoint.position = wand.transform.position;
+        interactionPoint.rotation = wand.transform.rotation;
+        interactionPoint.SetParent(transform, true);
+
+        currentlyInteracting = true;
+    }
+
+    public void EndInteraction(FlyStickInteraction wand)
     {
         if (wand == attachedWand) //not needed for us
         {

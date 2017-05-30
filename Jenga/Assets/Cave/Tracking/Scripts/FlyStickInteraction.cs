@@ -12,8 +12,34 @@ public class FlyStickInteraction : MonoBehaviour {
 	public Transform dest;
 	public float maxRayDist = 10f;
 
-	// Use this for initialization
-	void Start () {		
+
+    public GameObject SelectedPart
+    {
+        get
+        {
+            return selectedPart;
+        }
+
+        set
+        {
+            selectedPart = value;
+        }
+    }
+    public TrackerSettings TrackerSettings
+    {
+        get
+        {
+            return trackerSettings;
+        }
+
+        set
+        {
+            trackerSettings = value;
+        }
+    }
+
+    // Use this for initialization
+    void Start () {		
 		lineRender = this.GetComponent<LineRenderer> ();
 		trackerSettings = this.GetComponent<TrackerSettings> ();
 	}
@@ -53,5 +79,7 @@ public class FlyStickInteraction : MonoBehaviour {
 		Vector3 rot = new Vector3 (0, vec.x, 0);
 		model.transform.Rotate (rot);
 	}
+
+
 }
 

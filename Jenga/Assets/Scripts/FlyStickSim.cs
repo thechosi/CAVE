@@ -53,7 +53,6 @@ public class FlyStickSim : MonoBehaviour
                     {
                         return;
                     }
-
                     if(interactingItem.GetComponent<Renderer>().material.color != Color.green)
                     {
                         if (tower.FirstSelected == null)
@@ -63,24 +62,15 @@ public class FlyStickSim : MonoBehaviour
                         {
                             return;
                         }
-                  
                     }
-                
-
-                    
                 }
-
-
                 if (interactingItem)
                 {
                     if (interactingItem.isInteracting())
                     {
                         interactingItem.EndInteraction(this);
                     }
-
                     interactingItem.BeginInteraction(this);
-
-
                 }
 
             }
