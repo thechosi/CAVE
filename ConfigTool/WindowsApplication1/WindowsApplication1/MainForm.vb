@@ -420,7 +420,12 @@ Public Class MainForm
 
     Private Sub SlaveConfigToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SlaveConfigToolStripMenuItem.Click
 
-        pathToSlave = InputBox("Please enter the path to the folder where the .exe-file is located:", "Slave Path", pathToSlave)
+        Dim newPath As String = ""
+        newPath = InputBox("Please enter the path to the folder where the .exe-file is located:", "Slave Path", pathToSlave)
+
+        If newPath IsNot "" Then
+            pathToSlave = newPath
+        End If
 
     End Sub
 
