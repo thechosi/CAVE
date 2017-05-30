@@ -156,12 +156,15 @@ public class TowerInteractivity : MonoBehaviour
 
     private void addRow()
     {
+		GameObject plane = GameObject.Find ("Plane");
+		float planeHeight = plane.transform.position.y;
         maxRow = transform.childCount;
         GameObject row = new GameObject();
         row.name = "Row#" + (maxRow + 1);
         row.transform.parent = this.transform;
 
-        float absolutDiff = (blockSize.y + diffBetweenBlocks) * maxRow;
+		float absolutDiff = (blockSize.y + diffBetweenBlocks) * maxRow + planeHeight;
+		Debug.Log(absolutDiff);
         GameObject newBrick;
         if ((maxRow + 1) % 2 == 1)
         {

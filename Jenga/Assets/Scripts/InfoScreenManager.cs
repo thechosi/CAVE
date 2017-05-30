@@ -65,14 +65,15 @@ public class InfoScreenManager : MonoBehaviour
         return "Spieler " + FindActivePlayer() + " ist dran!";
     }
 
-    public void LoserView(int playerNumber)
+    public void LoserView()
     {
-        loseInfo.text = "Spieler " + playerNumber + "\nhat verloren!";
-        anim.CrossFade("LoserView", 0);
+		int playerNumber = Player.ActivePlayer + 1;
+		loseInfo.text = "Spieler " + playerNumber + "\nhat verloren!";
+		anim.SetBool("LoserView", true);
     }
 
     public void InfoView()
     {
-        anim.CrossFade("InfoView", 0);
+		anim.SetBool("LoserView", false);
     }
 }

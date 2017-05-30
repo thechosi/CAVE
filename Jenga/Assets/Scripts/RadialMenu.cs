@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.Networking;
 
 public class RadialMenu : MonoBehaviour {
 
@@ -23,6 +24,7 @@ public class RadialMenu : MonoBehaviour {
 			newButton.title.text = obj.options [i].title;
 			newButton.action = obj.options [i].action;
 			newButton.myMenu = this;
+			NetworkServer.Spawn ( newButton.gameObject);
 		}
 	}
 
