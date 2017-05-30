@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using UnityEngine;
 using AwesomeSockets.Domain.Sockets;
@@ -52,15 +52,22 @@ namespace Cave
 
         public static void BuildMessage(InputParticleMessage message)
         {
-            if (particleSystems != null && particleSystems.Length > 0)
-            {
-                float deltaTime = particleSystems[0].time - lastParticleTime;
-                if (deltaTime < 0)
-                    deltaTime = particleSystems[0].time - lastParticleTime + particleSystems[0].main.duration;
-                message.particleDeltaTime = deltaTime;
+			if (particleSystems != null)
+			{
+				foreach (ParticleSystem particleSystem in particleSystems)
+				{				
+					if (particleSystem.isPlaying) 
+					{
+						float deltaTime = particleSystem.time - lastParticleTime;
+						if (deltaTime < 0)
+							deltaTime = particleSystem.time - lastParticleTime + particleSystem.main.duration;
+						message.particleDeltaTime = deltaTime;
 
-                lastParticleTime = particleSystems[0].time;
-            }
+						lastParticleTime = particleSystem.time;
+						break;
+					}
+				}
+			}
         }
 
         public static void InitializeFromServer(Server server, ISocket client)
