@@ -65,6 +65,25 @@ public class InteractableItem : MonoBehaviour
             }
             this.rigidbody.angularVelocity = (Time.fixedDeltaTime * angle * axis) * rotationFactor;
         }
+
+
+        //TODO just for FlyStickSim, delete as Sim is no longer needed!
+        else
+        if (attachedWandSim && currentlyInteracting)
+        {
+            posDelta = attachedWandSim.transform.position - interactionPoint.position;
+            // Debug.Log((posDelta * velocityFactor * Time.fixedDeltaTime).sqrMagnitude);
+            this.rigidbody.velocity = posDelta * velocityFactor * Time.fixedDeltaTime; //TODO change to networkTime
+
+            rotationDelta = attachedWandSim.transform.rotation * Quaternion.Inverse(interactionPoint.rotation);
+            rotationDelta.ToAngleAxis(out angle, out axis);
+
+            if (angle > 180)
+            {
+                angle -= 360;
+            }
+            this.rigidbody.angularVelocity = (Time.fixedDeltaTime * angle * axis) * rotationFactor;
+        }
     }
 
     public void BeginInteraction(FlyStickSim wand)
