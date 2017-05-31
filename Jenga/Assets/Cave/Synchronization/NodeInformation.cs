@@ -137,7 +137,10 @@ namespace Cave
 
 		static bool isOwnIP(String ip)
 		{
-			var host = System.Net.Dns.GetHostEntry(System.Net.Dns.GetHostName());
+            string dnsName = System.Net.Dns.GetHostName();
+            if (dnsName == "")
+                dnsName = "localhost";
+            var host = System.Net.Dns.GetHostEntry(dnsName);
 			foreach (var ownIp in host.AddressList)
 			{
 				if (ownIp.ToString().Equals(ip))
