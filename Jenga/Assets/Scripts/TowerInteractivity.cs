@@ -13,6 +13,8 @@ public class TowerInteractivity : MonoBehaviour
     InteractableItem interactingItem;
     TrackerHostSettings trackerHostSettings;
 
+    private bool grabbed = false;
+
     public float gravity = 10;
 
     private GameObject selectedObj = null;
@@ -127,7 +129,7 @@ public class TowerInteractivity : MonoBehaviour
         {
             diffBetweenBlocks = 0;
         }
-        //createTower();
+        createTower();
 
         //destroyAudioSource = GetComponent<AudioSource>()[0];
         //buttonSelectAudioSource = GetComponent<AudioSource>()[1];
@@ -173,8 +175,8 @@ public class TowerInteractivity : MonoBehaviour
         row.name = "Row#" + (maxRow + 1);
         row.transform.parent = this.transform;
 
-        float absolutDiff = (blockSize.y + diffBetweenBlocks) * maxRow + planeHeight;
-        Debug.Log(absolutDiff);
+        float absolutDiff = (blockSize.y + diffBetweenBlocks) * maxRow;
+        Debug.Log("Plane: " + planeHeight + "absolute: " + absolutDiff);
         GameObject newBrick;
         if ((maxRow + 1) % 2 == 1)
         {
@@ -193,8 +195,7 @@ public class TowerInteractivity : MonoBehaviour
             newBrick.name = row.name + "Block3";
             RigidBodySynchronizer.Spawn(newBrick);
         }
-        else
-        {
+        else {
             newBrick = Instantiate(brick, new Vector3(0, absolutDiff, blockSize.z), Quaternion.identity) as GameObject;
             newBrick.transform.Rotate(new Vector3(0, 90, 0));
             newBrick.transform.parent = row.transform;
@@ -247,17 +248,32 @@ public class TowerInteractivity : MonoBehaviour
     {
         // if Button is not pressed anymore!
         // TODO: maybe make a method onButtonReleased? 
-        if (interactingItem)
+        GameObject flyStick = GameObject.Find("Flystick");
+        if (flyStick)
         {
-            if (trackerHostSettings)
+            TrackerSettings trackerSettings = flyStick.GetComponent<TrackerSettings>();
+            if (trackerSettings)
             {
-                if (!trackerHostSettings.GetButton(flyStickInteraction.TrackerSettings.ObjectName, 0))
+                Debug.Log(trackerSettings.HostSettings.GetButton(flyStickInteraction.TrackerSettings.ObjectName, 0));
+
+                if (trackerSettings.HostSettings)
                 {
-                    interactingItem.EndInteraction(flyStickInteraction);
-                    interactingItem = null;
+                    Debug.Log("host settings");
+                    if (!trackerSettings.HostSettings.GetButton(flyStickInteraction.TrackerSettings.ObjectName, 0))
+                    {
+                        grabbed = false;
+                        Debug.Log("not grabbing");
+                        if (interactingItem)
+                        {
+                            Debug.Log("loslassen");
+                            interactingItem.EndInteraction(flyStickInteraction);
+                            interactingItem = null;
+                        }
+                    }
                 }
             }
         }
+
 
         if (Input.GetKey(KeyCode.O))
         {
@@ -291,8 +307,7 @@ public class TowerInteractivity : MonoBehaviour
                         select(hitInfo.transform.gameObject);
                         Debug.Log("select");
                     }
-                    else
-                    {
+                    else {
                         deselect();
                         Debug.Log("deselect");
                     }
@@ -364,8 +379,7 @@ public class TowerInteractivity : MonoBehaviour
             gameObject.name = "Row#" + (maxRow) + "Block3";
 
         }
-        else
-        {
+        else {
             Debug.Log("else");
         }
     }
@@ -379,78 +393,80 @@ public class TowerInteractivity : MonoBehaviour
             if (flyStickInteractionLocal)
             {
                 flyStickInteraction = flyStickInteractionLocal;
+                Debug.Log("flyStickInteraction set");
             }
 
             TrackerHostSettings trackerHostSettingslocal = flyStick.GetComponent<TrackerHostSettings>();
             if (trackerHostSettingslocal)
             {
                 trackerHostSettings = trackerHostSettingslocal;
+                Debug.Log("trackerHostSettings set");
             }
 
             TrackerSettings trackerSettings = flyStick.GetComponent<TrackerSettings>();
             if (trackerSettings)
             {
                 UnityEvent ev = new UnityEvent();
-                //ev.AddListener(createMenu);
-                trackerSettings.middleButton = ev;
+                ev.AddListener(grabBrick);
+                trackerSettings.triggerButton = ev;
+                Debug.Log("event set");
             }
-            else
-            {
+            else {
                 Debug.LogError("FlyStick has no TrackerSettings");
             }
         }
-        else
-        {
+        else {
             Debug.LogError("Didn't find the FlyStick");
         }
     }
 
     private void grabBrick()
     {
-        GameObject selectedItem = flyStickInteraction.SelectedPart;
-        interactingItem = selectedItem.GetComponent<InteractableItem>();
-        if (interactingItem)
+        if (!grabbed)
         {
-
-            GameObject towerObject = GameObject.Find("DynamicTower");
-            if (towerObject)
+            grabbed = true;
+            Debug.Log("grabBrick");
+            flyStickInteraction.sendRayForBlocks();
+            GameObject selectedItem = flyStickInteraction.SelectedPart;
+            if (selectedItem)
             {
-                TowerInteractivity tower = towerObject.GetComponent<TowerInteractivity>();
+                Debug.Log("Name" + selectedItem.name);
+                interactingItem = selectedItem.GetComponent<InteractableItem>();
+                if (interactingItem)
+                {
+                    Debug.Log("got Item");
+                    GameObject towerObject = GameObject.Find("DynamicTower");
+                    if (towerObject)
+                    {
+                        TowerInteractivity tower = towerObject.GetComponent<TowerInteractivity>();
 
-                Debug.Log(interactingItem.name);
-                if (interactingItem.name.Contains(TowerInteractivity.MaxRow.ToString()) && interactingItem.GetComponent<Renderer>().material.color != Color.green)
-                {
-                    return;
-                }
-                if (interactingItem.GetComponent<Renderer>().material.color != Color.green)
-                {
-                    if (tower.FirstSelected == null)
-                    {
-                        tower.select(interactingItem.transform.gameObject);
+                        if (interactingItem.name.Contains(TowerInteractivity.MaxRow.ToString()) && interactingItem.GetComponent<Renderer>().material.color != Color.green)
+                        {
+                            Debug.Log("return1");
+                            return;
+                        }
+                        if (interactingItem.GetComponent<Renderer>().material.color != Color.green)
+                        {
+                            if (tower.FirstSelected == null)
+                            {
+                                tower.select(interactingItem.transform.gameObject);
+                                Debug.Log("select: " + interactingItem.transform.gameObject.name);
+                            }
+                            else {
+                                Debug.Log("return2");
+                                return;
+                            }
+                        }
                     }
-                    else
+                    if (interactingItem.isInteracting())
                     {
-                        return;
+                        interactingItem.EndInteraction(flyStickInteraction);
+                        interactingItem = null;
+                        Debug.Log("endInteraction");
                     }
+                    interactingItem.BeginInteraction(flyStickInteraction);
                 }
             }
-                if (interactingItem.isInteracting())
-                {
-                    interactingItem.EndInteraction(flyStickInteraction);
-                    interactingItem = null;
-                }
-                interactingItem.BeginInteraction(flyStickInteraction);
-            
-
         }
-
-
-        if (Input.GetKeyUp(KeyCode.Space) && interactingItem != null)
-        {
-            interactingItem.EndInteraction(flyStickInteraction);
-        }
-
     }
-
-        
 }
