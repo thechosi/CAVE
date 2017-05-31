@@ -129,7 +129,7 @@ public class TowerInteractivity : MonoBehaviour
         {
             diffBetweenBlocks = 0;
         }
-        createTower();
+        //createTower();
 
         //destroyAudioSource = GetComponent<AudioSource>()[0];
         //buttonSelectAudioSource = GetComponent<AudioSource>()[1];
