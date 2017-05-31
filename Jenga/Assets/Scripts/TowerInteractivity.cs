@@ -146,9 +146,6 @@ public class TowerInteractivity : MonoBehaviour
 
         blockSize = newBrick.GetComponent<Renderer>().bounds.size;
         Destroy(newBrick);
-
-        GameObject plane = GameObject.Find("Plane");
-        plane.transform.position = new Vector3(0, -blockSize.y, 0);
     }
 
     public void createTower()
