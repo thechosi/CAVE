@@ -338,20 +338,26 @@ Public Class MainForm
 
     Private Sub btn_startProject_Click(sender As Object, e As EventArgs) Handles btn_startProject.Click
         If File.Exists(".\MASTER_StartUnity.bat") Then
+
             Dim pfd As New ProjectForm
+
+            If Application.OpenForms().OfType(Of ProjectForm).Any Then
+                pf.Close()
+            End If
+
             DisableButtons()
             pf = pfd
             pf.txt_projectForm.Text = ""
-            pf.Text = "Start Project"
-            pf.Visible = True
-            pf.ProgressBar1.Maximum = (ListBox1.Items.Count - 1) * 1 * 10
-            opencmd_start()
-            Dim CMDThread2 As New Threading.Thread(AddressOf CMDConfig)
-            CMDThread = CMDThread2
-            'start cmd thread
-            CMDThread.Start()
-        Else
-            MsgBox("MASTER_StartUnity.bat not found", MsgBoxStyle.Critical, "Not Found")
+                pf.Text = "Start Project"
+                pf.Visible = True
+                pf.ProgressBar1.Maximum = (ListBox1.Items.Count - 1) * 1 * 10
+                opencmd_start()
+                Dim CMDThread2 As New Threading.Thread(AddressOf CMDConfig)
+                CMDThread = CMDThread2
+                'start cmd thread
+                CMDThread.Start()
+            Else
+                MsgBox("MASTER_StartUnity.bat not found", MsgBoxStyle.Critical, "Not Found")
         End If
     End Sub
 
@@ -365,6 +371,11 @@ Public Class MainForm
     Private Sub btn_deployProject_Click(sender As Object, e As EventArgs) Handles btn_deployProject.Click
         If File.Exists(".\ProjektVerteilen.bat") Then
             Dim pfd As New ProjectForm
+
+            If Application.OpenForms().OfType(Of ProjectForm).Any Then
+                pf.Close()
+            End If
+
             DisableButtons()
             checkStartUnity()
             pf = pfd
@@ -389,6 +400,11 @@ Public Class MainForm
     Private Sub btn_update_Click(sender As Object, e As EventArgs) Handles btn_update.Click
         If File.Exists(".\ProjektVerteilen.bat") Then
             Dim pfd As New ProjectForm
+
+            If Application.OpenForms().OfType(Of ProjectForm).Any Then
+                pf.Close()
+            End If
+
             DisableButtons()
             checkStartUnity()
             pf = pfd
