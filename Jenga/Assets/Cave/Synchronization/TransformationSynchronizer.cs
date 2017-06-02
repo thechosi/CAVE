@@ -87,12 +87,15 @@ namespace Cave
         {
             foreach (KeyValuePair<NetworkInstanceId, NetworkIdentity> networkIdentity in NetworkServer.objects)
             {
-                StoredTransform transform = new StoredTransform();
-                transform.networkId = networkIdentity.Key.Value;
-                transform.localPosition = networkIdentity.Value.gameObject.transform.localPosition;
-                transform.localEulerAngles = networkIdentity.Value.gameObject.transform.localEulerAngles;
-                transform.localScale = networkIdentity.Value.gameObject.transform.localScale;
-                message.transforms.Add(transform);
+                if (networkIdentity.Value.gameObject.GetComponent<Rigidbody>() != null)
+                {
+                    StoredTransform transform = new StoredTransform();
+                    transform.networkId = networkIdentity.Key.Value;
+                    transform.localPosition = networkIdentity.Value.gameObject.transform.localPosition;
+                    transform.localEulerAngles = networkIdentity.Value.gameObject.transform.localEulerAngles;
+                    transform.localScale = networkIdentity.Value.gameObject.transform.localScale;
+                    message.transforms.Add(transform);
+                }
             }
         }
 

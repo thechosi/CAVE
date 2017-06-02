@@ -1,54 +1,64 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System;
+using Cave;
+using UnityEngine.Networking;
 using UnityEngine.UI;
 
 public class MenuGUI : MonoBehaviour
 {
+    enum MenuState
+    {
+        Main,
+        Credits,
+        Options,
+        Hidden
+    }
 
-    private Boolean showMenu = true;
-    private Boolean musicOn = true;
+    private MenuState state = MenuState.Main;
+    private bool musicOn = true;
 
-    GameObject b1;
-    GameObject b2;
-    GameObject b3;
-    GameObject b4;
-    GameObject b5;
-    GameObject btnBack;
-    GameObject txt;
+    public GameObject playBtn;
+    public GameObject creditsBtn;
+    public GameObject exitBtn;
+    public GameObject settingsBtn;
+    public GameObject musicBtn;
+    public GameObject backBtn;
+    public GameObject header;
+
+    private bool allButtonsSpawned = false;
 
     void Start()
     {
-        b1 = GameObject.Find("Btn_Play");
-        b2 = GameObject.Find("Btn_Credits");
-        b3 = GameObject.Find("Btn_Exit");
-        b4 = GameObject.Find("Btn_Settings");
-        b5 = GameObject.Find("Btn_Music");
-
-
-        btnBack = GameObject.Find("Btn_Back");
-        txt = GameObject.Find("MenuText");
-
-        btnBack.SetActive(false);
-        b5.SetActive(false);
+        if (NodeInformation.type.Equals("master"))
+        {
+            state = MenuState.Main;
+            refresh();
+        }
     }
 
     public void playButton()
     {
-        toggleMenu();
-        btnBack.SetActive(false);
-        
+        state = MenuState.Hidden;
+        refresh();
     }
 
     public void settingsButton()
     {
-        toggleMenu();
-        b5.SetActive(true);
+        state = MenuState.Options;
+        refresh();
+        if (!allButtonsSpawned && NodeInformation.type.Equals("master"))
+        {
+            NetworkServer.Spawn(musicBtn);
+            NetworkServer.Spawn(backBtn);
+            allButtonsSpawned = true;
+        }
     }
 
     public void creditsButton()
     {
-        toggleMenu();
+        state = MenuState.Credits;
+        refresh();
     }
 
     public void exitButton()
@@ -58,27 +68,27 @@ public class MenuGUI : MonoBehaviour
 
     public void backButton()
     {
-        toggleMenu();
+        state = MenuState.Main;
+        refresh();
     }
 
     public void showMenuFunc()
     {
-        showMenu = false;
-        toggleMenu();
+        state = MenuState.Main;
+        refresh();
     }
 
 
-    public void toggleMenu()
+    public void refresh()
     {
-        showMenu = !showMenu;
-        b1.SetActive(showMenu);
-        b2.SetActive(showMenu);
-        b3.SetActive(showMenu);
-        b4.SetActive(showMenu);
-        b5.SetActive(showMenu);
-        txt.SetActive(showMenu);
+        playBtn.SetActive(state == MenuState.Main);
+        creditsBtn.SetActive(state == MenuState.Main);
+        exitBtn.SetActive(state == MenuState.Main);
+        settingsBtn.SetActive(state == MenuState.Main);
+        header.SetActive(state == MenuState.Main);
 
-        btnBack.SetActive(!showMenu);
+        musicBtn.SetActive(state == MenuState.Options);
+        backBtn.SetActive(state != MenuState.Main && state != MenuState.Hidden);
     }
 
     public void toggleMusic()
@@ -87,11 +97,12 @@ public class MenuGUI : MonoBehaviour
         if (musicOn)
         {
             music.Pause();
-            b5.GetComponent<Button>().GetComponentInChildren<Text>().text = "Music ON";
-        } else
+            musicBtn.GetComponent<Button>().GetComponentInChildren<Text>().text = "Music ON";
+        }
+        else
         {
             music.Play();
-            b5.GetComponent<Button>().GetComponentInChildren<Text>().text = "Music OFF";
+            musicBtn.GetComponent<Button>().GetComponentInChildren<Text>().text = "Music OFF";
         }
         musicOn = !musicOn;
     }

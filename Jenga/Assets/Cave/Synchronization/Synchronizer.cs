@@ -15,6 +15,7 @@ namespace Cave
         void Start()
         {
             RigidBodySynchronizer.Prepare();
+            GUISynchronizer.Prepare();
             started = false;
             
             if (NodeInformation.type.Equals("slave"))
@@ -65,7 +66,7 @@ namespace Cave
                 TrackingSynchronizer.BuildMessage(inputMessage.inputTrackingMessage);
                 RigidBodySynchronizer.BuildMessage(inputMessage.inputRigidBodyMessage);
                 TransformationSynchronizer.BuildMessage(inputMessage.inputTransformationMessage);
-                CollisionSynchronizer.BuildMessage(inputMessage.inputCollisionMessage);
+                EventSynchronizer.BuildMessage(inputMessage.inputEventsMessage);
 
                 node.BroadcastMessage(inputMessage);
             }
@@ -81,7 +82,7 @@ namespace Cave
                 TrackingSynchronizer.ProcessMessage(inputMessage.inputTrackingMessage);
                 RigidBodySynchronizer.ProcessMessage(inputMessage.inputRigidBodyMessage);
                 TransformationSynchronizer.ProcessMessage(inputMessage.inputTransformationMessage);
-                CollisionSynchronizer.ProcessMessage(inputMessage.inputCollisionMessage);
+                EventSynchronizer.ProcessMessage(inputMessage.inputEventsMessage);
             }
             
             StartCoroutine(EndOfFrame());

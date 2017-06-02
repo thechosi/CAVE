@@ -150,17 +150,20 @@ public class TowerInteractivity : MonoBehaviour
 
     public void createTower()
     {
-        Debug.Log("creating Tower");
-
-        setSizes();
-
-
-        for (int i = 0; i < nrOfRows; i++)
+        if (NodeInformation.type.Equals("master"))
         {
-            addRow();
-        }
+            Debug.Log("creating Tower");
 
-        Debug.Log("Tower created");
+            setSizes();
+
+
+            for (int i = 0; i < nrOfRows; i++)
+            {
+                addRow();
+            }
+
+            Debug.Log("Tower created");
+        }
     }
 
     private void addRow()
