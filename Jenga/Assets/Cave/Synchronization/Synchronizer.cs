@@ -6,7 +6,10 @@ namespace Cave
    
     public class Synchronizer : MonoBehaviour
     {
-        
+        public string[] relevantAxes = { "Vertical", "Horizontal" };
+        public string[] relevantButtons = { };
+        public string[] relevantKeys = { "mouse 0", "mouse 1", "mouse 2", "flystick 0", "flystick 1", "flystick 2", "flystick 3" };
+        public GameObject flyStick = null;
 
         private bool started;
         
@@ -14,6 +17,7 @@ namespace Cave
 
         void Start()
         {
+            flyStick = GameObject.Find("Flystick");
             RigidBodySynchronizer.Prepare();
             GUISynchronizer.Prepare();
             started = false;
@@ -60,7 +64,7 @@ namespace Cave
                 InputMessage inputMessage = new InputMessage();
 
                 TimeSynchronizer.BuildMessage(inputMessage.inputTimeMessage);
-                InputSynchronizer.BuildMessage(inputMessage.inputInputMessage);
+                InputSynchronizer.BuildMessage(this, inputMessage.inputInputMessage);
                 ParticleSynchronizer.BuildMessage(inputMessage.inputParticleMessage);
                 AnimatorSynchronizer.BuildMessage(inputMessage.inputAnimatorMessage);
                 TrackingSynchronizer.BuildMessage(inputMessage.inputTrackingMessage);
@@ -76,7 +80,7 @@ namespace Cave
                 ((Client)node).WaitForNextMessage(inputMessage);
 
                 TimeSynchronizer.ProcessMessage(inputMessage.inputTimeMessage);
-                InputSynchronizer.ProcessMessage(inputMessage.inputInputMessage);
+                InputSynchronizer.ProcessMessage(this, inputMessage.inputInputMessage);
                 ParticleSynchronizer.ProcessMessage(inputMessage.inputParticleMessage);
                 AnimatorSynchronizer.ProcessMessage(inputMessage.inputAnimatorMessage);
                 TrackingSynchronizer.ProcessMessage(inputMessage.inputTrackingMessage);

@@ -17,14 +17,8 @@ public class TrackerSettings : MonoBehaviour
     //added by pohl 09.12.16
     [SerializeField]
     private int nButtons;
-    [SerializeField]
-    public UnityEvent triggerButton;
-    [SerializeField]
-    public UnityEvent leftButton;
-    [SerializeField]
-    public UnityEvent rightButton;
-    [SerializeField]
-    public UnityEvent middleButton;
+
+    private bool[] pressedButtons;
 
 
     public TrackerHostSettings HostSettings
@@ -146,38 +140,20 @@ public class TrackerSettings : MonoBehaviour
 
     private IEnumerator PushButton()
     {
+        pressedButtons = new bool[nButtons];
         while (true)
         {
             for (int i = 0; i < nButtons; i += 1)
             {
-                if (hostSettings.GetButton(objectName, i))
-                {
-                    executeButtonFunctions(i);
-                }
+                pressedButtons[i] = hostSettings.GetButton(objectName, i);
             }
             yield return null;
         }
     }
 
-    private void executeButtonFunctions(int buttonChannel)
+    // 0 = trigger, 1 = left, 2 = right, 3 = middle
+    public bool IsButtonPressed(int buttonChannel)
     {
-        switch (buttonChannel)
-        {
-            case 0:
-                triggerButton.Invoke();
-                break;
-            case 1:
-                leftButton.Invoke();
-                break;
-            case 2:
-                rightButton.Invoke();
-                break;
-            case 3:
-                middleButton.Invoke();
-                break;
-            default:
-                print("Button does not exist!");
-                break;
-        }
+        return pressedButtons != null && buttonChannel < pressedButtons.Length && pressedButtons[buttonChannel];
     }
 }

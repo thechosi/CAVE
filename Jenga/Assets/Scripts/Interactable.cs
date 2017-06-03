@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using Cave;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -16,23 +18,11 @@ public class Interactable : MonoBehaviour {
 
 	public Action[] options;
 
-    void Start()
-    {
-        GameObject flyStick = GameObject.Find("Flystick");
-        TrackerSettings trackerSettings = flyStick.GetComponent<TrackerSettings>();
-        UnityEvent ev = new UnityEvent();
-        ev.AddListener(createMenu);
-        trackerSettings.middleButton = ev;
-    }
 
     void Update(){
-		if (Input.GetKeyDown(KeyCode.Escape)){
+        if (Input.GetKeyDown(KeyCode.Escape) || InputSynchronizer.GetFlyStickButtonDown(3)){
 			RadialMenuSpawner.ins.SpawnMenu (this);
 		}
 	}
-
-    private void createMenu()
-    {
-        RadialMenuSpawner.ins.SpawnMenu(this);
-    }
+    
 }
