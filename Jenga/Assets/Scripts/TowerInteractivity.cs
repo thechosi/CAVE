@@ -11,7 +11,7 @@ public class TowerInteractivity : MonoBehaviour
 
 
     InteractableItem interactingItem;
-    
+
     public float gravity = 10;
 
     private GameObject selectedObj = null;
@@ -28,7 +28,7 @@ public class TowerInteractivity : MonoBehaviour
 
     public int nrOfRows;
 
-    public int nrOfPlayers;
+    private int nrOfPlayers;
     private List<Player> players = new List<Player>();
 
     private AudioSource destroyAudioSource;
@@ -114,13 +114,13 @@ public class TowerInteractivity : MonoBehaviour
 
         cam = GameObject.Find("Camera").GetComponent<Camera>();
 
-        for (int i = 0; i < NrOfPlayers; i++)
+        /*for (int i = 0; i < NrOfPlayers; i++)
         {
             Players.Add(ScriptableObject.CreateInstance<Player>());
             Players[i].Score = 0;
             Players[i].PlayerNumber = i;
         }
-        Players[0].IsActive = true;
+        Players[0].IsActive = true;*/
 
         if (diffBetweenBlocks < 0)
         {
@@ -192,7 +192,8 @@ public class TowerInteractivity : MonoBehaviour
             newBrick.name = row.name + "Block3";
             RigidBodySynchronizer.Spawn(newBrick);
         }
-        else {
+        else
+        {
             newBrick = Instantiate(brick, new Vector3(0, absolutDiff, blockSize.z), Quaternion.identity) as GameObject;
             newBrick.transform.Rotate(new Vector3(0, 90, 0));
             newBrick.transform.parent = row.transform;
@@ -236,6 +237,7 @@ public class TowerInteractivity : MonoBehaviour
 
     public void resetTower()
     {
+        TopBlockPlacer.PlayerChangeable = true;
         destroyTower();
         createTower();
     }
@@ -258,7 +260,7 @@ public class TowerInteractivity : MonoBehaviour
                 interactingItem = null;
             }
         }
-        
+
         if (Input.GetKey(KeyCode.O))
         {
             if (TopBlockPlacer.PlayerChangeable == true)
@@ -291,7 +293,8 @@ public class TowerInteractivity : MonoBehaviour
                         select(hitInfo.transform.gameObject);
                         Debug.Log("select");
                     }
-                    else {
+                    else
+                    {
                         deselect();
                         Debug.Log("deselect");
                     }
@@ -363,7 +366,8 @@ public class TowerInteractivity : MonoBehaviour
             gameObject.name = "Row#" + (maxRow) + "Block3";
 
         }
-        else {
+        else
+        {
             Debug.Log("else");
         }
     }
@@ -380,7 +384,8 @@ public class TowerInteractivity : MonoBehaviour
                 Debug.Log("flyStickInteraction set");
             }
         }
-        else {
+        else
+        {
             Debug.LogError("Didn't find the FlyStick");
         }
     }
@@ -414,7 +419,8 @@ public class TowerInteractivity : MonoBehaviour
                             tower.select(interactingItem.transform.gameObject);
                             Debug.Log("select: " + interactingItem.transform.gameObject.name);
                         }
-                        else {
+                        else
+                        {
                             Debug.Log("return2");
                             return;
                         }

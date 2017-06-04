@@ -12,7 +12,8 @@ public class MenuGUI : MonoBehaviour
         Main,
         Credits,
         Options,
-        Hidden
+        Hidden,
+        Player
     }
 
     private MenuState state = MenuState.Main;
@@ -25,6 +26,7 @@ public class MenuGUI : MonoBehaviour
     public GameObject musicBtn;
     public GameObject backBtn;
     public GameObject header;
+    public GameObject nrOfPlayers;
 
     private bool allButtonsSpawned = false;
 
@@ -39,7 +41,27 @@ public class MenuGUI : MonoBehaviour
 
     public void playButton()
     {
+        state = MenuState.Player;
+        refresh();
+    }
+
+    public void createPlayers()
+    {
+        TowerInteractivity tower = FindObjectOfType<TowerInteractivity>();
+        tower.NrOfPlayers = Int32.Parse(nrOfPlayers.transform.FindChild("Text").GetComponent<Text>().text);
+        for (int i = 0; i < tower.NrOfPlayers; i++)
+        {
+            tower.Players.Add(ScriptableObject.CreateInstance<Player>());
+            tower.Players[i].Score = 0;
+            tower.Players[i].PlayerNumber = i;
+        }
+        tower.Players[0].IsActive = true;
+    }
+
+    public void startGame()
+    {
         state = MenuState.Hidden;
+        createPlayers();
         refresh();
     }
 
@@ -87,6 +109,8 @@ public class MenuGUI : MonoBehaviour
         settingsBtn.SetActive(state == MenuState.Main);
         header.SetActive(state == MenuState.Main);
 
+        nrOfPlayers.SetActive(state == MenuState.Player);
+
         musicBtn.SetActive(state == MenuState.Options);
         backBtn.SetActive(state != MenuState.Main && state != MenuState.Hidden);
     }
@@ -96,12 +120,12 @@ public class MenuGUI : MonoBehaviour
         var music = GameObject.Find("BackgroundMusic").GetComponent<AudioSource>();
         if (musicOn)
         {
-            music.Pause();
+            music.mute = true;
             musicBtn.GetComponent<Button>().GetComponentInChildren<Text>().text = "Music ON";
         }
         else
         {
-            music.Play();
+            music.mute = false;
             musicBtn.GetComponent<Button>().GetComponentInChildren<Text>().text = "Music OFF";
         }
         musicOn = !musicOn;
