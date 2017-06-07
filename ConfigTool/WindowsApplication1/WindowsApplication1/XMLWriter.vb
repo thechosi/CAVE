@@ -2,15 +2,15 @@
 
 Public Class XMLWriter
 
-    Private Function WriteVektor(data As XElement, vektor As Vektor)
+    Private Sub WriteVektor(data As XElement, vektor As Vektor)
 
-        data.Attribute("x").Value = Vektor.x
-        data.Attribute("y").Value = Vektor.y
-        data.Attribute("z").Value = Vektor.z
+        data.Attribute("x").Value = vektor.x
+        data.Attribute("y").Value = vektor.y
+        data.Attribute("z").Value = vektor.z
 
-    End Function
+    End Sub
 
-    Private Function WriteOrigin(data As XElement, computer As Computer)
+    Private Sub WriteOrigin(data As XElement, computer As Computer)
 
         For Each child In data.Elements()
             If child.Name.ToString.Equals("position") Then
@@ -18,9 +18,9 @@ Public Class XMLWriter
             End If
         Next
 
-    End Function
+    End Sub
 
-    Private Function WriteCamera(data As XElement, computer As Computer)
+    Private Sub WriteCamera(data As XElement, computer As Computer)
 
         data.Attribute("eye").Value = DirectCast(computer, Slave).camera.eye.Trim()
 
@@ -29,9 +29,9 @@ Public Class XMLWriter
                 WriteVektor(child, DirectCast(computer, Slave).camera.rotation)
             End If
         Next
-    End Function
+    End Sub
 
-    Private Function WriteScreenPlane(data As XElement, computer As Computer)
+    Private Sub WriteScreenPlane(data As XElement, computer As Computer)
         Dim screenPlane As New ScreenPlane
         For Each child In data.Elements()
             If child.Name.ToString.Equals("position") Then
@@ -43,9 +43,9 @@ Public Class XMLWriter
             End If
         Next
 
-    End Function
+    End Sub
 
-    Public Function SetAllComputers(filename As String, computers As List(Of Computer))
+    Public Sub SetAllComputers(filename As String, computers As List(Of Computer))
         Dim openFile As New FileStream(filename, FileMode.Open, FileAccess.Read)
         Dim xml As XDocument = XDocument.Load(openFile)
         Dim counter As Integer = 0
@@ -86,6 +86,19 @@ Public Class XMLWriter
         xml.Save(saveFile)
         saveFile.Close()
 
-    End Function
+    End Sub
+
+    Public Sub SetConfig(configpath As String, category As String, value As String)
+
+        Dim xml As XDocument = XDocument.Load(configpath)
+
+        For Each element In xml.<config>.Elements()
+            If element.Name.ToString.Equals(category) Then
+                element.Value = value
+            End If
+        Next
+
+        xml.Save(configpath)
+    End Sub
 
 End Class

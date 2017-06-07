@@ -52,6 +52,21 @@ Public Class XMLReader
         Return screenPlane
     End Function
 
+    Public Function GetConfig(configfilepath As String, category As String)
+        Dim fs As New FileStream(configfilepath, FileMode.Open, FileAccess.Read)
+        Dim xml As XDocument = XDocument.Load(fs)
+        fs.Close()
+        Dim value As String = ""
+
+        For Each element In xml.<config>.Elements()
+            If element.Name.ToString.Equals(category) Then
+                value = element.Value
+            End If
+        Next
+
+        Return value
+    End Function
+
     Public Function GetAllComputers(fs As FileStream)
         Dim computers As New List(Of Computer)
 

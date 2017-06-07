@@ -16,10 +16,13 @@ Public Class MainForm
     Dim button_click As Integer = 0
     Dim pf As New ProjectForm
     Dim P As Process
-    Dim pathToSlave As String = "C:\StudentenprojektCAVE\AktuellesProjekt\"
+    Dim configfilepath As String = ".\config.xml"
+    Dim xmlreadconfig As XMLReader = New XMLReader
+    Dim pathToSlave As String = xmlreadconfig.GetConfig(configfilepath, "pathToSlave")
+    Dim newPath As String = ""
     Dim CMDThread As Threading.Thread
 
-    Private Function clearAllFields()
+    Private Sub clearAllFields()
         txt_ipAddress.Text = ""
         txt_port.Text = ""
         txt_computerName.Text = ""
@@ -36,7 +39,7 @@ Public Class MainForm
         txt_splane_x.Text = ""
         txt_splane_y.Text = ""
         txt_splane_z.Text = ""
-    End Function
+    End Sub
 
     Private Sub ListBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ListBox1.SelectedIndexChanged
         Me.grp_computerInfo.Text = Me.ListBox1.SelectedItem.ToString
@@ -435,14 +438,19 @@ Public Class MainForm
     End Sub
 
     Private Sub SlaveConfigToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SlaveConfigToolStripMenuItem.Click
-
-        Dim newPath As String = ""
-        newPath = InputBox("Please enter the path to the folder where the .exe-file is located:", "Slave Path", pathToSlave)
-
-        If newPath IsNot "" Then
-            pathToSlave = newPath
+        If File.Exists(configfilepath) Then
+            Dim newPath As String = ""
+            Dim xmlRead As New XMLReader
+            pathToSlave = xmlRead.GetConfig(configfilepath, "pathToSlave")
+            newPath = InputBox("Please enter the path to the folder where the .exe-file is located:", "Slave Path", pathToSlave)
+            If newPath IsNot "" Then
+                If Not newPath.Equals(pathToSlave) Then
+                    Dim xmlWrite As New XMLWriter
+                    xmlWrite.SetConfig(configfilepath, "pathToSlave", newPath)
+                    pathToSlave = newPath
+                End If
+            End If
         End If
-
     End Sub
 
 End Class
