@@ -26,16 +26,70 @@ public class MenuGUI : MonoBehaviour
     public GameObject musicBtn;
     public GameObject backBtn;
     public GameObject header;
-    public GameObject nrOfPlayers;
+    private GameObject nrOfPlayers;
+    public GameObject twoPlayers;
+    public GameObject threePlayers;
+    public GameObject fourPlayers;
+
+    private Button selectedButton;
 
     private bool allButtonsSpawned = false;
 
     void Start()
     {
+
         if (NodeInformation.type.Equals("master"))
         {
             state = MenuState.Main;
             refresh();
+        }
+    }
+
+    void Update()
+    {
+        if (state != MenuState.Hidden)
+        {
+            GameObject flystickSim = GameObject.Find("FlystickSim");
+            GameObject flystick = GameObject.Find("Flystick");
+
+            RaycastHit hit;
+
+            if (Physics.Raycast(flystickSim.transform.position + flystickSim.transform.up, flystickSim.transform.up, out hit, 10) || Physics.Raycast(flystick.transform.position + flystick.transform.up, flystick.transform.up, out hit, 10))
+            {
+                if (hit.collider.name == "Plane")
+                {
+                    return;
+                }
+
+                GameObject hitObj = hit.collider.gameObject;
+                Button hitButton = hitObj.GetComponent<Button>();
+
+                if (selectedButton != null && selectedButton != hitButton)
+                {
+                    selectedButton.GetComponent<Image>().color = Color.white;
+                }
+
+                selectedButton = hitButton;
+
+                selectedButton.GetComponent<Image>().color = Color.green;
+
+            }
+            else if (selectedButton != null)
+            {
+                selectedButton.GetComponent<Image>().color = Color.white;
+                selectedButton = null;
+            }
+
+            if (selectedButton != null && (selectedButton.name == "Btn_2Player" || selectedButton.name == "Btn_3Player" || selectedButton.name == "Btn_4Player"))
+            {
+                nrOfPlayers = selectedButton.gameObject;
+            }
+
+            if (selectedButton != null && Input.GetButtonDown("Submit"))
+            {
+                selectedButton.onClick.Invoke();
+            }
+
         }
     }
 
@@ -48,7 +102,9 @@ public class MenuGUI : MonoBehaviour
     public void createPlayers()
     {
         TowerInteractivity tower = FindObjectOfType<TowerInteractivity>();
-        tower.NrOfPlayers = Int32.Parse(nrOfPlayers.transform.FindChild("Text").GetComponent<Text>().text);
+
+        tower.NrOfPlayers = Int32.Parse(nrOfPlayers.transform.FindChild("Text").GetComponent<Text>().text.Substring(0, 1));
+
         for (int i = 0; i < tower.NrOfPlayers; i++)
         {
             tower.Players.Add(ScriptableObject.CreateInstance<Player>());
@@ -109,7 +165,9 @@ public class MenuGUI : MonoBehaviour
         settingsBtn.SetActive(state == MenuState.Main);
         header.SetActive(state == MenuState.Main);
 
-        nrOfPlayers.SetActive(state == MenuState.Player);
+        twoPlayers.SetActive(state == MenuState.Player);
+        threePlayers.SetActive(state == MenuState.Player);
+        fourPlayers.SetActive(state == MenuState.Player);
 
         musicBtn.SetActive(state == MenuState.Options);
         backBtn.SetActive(state != MenuState.Main && state != MenuState.Hidden);
