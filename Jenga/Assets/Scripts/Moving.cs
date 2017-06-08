@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Cave;
 using UnityEngine;
 
 public class Moving : MonoBehaviour {
@@ -11,37 +12,37 @@ public class Moving : MonoBehaviour {
     {
         Vector3 moveVector = new Vector3();
         // up
-        if (Input.GetKey(KeyCode.Y))
+        if (InputSynchronizer.GetKey("y"))
         {
             moveVector.y += speed;
         }
 
         // down
-        if (Input.GetKey(KeyCode.X))
+        if (InputSynchronizer.GetKey("x"))
         {
             moveVector.y -= speed;
         }
 
         // forward
-        if (Input.GetKey(KeyCode.W))
+        if (InputSynchronizer.GetKey("w"))
         {
             moveVector.z += speed;
         }
 
         // backward
-        if (Input.GetKey(KeyCode.S))
+        if (InputSynchronizer.GetKey("s"))
         {
             moveVector.z -= speed;
         }
 
         // left
-        if (Input.GetKey(KeyCode.A))
+        if (InputSynchronizer.GetKey("a"))
         {
             moveVector.x -= speed;
         }
 
         // right
-        if (Input.GetKey(KeyCode.D))
+        if (InputSynchronizer.GetKey("d"))
         {
             moveVector.x += speed;
         }
@@ -51,32 +52,32 @@ public class Moving : MonoBehaviour {
         // Rotation
         Vector3 rotationVector = new Vector3();
 
-        if (Input.GetKey(KeyCode.U))
+        if (InputSynchronizer.GetKey("u"))
         {
             rotationVector.x += rotationSpeed;
         }
 
-        if (Input.GetKey(KeyCode.J))
+        if (InputSynchronizer.GetKey("j"))
         {
             rotationVector.x -= rotationSpeed;
         }
 
-        if (Input.GetKey(KeyCode.H))
+        if (InputSynchronizer.GetKey("h"))
         {
             rotationVector.z += rotationSpeed;
         }
 
-        if (Input.GetKey(KeyCode.K))
+        if (InputSynchronizer.GetKey("k"))
         {
             rotationVector.z -= rotationSpeed;
         }
 
-        if (Input.GetKey(KeyCode.N))
+        if (InputSynchronizer.GetKey("n"))
         {
             rotationVector.y += rotationSpeed;
         }
 
-        if (Input.GetKey(KeyCode.M))
+        if (InputSynchronizer.GetKey("m"))
         {
             rotationVector.y -= rotationSpeed;
         }

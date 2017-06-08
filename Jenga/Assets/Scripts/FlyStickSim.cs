@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Cave;
 using UnityEngine;
 
 public class FlyStickSim : MonoBehaviour
@@ -25,7 +26,7 @@ public class FlyStickSim : MonoBehaviour
     {
         if (enable)
         {
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (InputSynchronizer.GetKeyDown("space"))
             {
                 float minDistance = float.MaxValue;
 
@@ -74,7 +75,7 @@ public class FlyStickSim : MonoBehaviour
                 }
 
             }
-            if (Input.GetKeyUp(KeyCode.Space) && interactingItem != null)
+            if (InputSynchronizer.GetKeyUp("space") && interactingItem != null)
             {
                 interactingItem.EndInteraction(this);
             }

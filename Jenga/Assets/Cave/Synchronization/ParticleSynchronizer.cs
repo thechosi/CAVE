@@ -38,13 +38,17 @@ namespace Cave
             {
                 foreach (ParticleSystem particleSystem in particleSystems)
                 {
-                    target[particleSystem] = (message.particleDeltaTime + target[particleSystem]) % particleSystem.main.duration;
+                    if (target.ContainsKey(particleSystem))
+                    {
+                        target[particleSystem] = (message.particleDeltaTime + target[particleSystem]) %
+                                                 particleSystem.main.duration;
 
-                    float deltaTime = target[particleSystem] - particleSystem.time;
-                    if (deltaTime < -particleSystem.main.duration + 1)
-                        deltaTime += particleSystem.main.duration;
-                    if (deltaTime > 0 && deltaTime < 1)
-                        particleSystem.Simulate(deltaTime, true, firstSyncTime);
+                        float deltaTime = target[particleSystem] - particleSystem.time;
+                        if (deltaTime < -particleSystem.main.duration + 1)
+                            deltaTime += particleSystem.main.duration;
+                        if (deltaTime > 0 && deltaTime < 1)
+                            particleSystem.Simulate(deltaTime, true, firstSyncTime);
+                    }
                 }
                 firstSyncTime = false;
             }
@@ -75,15 +79,18 @@ namespace Cave
             particleSystems = Resources.FindObjectsOfTypeAll(typeof(ParticleSystem)) as ParticleSystem[];
             foreach (ParticleSystem particleSystem in particleSystems)
             {
-                EventMessage message = new EventMessage();
-                message.type = SynchroMessageType.SetParticleSeed;
-                message.data = particleSystem.randomSeed;
+                if (particleSystem.isPlaying)
+                {
+                    EventMessage message = new EventMessage();
+                    message.type = SynchroMessageType.SetParticleSeed;
+                    message.data = particleSystem.randomSeed;
 
-                server.SendMessage(message, client);
-                particleSystem.Stop();
-                particleSystem.useAutoRandomSeed = false;
-                particleSystem.Clear();
-                particleSystem.Play();
+                    server.SendMessage(message, client);
+                    particleSystem.Stop();
+                    particleSystem.useAutoRandomSeed = false;
+                    particleSystem.Clear();
+                    particleSystem.Play();
+                }
             }
         }
 
@@ -92,14 +99,17 @@ namespace Cave
             particleSystems = Resources.FindObjectsOfTypeAll(typeof(ParticleSystem)) as ParticleSystem[];
             foreach (ParticleSystem particleSystem in particleSystems)
             {
-                EventMessage message = new EventMessage();
-                client.WaitForNextMessage(message);
+                if (particleSystem.isPlaying)
+                {
+                    EventMessage message = new EventMessage();
+                    client.WaitForNextMessage(message);
 
-                target[particleSystem] = 0;
-                particleSystem.Stop();
-                particleSystem.randomSeed = message.data;
-                particleSystem.Clear();
-                particleSystem.Play();
+                    target[particleSystem] = 0;
+                    particleSystem.Stop();
+                    particleSystem.randomSeed = message.data;
+                    particleSystem.Clear();
+                    particleSystem.Play();
+                }
             }
         }
     }
