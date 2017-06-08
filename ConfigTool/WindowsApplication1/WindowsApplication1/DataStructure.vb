@@ -37,9 +37,9 @@ Public Class Origin
 End Class
 
 Public Class Vektor
-    Public x As String
-    Public y As String
-    Public z As String
+    Public x As String = "0"
+    Public y As String = "0"
+    Public z As String = "0"
 End Class
 
 Public Class ScreenPlane

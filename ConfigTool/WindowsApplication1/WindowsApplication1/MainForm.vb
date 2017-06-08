@@ -87,17 +87,15 @@ Public Class MainForm
             projectname = FolderBrowserDialog1.SelectedPath.Substring(FolderBrowserDialog1.SelectedPath.LastIndexOf("\") + 1)
             filename = FolderBrowserDialog1.SelectedPath + "\" + projectname + "_Data\StreamingAssets\node-config.xml"
             If File.Exists(filename) Then
-                Dim fs As New FileStream(filename, FileMode.Open, FileAccess.Read)
                 ListBox1.Items.Clear()
 
                 Dim xmlReader As New XMLReader
-                computers = xmlReader.GetAllComputers(fs)
+                computers = xmlReader.GetAllComputers(filename)
 
                 For Each computer In computers
                     ListBox1.Items.Add(computer.ToString)
                 Next
 
-                fs.Close()
                 grp_computerList.Enabled = True
                 btn_configSave.Enabled = True
                 btn_startProject.Enabled = True
@@ -453,4 +451,45 @@ Public Class MainForm
         End If
     End Sub
 
+    Private Sub btn_addComputer_Click(sender As Object, e As EventArgs) Handles btn_addComputer.Click
+        Dim computer_new As New Slave()
+        Dim camera As New Camera
+        Dim rotation As New Vektor
+        Dim screenplane As New ScreenPlane
+        Dim position As New Vektor
+        Dim sp_rotation As New Vektor
+        Dim scale As New Vektor
+        Dim vektor_cam As New Vektor
+
+        computer_new.camera = camera
+        computer_new.camera.rotation = rotation
+        computer_new.screenplane = screenplane
+        computer_new.screenplane.position = position
+        computer_new.screenplane.rotation = sp_rotation
+        computer_new.screenplane.scale = scale
+
+        computers.Add(computer_new)
+        ListBox1.Items.Add(computer_new.ToString)
+    End Sub
+
+    Private Sub btm_removeComputer_Click(sender As Object, e As EventArgs) Handles btm_removeComputer.Click
+        Dim computerToRemove As Computer = computers.ElementAt(Me.ListBox1.SelectedIndex)
+
+        If TypeOf computerToRemove Is Master Then
+            MsgBox("A computer from type Master cannot be removed", MsgBoxStyle.Critical, "Remove Computer")
+        Else
+
+            Dim result As Integer = MessageBox.Show("Do you want to remove the computer?", "Remove Computer", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Information)
+            If result = DialogResult.Yes Then
+
+                computers.Remove(computerToRemove)
+
+                ListBox1.Items.Clear()
+                For Each computer In computers
+                    ListBox1.Items.Add(computer.ToString)
+                Next
+            End If
+        End If
+
+    End Sub
 End Class

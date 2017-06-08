@@ -67,10 +67,10 @@ Public Class XMLReader
         Return value
     End Function
 
-    Public Function GetAllComputers(fs As FileStream)
+    Public Function GetAllComputers(path As String)
         Dim computers As New List(Of Computer)
 
-        Dim xml As XDocument = XDocument.Load(fs)
+        Dim xml As XDocument = XDocument.Load(path)
 
         For Each element In xml.<config>.Elements()
 

@@ -2,90 +2,45 @@
 
 Public Class XMLWriter
 
-    Private Sub WriteVektor(data As XElement, vektor As Vektor)
-
-        data.Attribute("x").Value = vektor.x
-        data.Attribute("y").Value = vektor.y
-        data.Attribute("z").Value = vektor.z
-
-    End Sub
-
-    Private Sub WriteOrigin(data As XElement, computer As Computer)
-
-        For Each child In data.Elements()
-            If child.Name.ToString.Equals("position") Then
-                WriteVektor(child, DirectCast(computer, Master).origin.position)
-            End If
-        Next
-
-    End Sub
-
-    Private Sub WriteCamera(data As XElement, computer As Computer)
-
-        data.Attribute("eye").Value = DirectCast(computer, Slave).camera.eye.Trim()
-
-        For Each child In data.Elements()
-            If child.Name.ToString.Equals("rotation") Then
-                WriteVektor(child, DirectCast(computer, Slave).camera.rotation)
-            End If
-        Next
-    End Sub
-
-    Private Sub WriteScreenPlane(data As XElement, computer As Computer)
-        Dim screenPlane As New ScreenPlane
-        For Each child In data.Elements()
-            If child.Name.ToString.Equals("position") Then
-                WriteVektor(child, computer.screenplane.position)
-            ElseIf child.Name.ToString.Equals("rotation") Then
-                WriteVektor(child, computer.screenplane.rotation)
-            ElseIf child.Name.ToString.Equals("scale") Then
-                WriteVektor(child, computer.screenplane.scale)
-            End If
-        Next
-
-    End Sub
-
     Public Sub SetAllComputers(filename As String, computers As List(Of Computer))
-        Dim openFile As New FileStream(filename, FileMode.Open, FileAccess.Read)
-        Dim xml As XDocument = XDocument.Load(openFile)
+        Dim xml As New XDocument
+        Dim rootTree As XElement = <config></config>
+        xml.Add(rootTree)
+
         Dim counter As Integer = 0
-        openFile.Close()
-        For Each element In xml.<config>.Elements()
-            ' MasterPC
-            If element.Name.ToString.Equals("master") Then
-
-                If TypeOf computers.Item(counter) Is Master Then
-                    For Each child In element.Elements()
-                        If child.Name.ToString.Equals("origin") Then
-                            WriteOrigin(child, computers.Item(counter))
-                        End If
-                        If child.Name.ToString.Equals("screenplane") Then
-                            WriteScreenPlane(child, computers.Item(counter))
-                        End If
-                    Next
-                    element.Attribute("port").Value = DirectCast(computers.Item(counter), Master).port
-                    element.Attribute("ip").Value = computers.Item(counter).ip
-                End If
-                'SlavePCs
+        While counter < computers.Count
+            If TypeOf computers.Item(counter) Is Master Then
+                Dim srcTree As XElement =
+                      <master ip=<%= computers.Item(counter).ip %> port=<%= DirectCast(computers.Item(counter), Master).port %>>
+                          <origin>
+                              <position x=<%= DirectCast(computers.Item(counter), Master).origin.position.x %> y=<%= DirectCast(computers.Item(counter), Master).origin.position.y %> z=<%= DirectCast(computers.Item(counter), Master).origin.position.z %>/>
+                          </origin>
+                          <screenplane>
+                              <position x=<%= computers.Item(counter).screenplane.position.x %> y=<%= computers.Item(counter).screenplane.position.y %> z=<%= computers.Item(counter).screenplane.position.z %>/>
+                              <rotation x=<%= computers.Item(counter).screenplane.rotation.x %> y=<%= computers.Item(counter).screenplane.rotation.y %> z=<%= computers.Item(counter).screenplane.rotation.z %>/>
+                              <scale x=<%= computers.Item(counter).screenplane.scale.x %> y=<%= computers.Item(counter).screenplane.scale.y %> z=<%= computers.Item(counter).screenplane.scale.z %>/>
+                          </screenplane>
+                      </master>
+                xml.Root.Add(srcTree)
             Else
-                For Each child In element.Elements()
-                    If child.Name.ToString.Equals("camera") Then
-                        WriteCamera(child, computers.Item(counter))
-                    End If
-                    If child.Name.ToString.Equals("screenplane") Then
-                        WriteScreenPlane(child, computers.Item(counter))
-                    End If
-                Next
-
-                element.Attribute("ip").Value = computers.Item(counter).ip
+                Dim srcTree As XElement =
+              <slave ip=<%= computers.Item(counter).ip %>>
+                  <camera eye=<%= DirectCast(computers.Item(counter), Slave).camera.eye %>>
+                      <rotation x=<%= DirectCast(computers.Item(counter), Slave).camera.rotation.x %> y=<%= DirectCast(computers.Item(counter), Slave).camera.rotation.y %> z=<%= DirectCast(computers.Item(counter), Slave).camera.rotation.z %>/>
+                  </camera>
+                  <screenplane>
+                      <position x=<%= computers.Item(counter).screenplane.position.x %> y=<%= computers.Item(counter).screenplane.position.y %> z=<%= computers.Item(counter).screenplane.position.z %>/>
+                      <rotation x=<%= computers.Item(counter).screenplane.rotation.x %> y=<%= computers.Item(counter).screenplane.rotation.y %> z=<%= computers.Item(counter).screenplane.rotation.z %>/>
+                      <scale x=<%= computers.Item(counter).screenplane.scale.x %> y=<%= computers.Item(counter).screenplane.scale.y %> z=<%= computers.Item(counter).screenplane.scale.z %>/>
+                  </screenplane>
+              </slave>
+                xml.Root.Add(srcTree)
             End If
             counter = counter + 1
-        Next
-        Dim saveFile As New FileStream(filename, FileMode.OpenOrCreate, FileAccess.ReadWrite)
+        End While
 
-        xml.Save(saveFile)
-        saveFile.Close()
 
+        xml.Save(filename)
     End Sub
 
     Public Sub SetConfig(configpath As String, category As String, value As String)

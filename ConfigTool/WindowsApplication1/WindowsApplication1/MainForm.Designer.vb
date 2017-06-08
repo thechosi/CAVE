@@ -24,6 +24,8 @@ Partial Class MainForm
     Private Sub InitializeComponent()
         Me.ListBox1 = New System.Windows.Forms.ListBox()
         Me.grp_computerList = New System.Windows.Forms.GroupBox()
+        Me.btm_removeComputer = New System.Windows.Forms.Button()
+        Me.btn_addComputer = New System.Windows.Forms.Button()
         Me.MenuStrip1 = New System.Windows.Forms.MenuStrip()
         Me.DateiToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ÖffnenToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -94,19 +96,39 @@ Partial Class MainForm
         Me.ListBox1.FormattingEnabled = True
         Me.ListBox1.Location = New System.Drawing.Point(6, 19)
         Me.ListBox1.Name = "ListBox1"
-        Me.ListBox1.Size = New System.Drawing.Size(133, 264)
+        Me.ListBox1.Size = New System.Drawing.Size(133, 251)
         Me.ListBox1.TabIndex = 0
         '
         'grp_computerList
         '
+        Me.grp_computerList.Controls.Add(Me.btm_removeComputer)
+        Me.grp_computerList.Controls.Add(Me.btn_addComputer)
         Me.grp_computerList.Controls.Add(Me.ListBox1)
         Me.grp_computerList.Enabled = False
         Me.grp_computerList.Location = New System.Drawing.Point(12, 61)
         Me.grp_computerList.Name = "grp_computerList"
-        Me.grp_computerList.Size = New System.Drawing.Size(145, 289)
+        Me.grp_computerList.Size = New System.Drawing.Size(145, 305)
         Me.grp_computerList.TabIndex = 1
         Me.grp_computerList.TabStop = False
         Me.grp_computerList.Text = "Which Computer"
+        '
+        'btm_removeComputer
+        '
+        Me.btm_removeComputer.Location = New System.Drawing.Point(115, 276)
+        Me.btm_removeComputer.Name = "btm_removeComputer"
+        Me.btm_removeComputer.Size = New System.Drawing.Size(24, 23)
+        Me.btm_removeComputer.TabIndex = 2
+        Me.btm_removeComputer.Text = "-"
+        Me.btm_removeComputer.UseVisualStyleBackColor = True
+        '
+        'btn_addComputer
+        '
+        Me.btn_addComputer.Location = New System.Drawing.Point(85, 276)
+        Me.btn_addComputer.Name = "btn_addComputer"
+        Me.btn_addComputer.Size = New System.Drawing.Size(24, 23)
+        Me.btn_addComputer.TabIndex = 1
+        Me.btn_addComputer.Text = "+"
+        Me.btn_addComputer.UseVisualStyleBackColor = True
         '
         'MenuStrip1
         '
@@ -147,7 +169,7 @@ Partial Class MainForm
         'SlaveConfigToolStripMenuItem
         '
         Me.SlaveConfigToolStripMenuItem.Name = "SlaveConfigToolStripMenuItem"
-        Me.SlaveConfigToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.SlaveConfigToolStripMenuItem.Size = New System.Drawing.Size(151, 22)
         Me.SlaveConfigToolStripMenuItem.Text = "&Path to Slave..."
         '
         'ToolStripMenuItem1
@@ -695,4 +717,6 @@ Partial Class MainForm
     Friend WithEvents Label7 As Label
     Friend WithEvents EditToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents SlaveConfigToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents btm_removeComputer As Button
+    Friend WithEvents btn_addComputer As Button
 End Class
