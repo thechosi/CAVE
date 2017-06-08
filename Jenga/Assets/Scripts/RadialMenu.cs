@@ -28,29 +28,18 @@ public class RadialMenu : MonoBehaviour {
 		}
 	}
 
-	void Update(){
-		if (Input.GetKeyUp(KeyCode.Escape)) {
-
-			// fade music if in menu modus
-			GameObject BackgroundMusic = GameObject.Find ("BackgroundMusic");
-			AudioSource backgroundMusicSource = BackgroundMusic.GetComponent<AudioSource>();
-			backgroundMusicSource.volume = 0.5f;
-
-			if (selected) {
-				
-				selected.ButtonPressed ();
-			}
-
-			// music back to full volume
-			backgroundMusicSource.volume = 1.0f;
-			Destroy (gameObject);
+	public void Trigger(){
+		if (selected) {				
+			selected.ButtonPressed ();
 		}
+	}
 
-		GameObject flystick = GameObject.Find ("FlystickSim");
+	void Update(){
+		GameObject flystick = GameObject.Find ("Flystick");
 
 		RaycastHit hit;
 
-		if (Physics.Raycast (flystick.transform.position + flystick.transform.up, flystick.transform.up, out hit, 10)) {
+		if (Physics.Raycast (flystick.transform.position, flystick.transform.up, out hit, 10)) {
 			if (hit.collider.gameObject.name == "Button(Clone)") {
 				GameObject hitObj = hit.collider.gameObject;
 				RadialButton hitButton = hitObj.GetComponent<RadialButton> ();

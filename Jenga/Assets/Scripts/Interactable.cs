@@ -18,11 +18,29 @@ public class Interactable : MonoBehaviour {
 
 	public Action[] options;
 
+	private RadialMenu menu = null;
 
     void Update(){
-        if (Input.GetKeyDown(KeyCode.Escape) || InputSynchronizer.GetFlyStickButtonDown(3)){
-			RadialMenuSpawner.ins.SpawnMenu (this);
+		if (menu == null && (Input.GetKeyDown(KeyCode.Escape) || InputSynchronizer.GetFlyStickButtonDown(3))){
+			menu = RadialMenuSpawner.ins.SpawnMenu (this);
+
+			// fade music if in menu modus
+			GameObject BackgroundMusic = GameObject.Find ("BackgroundMusic");
+			AudioSource backgroundMusicSource = BackgroundMusic.GetComponent<AudioSource>();
+			backgroundMusicSource.volume = 0.5f;
+
+			Debug.Log ("Radial Menu created");
+		}else if (menu!=null && (Input.GetKeyDown(KeyCode.Escape) || InputSynchronizer.GetFlyStickButtonDown(3))){
+			// music back to full volume
+			GameObject BackgroundMusic = GameObject.Find ("BackgroundMusic");
+			AudioSource backgroundMusicSource = BackgroundMusic.GetComponent<AudioSource>();
+			backgroundMusicSource.volume = 1.0f;
+
+			menu.Trigger ();
+			Destroy (menu.gameObject);
+			menu = null;
+
+			Debug.Log ("Radial Menu destroyed");
 		}
-	}
-    
+	}    
 }

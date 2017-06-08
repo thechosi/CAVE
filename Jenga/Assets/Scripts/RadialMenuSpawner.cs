@@ -13,7 +13,7 @@ public class RadialMenuSpawner : MonoBehaviour {
 		ins = this;
 	}
 
-	public void SpawnMenu(Interactable obj){
+	public RadialMenu SpawnMenu(Interactable obj){
 		RadialMenu newMenu = Instantiate(menuPrefab) as RadialMenu;
 		newMenu.transform.SetParent(transform, false);
 
@@ -31,5 +31,7 @@ public class RadialMenuSpawner : MonoBehaviour {
 		} else {
 			Debug.Log ("Flystick not found");
 		}
+
+		return newMenu;
 	}
 }
