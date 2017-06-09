@@ -39,7 +39,7 @@ public class RadialMenu : MonoBehaviour {
 
 		RaycastHit hit;
 
-		if (Physics.Raycast (flystick.transform.position, flystick.transform.up, out hit, 10)) {
+		if (Physics.Raycast (flystick.transform.position, flystick.transform.forward, out hit, 10)) {
 			if (hit.collider.gameObject.name == "Button(Clone)") {
 				GameObject hitObj = hit.collider.gameObject;
 				RadialButton hitButton = hitObj.GetComponent<RadialButton> ();

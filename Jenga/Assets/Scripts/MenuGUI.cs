@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class MenuGUI : MonoBehaviour
 {
-    enum MenuState
+    public enum MenuState
     {
         Main,
         Credits,
@@ -16,7 +16,7 @@ public class MenuGUI : MonoBehaviour
         Player
     }
 
-    private MenuState state = MenuState.Main;
+    public MenuState state = MenuState.Main;
     private bool musicOn = true;
 
     public GameObject playBtn;
@@ -54,7 +54,7 @@ public class MenuGUI : MonoBehaviour
 
             RaycastHit hit;
 
-            if (Physics.Raycast(flystickSim.transform.position + flystickSim.transform.up, flystickSim.transform.up, out hit, 10) || Physics.Raycast(flystick.transform.position + flystick.transform.up, flystick.transform.up, out hit, 10))
+            if (Physics.Raycast(flystickSim.transform.position + flystickSim.transform.up, flystickSim.transform.up, out hit, 10) || Physics.Raycast(flystick.transform.position, flystick.transform.forward, out hit, 10))
             {
                 if (hit.collider.name == "Plane")
                 {
@@ -85,7 +85,7 @@ public class MenuGUI : MonoBehaviour
                 nrOfPlayers = selectedButton.gameObject;
             }
 
-            if (selectedButton != null && Input.GetButtonDown("Submit"))
+            if (selectedButton != null && InputSynchronizer.GetFlyStickButtonDown(0))
             {
                 selectedButton.onClick.Invoke();
             }

@@ -261,7 +261,7 @@ public class TowerInteractivity : MonoBehaviour
             }
         }
 
-        if (Input.GetKey(KeyCode.O))
+        if (Input.GetKey(KeyCode.O) || InputSynchronizer.GetFlyStickButtonDown(1))
         {
             if (TopBlockPlacer.PlayerChangeable == true)
             {

@@ -5,42 +5,49 @@ using Cave;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class Interactable : MonoBehaviour {
+public class Interactable : MonoBehaviour
+{
 
-	[System.Serializable]
-	public class Action
-	{
-		public Color color;
-		public Sprite sprite;
-		public string title;
-		public UnityEvent action;
-	}
+    [System.Serializable]
+    public class Action
+    {
+        public Color color;
+        public Sprite sprite;
+        public string title;
+        public UnityEvent action;
+    }
 
-	public Action[] options;
+    public Action[] options;
 
-	private RadialMenu menu = null;
+    private RadialMenu menu = null;
+    
 
-    void Update(){
-		if (menu == null && (Input.GetKeyDown(KeyCode.Escape) || InputSynchronizer.GetFlyStickButtonDown(3))){
-			menu = RadialMenuSpawner.ins.SpawnMenu (this);
+    void Update()
+    {
+        MenuGUI menuState = FindObjectOfType<MenuGUI>();
+        if (menu == null && menuState.state == MenuGUI.MenuState.Hidden && (Input.GetKeyDown(KeyCode.Escape) || InputSynchronizer.GetFlyStickButtonDown(3)))
+        {
+            menu = RadialMenuSpawner.ins.SpawnMenu(this);
 
-			// fade music if in menu modus
-			GameObject BackgroundMusic = GameObject.Find ("BackgroundMusic");
-			AudioSource backgroundMusicSource = BackgroundMusic.GetComponent<AudioSource>();
-			backgroundMusicSource.volume = 0.5f;
+            // fade music if in menu modus
+            GameObject BackgroundMusic = GameObject.Find("BackgroundMusic");
+            AudioSource backgroundMusicSource = BackgroundMusic.GetComponent<AudioSource>();
+            backgroundMusicSource.volume = 0.5f;
 
-			Debug.Log ("Radial Menu created");
-		}else if (menu!=null && (Input.GetKeyDown(KeyCode.Escape) || InputSynchronizer.GetFlyStickButtonDown(3))){
-			// music back to full volume
-			GameObject BackgroundMusic = GameObject.Find ("BackgroundMusic");
-			AudioSource backgroundMusicSource = BackgroundMusic.GetComponent<AudioSource>();
-			backgroundMusicSource.volume = 1.0f;
+            Debug.Log("Radial Menu created");
+        }
+        else if (menu != null && (Input.GetKeyDown(KeyCode.Escape) || InputSynchronizer.GetFlyStickButtonDown(3)))
+        {
+            // music back to full volume
+            GameObject BackgroundMusic = GameObject.Find("BackgroundMusic");
+            AudioSource backgroundMusicSource = BackgroundMusic.GetComponent<AudioSource>();
+            backgroundMusicSource.volume = 1.0f;
 
-			menu.Trigger ();
-			Destroy (menu.gameObject);
-			menu = null;
+            menu.Trigger();
+            Destroy(menu.gameObject);
+            menu = null;
 
-			Debug.Log ("Radial Menu destroyed");
-		}
-	}    
+            Debug.Log("Radial Menu destroyed");
+        }
+    }
 }
