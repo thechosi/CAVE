@@ -34,7 +34,8 @@ public class MenuGUI : MonoBehaviour
 
     private Button selectedButton;
 
-    private bool allButtonsSpawned = false;
+    private bool settingsSpawned = false;
+	private bool playSpawned = false;
 
     void Start()
     {
@@ -98,6 +99,13 @@ public class MenuGUI : MonoBehaviour
     {
         state = MenuState.Player;
         refresh();
+		if (!playSpawned && NodeInformation.type.Equals("master"))
+		{
+			NetworkServer.Spawn(twoPlayers);
+			NetworkServer.Spawn(threePlayers);
+			NetworkServer.Spawn(fourPlayers);
+			playSpawned = true;
+		}
     }
 
     public void createPlayers()
@@ -126,11 +134,11 @@ public class MenuGUI : MonoBehaviour
     {
         state = MenuState.Options;
         refresh();
-        if (!allButtonsSpawned && NodeInformation.type.Equals("master"))
+		if (!settingsSpawned && NodeInformation.type.Equals("master"))
         {
             NetworkServer.Spawn(musicBtn);
             NetworkServer.Spawn(backBtn);
-            allButtonsSpawned = true;
+			settingsSpawned = true;
         }
     }
 
