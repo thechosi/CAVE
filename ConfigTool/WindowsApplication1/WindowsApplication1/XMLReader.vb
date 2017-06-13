@@ -18,6 +18,8 @@ Public Class XMLReader
         For Each child In data.Elements()
             If child.Name.ToString.Equals("position") Then
                 origin.position = ReadVektor(child)
+            ElseIf child.Name.ToString.Equals("rotation") Then
+                origin.rotation = ReadVektor(child)
             End If
         Next
         Return origin
@@ -63,7 +65,6 @@ Public Class XMLReader
                 value = element.Value
             End If
         Next
-
         Return value
     End Function
 

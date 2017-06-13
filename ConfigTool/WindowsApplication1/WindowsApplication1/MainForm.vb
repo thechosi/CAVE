@@ -18,7 +18,7 @@ Public Class MainForm
     Dim P As Process
     Dim configfilepath As String = ".\config.xml"
     Dim xmlreadconfig As XMLReader = New XMLReader
-    Dim pathToSlave As String = xmlreadconfig.GetConfig(configfilepath, "pathToSlave")
+    Dim pathToSlave As String = ""
     Dim newPath As String = ""
     Dim CMDThread As Threading.Thread
 
@@ -117,6 +117,10 @@ Public Class MainForm
             txt_relat_x.Text = relation.position.x
             txt_relat_y.Text = relation.position.y
             txt_relat_z.Text = relation.position.z
+        ElseIf list_rela.SelectedItem.Equals("Rotation") Then
+            txt_relat_x.Text = relation.rotation.x
+            txt_relat_y.Text = relation.rotation.y
+            txt_relat_z.Text = relation.rotation.z
         End If
 
 
@@ -199,6 +203,8 @@ Public Class MainForm
 
         If list_rela.SelectedItem.Equals("Position") Then
             DirectCast(act_computer, Master).origin.position.x = txt_relat_x.Text
+        ElseIf list_rela.SelectedItem.Equals("Rotation") Then
+            DirectCast(act_computer, Master).origin.rotation.x = txt_relat_x.Text
         End If
 
     End Sub
@@ -218,12 +224,16 @@ Public Class MainForm
     Private Sub txt_relat_y_TextChanged(sender As Object, e As EventArgs) Handles txt_relat_y.TextChanged
         If list_rela.SelectedItem.Equals("Position") Then
             DirectCast(act_computer, Master).origin.position.y = txt_relat_y.Text
+        ElseIf list_rela.SelectedItem.Equals("Rotation") Then
+            DirectCast(act_computer, Master).origin.rotation.y = txt_relat_y.Text
         End If
     End Sub
 
     Private Sub txt_relat_z_TextChanged(sender As Object, e As EventArgs) Handles txt_relat_z.TextChanged
         If list_rela.SelectedItem.Equals("Position") Then
             DirectCast(act_computer, Master).origin.position.z = txt_relat_z.Text
+        ElseIf list_rela.SelectedItem.Equals("Rotation") Then
+            DirectCast(act_computer, Master).origin.rotation.z = txt_relat_z.Text
         End If
     End Sub
 
@@ -489,6 +499,16 @@ Public Class MainForm
                     ListBox1.Items.Add(computer.ToString)
                 Next
             End If
+        End If
+
+    End Sub
+
+    Private Sub MainForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        If File.Exists(configfilepath) Then
+            pathToSlave = xmlreadconfig.GetConfig(configfilepath, "pathToSlave")
+        Else
+            MsgBox("Error: config.xml not found!", MsgBoxStyle.Exclamation)
+            Me.Close()
         End If
 
     End Sub

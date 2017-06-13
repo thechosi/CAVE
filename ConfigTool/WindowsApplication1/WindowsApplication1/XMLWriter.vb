@@ -14,6 +14,7 @@ Public Class XMLWriter
                       <master ip=<%= computers.Item(counter).ip %> port=<%= DirectCast(computers.Item(counter), Master).port %>>
                           <origin>
                               <position x=<%= DirectCast(computers.Item(counter), Master).origin.position.x %> y=<%= DirectCast(computers.Item(counter), Master).origin.position.y %> z=<%= DirectCast(computers.Item(counter), Master).origin.position.z %>/>
+                              <rotation x=<%= DirectCast(computers.Item(counter), Master).origin.rotation.x %> y=<%= DirectCast(computers.Item(counter), Master).origin.rotation.y %> z=<%= DirectCast(computers.Item(counter), Master).origin.rotation.z %>/>
                           </origin>
                           <screenplane>
                               <position x=<%= computers.Item(counter).screenplane.position.x %> y=<%= computers.Item(counter).screenplane.position.y %> z=<%= computers.Item(counter).screenplane.position.z %>/>

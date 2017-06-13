@@ -387,7 +387,7 @@ Partial Class MainForm
         'list_rela
         '
         Me.list_rela.FormattingEnabled = True
-        Me.list_rela.Items.AddRange(New Object() {"Position"})
+        Me.list_rela.Items.AddRange(New Object() {"Position", "Rotation"})
         Me.list_rela.Location = New System.Drawing.Point(7, 20)
         Me.list_rela.Name = "list_rela"
         Me.list_rela.Size = New System.Drawing.Size(80, 95)
@@ -625,7 +625,7 @@ Partial Class MainForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(664, 407)
+        Me.ClientSize = New System.Drawing.Size(664, 408)
         Me.Controls.Add(Me.btn_update)
         Me.Controls.Add(Me.txt_projectname)
         Me.Controls.Add(Me.lbl_projectname)

@@ -34,6 +34,7 @@ End Class
 
 Public Class Origin
     Public position As New Vektor
+    Public rotation As New Vektor
 End Class
 
 Public Class Vektor
