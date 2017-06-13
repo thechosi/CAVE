@@ -30,6 +30,7 @@ public class MenuGUI : MonoBehaviour
     public GameObject twoPlayers;
     public GameObject threePlayers;
     public GameObject fourPlayers;
+    public GameObject creditText;
 
     private Button selectedButton;
 
@@ -85,7 +86,7 @@ public class MenuGUI : MonoBehaviour
                 nrOfPlayers = selectedButton.gameObject;
             }
 
-            if (selectedButton != null && InputSynchronizer.GetFlyStickButtonDown(0))
+            if (selectedButton != null && InputSynchronizer.GetFlyStickButtonDown(0) || Input.GetButtonDown("Submit"))
             {
                 selectedButton.onClick.Invoke();
             }
@@ -164,6 +165,7 @@ public class MenuGUI : MonoBehaviour
         exitBtn.SetActive(state == MenuState.Main);
         settingsBtn.SetActive(state == MenuState.Main);
         header.SetActive(state == MenuState.Main);
+        creditText.SetActive(state == MenuState.Credits);
 
         twoPlayers.SetActive(state == MenuState.Player);
         threePlayers.SetActive(state == MenuState.Player);
