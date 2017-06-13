@@ -36,6 +36,7 @@ public class MenuGUI : MonoBehaviour
 
     private bool settingsSpawned = false;
 	private bool playSpawned = false;
+    private bool creditSpawned = false;
 
     void Start()
     {
@@ -104,7 +105,8 @@ public class MenuGUI : MonoBehaviour
 			NetworkServer.Spawn(twoPlayers);
 			NetworkServer.Spawn(threePlayers);
 			NetworkServer.Spawn(fourPlayers);
-			playSpawned = true;
+            NetworkServer.Spawn(backBtn);
+            playSpawned = true;
 		}
     }
 
@@ -146,6 +148,12 @@ public class MenuGUI : MonoBehaviour
     {
         state = MenuState.Credits;
         refresh();
+        if (!creditSpawned && NodeInformation.type.Equals("master"))
+        {
+            NetworkServer.Spawn(creditText);
+            NetworkServer.Spawn(backBtn);
+            creditSpawned = true;
+        }
     }
 
     public void exitButton()
