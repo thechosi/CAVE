@@ -22,12 +22,10 @@ public class FlystickSphereInteraction : MonoBehaviour {
             if (Input.GetKey(KeyCode.I) || InputSynchronizer.GetFlyStickButton(2))
             {
                 FlystickSphere.SetActive(true);
-                Debug.Log("Sphere enabled");
             }
             else
             {
                 FlystickSphere.SetActive(false);
-                Debug.Log("Sphere disabled");
             }
         }
 

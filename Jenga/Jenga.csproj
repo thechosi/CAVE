@@ -114,6 +114,7 @@
     <Compile Include="Assets\Cave\Tracking\Scripts\FixedRotation.cs" />
     <Compile Include="Assets\Cave\Tracking\Scripts\FlyStickInteraction.cs" />
     <Compile Include="Assets\Cave\Tracking\Scripts\Flystick.cs" />
+    <Compile Include="Assets\Cave\Tracking\Scripts\FlystickSphereInteraction.cs" />
     <Compile Include="Assets\Cave\Tracking\Scripts\InterpupillaryDistance.cs" />
     <Compile Include="Assets\Cave\Tracking\Scripts\VRInteractiveItem.cs" />
     <Compile Include="Assets\Cave\Tracking\Scripts\flystickNavigation.cs" />
@@ -138,7 +139,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\StreamingAssets\node-config.xml" />
-    <None Include="Assets\StreamingAssets\node-config_cave.xml" />
+    <None Include="Assets\StreamingAssets\node-config_local.xml" />
     <None Include="Assets\Textures\Skyboxes\checkered\Note.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

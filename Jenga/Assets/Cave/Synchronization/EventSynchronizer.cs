@@ -63,24 +63,25 @@ namespace Cave
 
         private static void TriggerCollisionEvent(EventType type, NetworkInstanceId networkInstanceId, uint data, Dictionary<NetworkInstanceId, NetworkIdentity> networkIdentities)
         {
-            CollisionSynchronization collisionSynchronization = networkIdentities[networkInstanceId].GetComponent<CollisionSynchronization>();
+            CollisionSynchronization[] collisionSynchronizations = networkIdentities[networkInstanceId].GetComponents<CollisionSynchronization>();
             NetworkInstanceId otherNetworkInstanceId = new NetworkInstanceId(data);
 
-            if (collisionSynchronization != null && networkIdentities.ContainsKey(otherNetworkInstanceId))
-            {
-                if (type == EventType.OnCollisionEnter)
-                    collisionSynchronization.OnSynchronizedCollisionEnter(networkIdentities[otherNetworkInstanceId].gameObject);
-                else if (type == EventType.OnCollisionStay)
-                    collisionSynchronization.OnSynchronizedCollisionStay(networkIdentities[otherNetworkInstanceId].gameObject);
-                else if (type == EventType.OnCollisionExit)
-                    collisionSynchronization.OnSynchronizedCollisionExit(networkIdentities[otherNetworkInstanceId].gameObject);
-                else if (type == EventType.OnTriggerEnter)
-                    collisionSynchronization.OnSynchronizedTriggerEnter(networkIdentities[otherNetworkInstanceId].gameObject);
-                else if (type == EventType.OnTriggerStay)
-                    collisionSynchronization.OnSynchronizedTriggerStay(networkIdentities[otherNetworkInstanceId].gameObject);
-                else if (type == EventType.OnTriggerExit)
-                    collisionSynchronization.OnSynchronizedTriggerExit(networkIdentities[otherNetworkInstanceId].gameObject);
-            }
+			foreach (CollisionSynchronization collisionSynchronization in collisionSynchronizations) {
+				if (collisionSynchronization != null && networkIdentities.ContainsKey (otherNetworkInstanceId)) {
+					if (type == EventType.OnCollisionEnter)
+						collisionSynchronization.OnSynchronizedCollisionEnter (networkIdentities [otherNetworkInstanceId].gameObject);
+					else if (type == EventType.OnCollisionStay)
+						collisionSynchronization.OnSynchronizedCollisionStay (networkIdentities [otherNetworkInstanceId].gameObject);
+					else if (type == EventType.OnCollisionExit)
+						collisionSynchronization.OnSynchronizedCollisionExit (networkIdentities [otherNetworkInstanceId].gameObject);
+					else if (type == EventType.OnTriggerEnter)
+						collisionSynchronization.OnSynchronizedTriggerEnter (networkIdentities [otherNetworkInstanceId].gameObject);
+					else if (type == EventType.OnTriggerStay)
+						collisionSynchronization.OnSynchronizedTriggerStay (networkIdentities [otherNetworkInstanceId].gameObject);
+					else if (type == EventType.OnTriggerExit)
+						collisionSynchronization.OnSynchronizedTriggerExit (networkIdentities [otherNetworkInstanceId].gameObject);
+				}
+			}
         }
 
         private static void TriggerGUIEvent(EventType type, NetworkInstanceId networkInstanceId)

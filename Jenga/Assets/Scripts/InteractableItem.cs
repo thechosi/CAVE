@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cave;
 
-public class InteractableItem : MonoBehaviour
+public class InteractableItem : CollisionSynchronization
 {
 
 
@@ -27,6 +28,11 @@ public class InteractableItem : MonoBehaviour
     public float rotationFactor = 400f;
     public float velocityFactor = 200f;
 
+	public InteractableItem()
+		: base(new[] { Cave.EventType.OnCollisionEnter })
+	{
+
+	}
 
     // Use this for initialization
     void Start()
@@ -129,9 +135,9 @@ public class InteractableItem : MonoBehaviour
         return currentlyInteracting;
     }
 
-    private void OnCollisionEnter(Collision collision)
+	public override void OnSynchronizedCollisionEnter(GameObject other)
     {
-        if (collision.collider.name == "Plane" && this.transform.parent.name != "Row#1")
+		if (other.name == "Plane" && this.transform.parent.name != "Row#1")
         {
             if (this.transform.GetComponent<Renderer>().material.color != Color.green)
             {

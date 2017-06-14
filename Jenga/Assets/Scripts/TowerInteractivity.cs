@@ -106,13 +106,7 @@ public class TowerInteractivity : MonoBehaviour
     {
         Physics.gravity = new Vector3(0, -gravity, 0);
 
-        if (NodeInformation.type.Equals("slave"))
-        {
-            enabled = false;
-            return;
-        }
-
-        cam = GameObject.Find("Camera").GetComponent<Camera>();
+        
 
         /*for (int i = 0; i < NrOfPlayers; i++)
         {
@@ -131,7 +125,6 @@ public class TowerInteractivity : MonoBehaviour
         //destroyAudioSource = GetComponent<AudioSource>()[0];
         //buttonSelectAudioSource = GetComponent<AudioSource>()[1];
 
-        initFlyStickEvents();
 
     }
 
@@ -245,6 +238,9 @@ public class TowerInteractivity : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+		if (flyStickInteraction == null)
+			initFlyStickEvents();
+
         if (InputSynchronizer.GetFlyStickButtonDown(0))
         {
             grabBrick();
@@ -261,7 +257,7 @@ public class TowerInteractivity : MonoBehaviour
             }
         }
 
-        if (Input.GetKey(KeyCode.O) || InputSynchronizer.GetFlyStickButtonDown(1))
+		if (InputSynchronizer.GetKey("o") || InputSynchronizer.GetFlyStickButtonDown(1))
         {
             if (TopBlockPlacer.PlayerChangeable == true)
             {
@@ -281,6 +277,7 @@ public class TowerInteractivity : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             RaycastHit hitInfo = new RaycastHit();
+			cam = GameObject.Find("Camera").GetComponent<Camera>();
             bool hit = Physics.Raycast(cam.ScreenPointToRay(Input.mousePosition), out hitInfo);
             if (hit)
             {
@@ -308,7 +305,7 @@ public class TowerInteractivity : MonoBehaviour
     {
         if (SelectedObj != null)
         {
-            SelectedObj.GetComponent<Renderer>().material = wood;
+            //SelectedObj.GetComponent<Renderer>().material = wood;
             SelectedObj.GetComponent<Renderer>().material.color = Color.white;
             SelectedObj = null;
             FirstSelected = null;
