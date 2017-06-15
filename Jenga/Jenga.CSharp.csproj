@@ -114,6 +114,7 @@
     <Compile Include="Assets\Cave\Tracking\Scripts\FixedRotation.cs" />
     <Compile Include="Assets\Cave\Tracking\Scripts\FlyStickInteraction.cs" />
     <Compile Include="Assets\Cave\Tracking\Scripts\Flystick.cs" />
+    <Compile Include="Assets\Cave\Tracking\Scripts\FlystickSphereInteraction.cs" />
     <Compile Include="Assets\Cave\Tracking\Scripts\InterpupillaryDistance.cs" />
     <Compile Include="Assets\Cave\Tracking\Scripts\VRInteractiveItem.cs" />
     <Compile Include="Assets\Cave\Tracking\Scripts\flystickNavigation.cs" />

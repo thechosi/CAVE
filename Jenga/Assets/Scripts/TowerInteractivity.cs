@@ -173,6 +173,7 @@ public class TowerInteractivity : MonoBehaviour
             newBrick = Instantiate(brick, new Vector3(blockSize.z, absolutDiff, 0), Quaternion.identity) as GameObject;
             newBrick.transform.parent = row.transform;
             newBrick.name = row.name + "Block1";
+            newBrick.GetComponent<InteractableItem>().rotationFactor = 400;
             RigidBodySynchronizer.Spawn(newBrick);
 
             newBrick = Instantiate(brick, new Vector3(blockSize.z, absolutDiff, blockSize.z), Quaternion.identity) as GameObject;

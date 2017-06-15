@@ -28,11 +28,11 @@ public class InteractableItem : CollisionSynchronization
     public float rotationFactor = 400f;
     public float velocityFactor = 200f;
 
-	public InteractableItem()
-		: base(new[] { Cave.EventType.OnCollisionEnter })
-	{
+    public InteractableItem()
+        : base(new[] { Cave.EventType.OnCollisionEnter })
+    {
 
-	}
+    }
 
     // Use this for initialization
     void Start()
@@ -135,20 +135,27 @@ public class InteractableItem : CollisionSynchronization
         return currentlyInteracting;
     }
 
-	public override void OnSynchronizedCollisionEnter(GameObject other)
+    private bool IsBrickInFirstRow()
     {
-		if (other.name == "Plane" && this.transform.parent.name != "Row#1")
+        return transform.position.z > 0 - transform.localScale.z / 2 && transform.position.z < transform.localScale.z * 3
+               && transform.position.x > 0 && transform.position.x < transform.localScale.x
+               && transform.position.y > 0 && transform.position.y < transform.localScale.y;
+    }
+
+    public override void OnSynchronizedCollisionEnter(GameObject other)
+    {
+        if (other.name == "Plane" && !IsBrickInFirstRow())
         {
-            if (this.transform.GetComponent<Renderer>().material.color != Color.green)
+            if (TopBlockPlacer.PlayerChangeable && transform.GetComponent<Renderer>().material.color != Color.green)
             {
                 TowerInteractivity tower = FindObjectOfType<TowerInteractivity>();
                 TopBlockPlacer.PlayerChangeable = false;
                 tower.Players[Player.ActivePlayer].Score++;
-                Debug.Log("Turm fällt");
+                Debug.Log("Turm fällt" + TimeSynchronizer.time);
 
 
-				InfoScreenManager infoScreen = FindObjectOfType<InfoScreenManager>();
-				infoScreen.LoserView ();
+                InfoScreenManager infoScreen = FindObjectOfType<InfoScreenManager>();
+                infoScreen.LoserView();
             }
         }
     }
