@@ -8,7 +8,7 @@ public class Moving : MonoBehaviour {
     public float speed;
     public float rotationSpeed;
 
-    void FixedUpdate()
+    void Update()
     {
         Vector3 moveVector = new Vector3();
         // up
@@ -81,7 +81,7 @@ public class Moving : MonoBehaviour {
         {
             rotationVector.y -= rotationSpeed;
         }
-        gameObject.transform.Translate(moveVector);
-        gameObject.transform.Rotate(rotationVector);
+        gameObject.transform.Translate(moveVector * TimeSynchronizer.deltaTime);
+        gameObject.transform.Rotate(rotationVector * TimeSynchronizer.deltaTime);
     }
 }

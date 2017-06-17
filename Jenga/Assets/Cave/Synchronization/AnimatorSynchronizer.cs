@@ -34,7 +34,7 @@ namespace Cave
         {
             if (animators.Length > 0)
             {
-                animators[0].Play(animators[0].GetAnimatorTransitionInfo(0).nameHash, 0, message.animatorTime);
+                animators[0].Update(message.animatorTime - animators[0].GetCurrentAnimatorStateInfo(0).normalizedTime);
             }
         }
 
