@@ -265,7 +265,7 @@ public class TowerInteractivity : MonoBehaviour
                 TopBlockPlacer.PlayerChangeable = false;
                 deselect();
                 Player.changeActivePlayer();
-                Debug.Log("Spieler " + (Player.ActivePlayer + 1) + " ist jetzt am Zug und hat " + Players[Player.ActivePlayer].Score + " Punkte");
+                Debug.Log("Player " + (Player.ActivePlayer + 1) + " is on the move and  has " + Players[Player.ActivePlayer].Score + " Points");
             }
         }
         if (Input.GetKeyDown(KeyCode.E))

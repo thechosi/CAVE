@@ -115,13 +115,13 @@ public class InfoScreenManager : MonoBehaviour
 
     string CreatePlayerText()
     {
-        return "Spieler " + FindActivePlayer() + " ist dran!";
+        return "Turn Player " + FindActivePlayer() + "";
     }
 
     public void LoserView()
     {
 		int playerNumber = Player.ActivePlayer + 1;
-		loseInfo.text = "Spieler " + playerNumber + "\nhat verloren!";
+		loseInfo.text = "Player " + playerNumber + "lost";
 		anim.SetBool("LoserView", true);
     }
 
