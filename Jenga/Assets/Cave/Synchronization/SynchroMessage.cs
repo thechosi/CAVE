@@ -19,7 +19,6 @@ namespace Cave
         public InputInputMessage inputInputMessage = new InputInputMessage();
         public InputAnimatorMessage inputAnimatorMessage = new InputAnimatorMessage();
         public InputTrackingMessage inputTrackingMessage = new InputTrackingMessage();
-        public InputRigidBodyMessage inputRigidBodyMessage = new InputRigidBodyMessage();
         public InputTransformationMessage inputTransformationMessage = new InputTransformationMessage();
         public InputEventsMessage inputEventsMessage = new InputEventsMessage();
 
@@ -30,7 +29,6 @@ namespace Cave
             inputInputMessage.Serialize(buffer);
             inputAnimatorMessage.Serialize(buffer);
             inputTrackingMessage.Serialize(buffer);
-            inputRigidBodyMessage.Serialize(buffer);
             inputTransformationMessage.Serialize(buffer);
             inputEventsMessage.Serialize(buffer);
         }
@@ -42,14 +40,13 @@ namespace Cave
             inputInputMessage.Deserialize(buffer);
             inputAnimatorMessage.Deserialize(buffer);
             inputTrackingMessage.Deserialize(buffer);
-            inputRigidBodyMessage.Deserialize(buffer);
             inputTransformationMessage.Deserialize(buffer);
             inputEventsMessage.Deserialize(buffer);
         }
 
         public int GetLength()
         {
-            return inputTimeMessage.GetLength() + inputParticleMessage.GetLength() + inputInputMessage.GetLength() + inputAnimatorMessage.GetLength() + inputTrackingMessage.GetLength() + inputRigidBodyMessage.GetLength() + inputTransformationMessage.GetLength() + inputEventsMessage.GetLength();
+            return inputTimeMessage.GetLength() + inputParticleMessage.GetLength() + inputInputMessage.GetLength() + inputAnimatorMessage.GetLength() + inputTrackingMessage.GetLength() + inputTransformationMessage.GetLength() + inputEventsMessage.GetLength();
         }
     }
 

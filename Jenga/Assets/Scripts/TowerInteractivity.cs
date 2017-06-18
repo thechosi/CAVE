@@ -5,6 +5,7 @@ using UnityEngine;
 using System;
 using Cave;
 using UnityEngine.Events;
+using UnityEngine.Networking;
 
 public class TowerInteractivity : MonoBehaviour
 {
@@ -19,8 +20,6 @@ public class TowerInteractivity : MonoBehaviour
     private GameObject firstSelected = null;
 
     private int rows;
-
-    private Material wood;
 
     public GameObject brick;
 
@@ -131,9 +130,7 @@ public class TowerInteractivity : MonoBehaviour
     private void setSizes()
     {
         GameObject newBrick;
-        newBrick = Instantiate(brick) as GameObject;
-        wood = newBrick.GetComponent<Renderer>().material;
-
+        newBrick = Instantiate(brick);
         blockSize = newBrick.GetComponent<Renderer>().bounds.size;
         Destroy(newBrick);
     }
@@ -155,8 +152,6 @@ public class TowerInteractivity : MonoBehaviour
 
     private void addRow()
     {
-        GameObject plane = GameObject.Find("Plane");
-        float planeHeight = plane.transform.position.y;
         maxRow = transform.childCount;
         GameObject row = new GameObject();
         row.name = "Row#" + (maxRow + 1);
@@ -170,17 +165,17 @@ public class TowerInteractivity : MonoBehaviour
             newBrick.transform.parent = row.transform;
             newBrick.name = row.name + "Block1";
             newBrick.GetComponent<InteractableItem>().rotationFactor = 400;
-            RigidBodySynchronizer.Spawn(newBrick);
+            NetworkServer.Spawn(newBrick);
 
             newBrick = Instantiate(brick, new Vector3(blockSize.z, absolutDiff, blockSize.z), Quaternion.identity) as GameObject;
             newBrick.transform.parent = row.transform;
             newBrick.name = row.name + "Block2";
-            RigidBodySynchronizer.Spawn(newBrick);
+            NetworkServer.Spawn(newBrick);
 
             newBrick = Instantiate(brick, new Vector3(blockSize.z, absolutDiff, 2 * blockSize.z), Quaternion.identity) as GameObject;
             newBrick.transform.parent = row.transform;
             newBrick.name = row.name + "Block3";
-            RigidBodySynchronizer.Spawn(newBrick);
+            NetworkServer.Spawn(newBrick);
         }
         else
         {
@@ -188,19 +183,19 @@ public class TowerInteractivity : MonoBehaviour
             newBrick.transform.Rotate(new Vector3(0, 90, 0));
             newBrick.transform.parent = row.transform;
             newBrick.name = row.name + "Block1";
-            RigidBodySynchronizer.Spawn(newBrick);
+            NetworkServer.Spawn(newBrick);
 
             newBrick = Instantiate(brick, new Vector3(blockSize.z, absolutDiff, blockSize.z), Quaternion.identity) as GameObject;
             newBrick.transform.Rotate(new Vector3(0, 90, 0));
             newBrick.transform.parent = row.transform;
             newBrick.name = row.name + "Block2";
-            RigidBodySynchronizer.Spawn(newBrick);
+            NetworkServer.Spawn(newBrick);
 
             newBrick = Instantiate(brick, new Vector3(2 * blockSize.z, absolutDiff, blockSize.z), Quaternion.identity) as GameObject;
             newBrick.transform.Rotate(new Vector3(0, 90, 0));
             newBrick.transform.parent = row.transform;
             newBrick.name = row.name + "Block3";
-            RigidBodySynchronizer.Spawn(newBrick);
+            NetworkServer.Spawn(newBrick);
         }
     }
 

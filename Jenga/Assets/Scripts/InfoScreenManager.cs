@@ -101,8 +101,6 @@ public class InfoScreenManager : MonoBehaviour
 
     int FindActivePlayer()
     {
-        TowerInteractivity tower = FindObjectOfType<TowerInteractivity>();
-
         return Player.ActivePlayer + 1;
     }
 

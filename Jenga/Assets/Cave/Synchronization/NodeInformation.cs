@@ -9,15 +9,14 @@ namespace Cave
     {
         private static XmlDocument xmlDocument;
 
-        public static string name, type, serverIp;
+        public static string type, serverIp;
         public static Vector3 originPosition;
         public static Vector3 cameraRoation;
         public static Vector3 screenplanePosition;
         public static Vector3 screenplaneRotation;
         public static Vector3 screenplaneScale;
         public static string cameraEye;
-        public static int nodes, serverPort;
-        public static bool stereo;
+        public static int serverPort;
         public static int numberOfSlaves;
 
         static NodeInformation()

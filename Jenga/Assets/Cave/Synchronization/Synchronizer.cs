@@ -18,7 +18,6 @@ namespace Cave
         void Start()
         {
             flyStick = GameObject.Find("Flystick");
-            RigidBodySynchronizer.Prepare();
             GUISynchronizer.Prepare();
             started = false;
             
@@ -48,7 +47,7 @@ namespace Cave
 #if UNITY_EDITOR
                     UnityEditor.EditorApplication.isPlaying = false;
 #else
-                        Application.Quit();
+                    Application.Quit();
 #endif
                 }
             }
@@ -68,7 +67,6 @@ namespace Cave
                 ParticleSynchronizer.BuildMessage(inputMessage.inputParticleMessage);
                 AnimatorSynchronizer.BuildMessage(inputMessage.inputAnimatorMessage);
                 TrackingSynchronizer.BuildMessage(inputMessage.inputTrackingMessage);
-                RigidBodySynchronizer.BuildMessage(inputMessage.inputRigidBodyMessage);
                 TransformationSynchronizer.BuildMessage(inputMessage.inputTransformationMessage);
                 EventSynchronizer.BuildMessage(inputMessage.inputEventsMessage);
 
@@ -84,7 +82,6 @@ namespace Cave
                 ParticleSynchronizer.ProcessMessage(inputMessage.inputParticleMessage);
                 AnimatorSynchronizer.ProcessMessage(inputMessage.inputAnimatorMessage);
                 TrackingSynchronizer.ProcessMessage(inputMessage.inputTrackingMessage);
-                RigidBodySynchronizer.ProcessMessage(inputMessage.inputRigidBodyMessage);
                 TransformationSynchronizer.ProcessMessage(inputMessage.inputTransformationMessage);
                 EventSynchronizer.ProcessMessage(inputMessage.inputEventsMessage);
             }
@@ -95,7 +92,6 @@ namespace Cave
         IEnumerator EndOfFrame()
         {
             yield return new WaitForEndOfFrame();
-            //ParticleSynchronizer.Synchronize(node);
             node.FinishFrame();
         }
 

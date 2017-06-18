@@ -95,7 +95,6 @@
     <Compile Include="Assets\Cave\Synchronization\NetworkNode.cs" />
     <Compile Include="Assets\Cave\Synchronization\NodeInformation.cs" />
     <Compile Include="Assets\Cave\Synchronization\ParticleSynchronizer.cs" />
-    <Compile Include="Assets\Cave\Synchronization\RigidBodySynchronizer.cs" />
     <Compile Include="Assets\Cave\Synchronization\Server.cs" />
     <Compile Include="Assets\Cave\Synchronization\SynchroMessage.cs" />
     <Compile Include="Assets\Cave\Synchronization\Synchronizer.cs" />

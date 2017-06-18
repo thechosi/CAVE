@@ -40,8 +40,7 @@ namespace Cave
                 {
                     if (target.ContainsKey(particleSystem))
                     {
-                        target[particleSystem] = (message.particleDeltaTime + target[particleSystem]) %
-                                                 particleSystem.main.duration;
+                        target[particleSystem] = (message.particleDeltaTime + target[particleSystem]) % particleSystem.main.duration;
 
                         float deltaTime = target[particleSystem] - particleSystem.time;
                         if (deltaTime < -particleSystem.main.duration + 1)
