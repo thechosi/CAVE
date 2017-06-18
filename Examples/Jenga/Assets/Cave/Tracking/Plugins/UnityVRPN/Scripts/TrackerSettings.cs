@@ -102,12 +102,8 @@ public class TrackerSettings : MonoBehaviour
     {
         while (true)
         {
-            if (hostSettings.GetPosition(objectName, channel).Equals(new Vector3(-505, -505, -505)))
-            {
-                //transform.localPosition = new Vector3(0, 0, 0);
-                //If there is no usable information coming from the tracker then leave the position as it is.
-            }
-            else {
+            if (hostSettings != null && !hostSettings.GetPosition(objectName, channel).Equals(new Vector3(-505, -505, -505)))
+            { 
                 transform.localPosition = hostSettings.GetPosition(objectName, channel);
             }
             yield return null;
@@ -118,7 +114,8 @@ public class TrackerSettings : MonoBehaviour
     {
         while (true)
         {
-            transform.rotation = hostSettings.GetRotation(objectName, channel);
+            if (hostSettings != null)
+                transform.rotation = hostSettings.GetRotation(objectName, channel);
             yield return null;
         }
     }
@@ -143,9 +140,12 @@ public class TrackerSettings : MonoBehaviour
         pressedButtons = new bool[nButtons];
         while (true)
         {
-            for (int i = 0; i < nButtons; i += 1)
+            if (hostSettings)
             {
-                pressedButtons[i] = hostSettings.GetButton(objectName, i);
+                for (int i = 0; i < nButtons; i += 1)
+                {
+                    pressedButtons[i] = hostSettings.GetButton(objectName, i);
+                }
             }
             yield return null;
         }

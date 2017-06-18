@@ -66,10 +66,10 @@ namespace Cave
                 {
                     //the origin-GameObject has the tag "MainCamera" to find it easily
                     originSlave = GameObject.FindGameObjectWithTag("MainCamera");
-                    originSlave.transform.parent = originParent;
                     //Since the client needs some time to get the object from the server, we can only continue if we have the origin
                     if (originSlave != null)
                     {
+                        originSlave.transform.parent = originParent;
                         //The plane is a child from origin
                         Transform ScreenplaneTransform = originSlave.transform.Find("Plane");
                         //Adjust the scale

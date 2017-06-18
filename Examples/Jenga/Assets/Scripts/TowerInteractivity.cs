@@ -99,7 +99,7 @@ public class TowerInteractivity : MonoBehaviour
     {
         Physics.gravity = new Vector3(0, -gravity, 0);
 
-        
+
 
         /*for (int i = 0; i < NrOfPlayers; i++)
         {
@@ -236,8 +236,8 @@ public class TowerInteractivity : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-		if (flyStickInteraction == null)
-			initFlyStickEvents();
+        if (flyStickInteraction == null)
+            initFlyStickEvents();
 
         if (InputSynchronizer.GetFlyStickButtonDown(0))
         {
@@ -253,7 +253,7 @@ public class TowerInteractivity : MonoBehaviour
             }
         }
 
-		if (InputSynchronizer.GetKey("o") || InputSynchronizer.GetFlyStickButtonDown(1))
+        if (InputSynchronizer.GetKey("o") || InputSynchronizer.GetFlyStickButtonDown(1))
         {
             if (state == State.BlockCorrectlyPlaced)
             {
@@ -273,7 +273,7 @@ public class TowerInteractivity : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             RaycastHit hitInfo = new RaycastHit();
-			cam = GameObject.Find("Camera").GetComponent<Camera>();
+            cam = GameObject.Find("Camera").GetComponent<Camera>();
             bool hit = Physics.Raycast(cam.ScreenPointToRay(Input.mousePosition), out hitInfo);
             if (hit)
             {
@@ -321,7 +321,8 @@ public class TowerInteractivity : MonoBehaviour
             FirstSelected = gameObject;
             SelectedObj = gameObject;
             SelectedObj.GetComponent<Renderer>().material.color = Color.green;
-            changeRow(gameObject);
+            if (NodeInformation.type.Equals("master"))
+                changeRow(gameObject);
         }
         else if (gameObject == FirstSelected)
         {
@@ -371,10 +372,6 @@ public class TowerInteractivity : MonoBehaviour
             {
                 flyStickInteraction = flyStickInteractionLocal;
             }
-        }
-        else
-        {
-            Debug.LogError("Didn't find the FlyStick");
         }
     }
 
