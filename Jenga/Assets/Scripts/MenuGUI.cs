@@ -88,7 +88,7 @@ public class MenuGUI : MonoBehaviour
                 nrOfPlayers = selectedButton.gameObject;
             }
 
-            if (selectedButton != null && InputSynchronizer.GetFlyStickButtonDown(0) || Input.GetButtonDown("Submit"))
+            if (selectedButton != null && (InputSynchronizer.GetFlyStickButtonDown(0) || Input.GetButtonDown("Submit")))
             {
                 selectedButton.onClick.Invoke();
             }

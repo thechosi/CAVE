@@ -59,7 +59,6 @@ public class InteractableItem : CollisionSynchronization
         if (attachedWand && currentlyInteracting)
         {
             posDelta = attachedWand.transform.position - interactionPoint.position;
-            // Debug.Log((posDelta * velocityFactor * Time.fixedDeltaTime).sqrMagnitude);
             this.rigidbody.velocity = posDelta * velocityFactor * Time.fixedDeltaTime; //TODO change to networkTime
 
             rotationDelta = attachedWand.transform.rotation * Quaternion.Inverse(interactionPoint.rotation);
@@ -78,7 +77,6 @@ public class InteractableItem : CollisionSynchronization
         if (attachedWandSim && currentlyInteracting)
         {
             posDelta = attachedWandSim.transform.position - interactionPoint.position;
-            // Debug.Log((posDelta * velocityFactor * Time.fixedDeltaTime).sqrMagnitude);
             this.rigidbody.velocity = posDelta * velocityFactor * Time.fixedDeltaTime; //TODO change to networkTime
 
             rotationDelta = attachedWandSim.transform.rotation * Quaternion.Inverse(interactionPoint.rotation);
@@ -151,7 +149,7 @@ public class InteractableItem : CollisionSynchronization
                 TowerInteractivity tower = FindObjectOfType<TowerInteractivity>();
                 TopBlockPlacer.PlayerChangeable = false;
                 tower.Players[Player.ActivePlayer].Score++;
-                Debug.Log("Turm fällt" + TimeSynchronizer.time);
+                Debug.Log("Tower crashed at " + TimeSynchronizer.time);
 
 
                 InfoScreenManager infoScreen = FindObjectOfType<InfoScreenManager>();

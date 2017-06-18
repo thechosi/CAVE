@@ -45,11 +45,10 @@ public class FlyStickSim : MonoBehaviour
                 closestItem = null;
 
                 GameObject towerObject = GameObject.Find("DynamicTower");
-                if (towerObject != null)
+                if (towerObject != null && interactingItem != null)
                 {
                     TowerInteractivity tower = towerObject.GetComponent<TowerInteractivity>();
 
-                    Debug.Log(interactingItem.name);
                     if (interactingItem.name.Contains(TowerInteractivity.MaxRow.ToString()) && interactingItem.GetComponent<Renderer>().material.color != Color.green)
                     {
                         return;
@@ -59,7 +58,8 @@ public class FlyStickSim : MonoBehaviour
                         if (tower.FirstSelected == null)
                         {
                             tower.select(interactingItem.transform.gameObject);
-                        } else
+                        }
+                        else
                         {
                             return;
                         }

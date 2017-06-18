@@ -142,10 +142,7 @@ public class TowerInteractivity : MonoBehaviour
     {
         if (NodeInformation.type.Equals("master"))
         {
-            Debug.Log("creating Tower");
-
             setSizes();
-
 
             for (int i = 0; i < nrOfRows; i++)
             {
@@ -166,7 +163,6 @@ public class TowerInteractivity : MonoBehaviour
         row.transform.parent = this.transform;
 
         float absolutDiff = (blockSize.y + diffBetweenBlocks) * maxRow;
-        Debug.Log("Plane: " + planeHeight + "absolute: " + absolutDiff);
         GameObject newBrick;
         if ((maxRow + 1) % 2 == 1)
         {
@@ -249,10 +245,8 @@ public class TowerInteractivity : MonoBehaviour
 
         if (InputSynchronizer.GetFlyStickButtonUp(0))
         {
-            Debug.Log("not grabbing");
             if (interactingItem)
             {
-                Debug.Log("loslassen");
                 interactingItem.EndInteraction(flyStickInteraction);
                 interactingItem = null;
             }
@@ -265,7 +259,7 @@ public class TowerInteractivity : MonoBehaviour
                 TopBlockPlacer.PlayerChangeable = false;
                 deselect();
                 Player.changeActivePlayer();
-                Debug.Log("Player " + (Player.ActivePlayer + 1) + " is on the move and  has " + Players[Player.ActivePlayer].Score + " Points");
+                Debug.Log("Player " + (Player.ActivePlayer + 1) + " is on the move and has " + Players[Player.ActivePlayer].Score + " Points");
             }
         }
         if (Input.GetKeyDown(KeyCode.E))
@@ -364,10 +358,6 @@ public class TowerInteractivity : MonoBehaviour
             gameObject.name = "Row#" + (maxRow) + "Block3";
 
         }
-        else
-        {
-            Debug.Log("else");
-        }
     }
 
     public void initFlyStickEvents()
@@ -379,7 +369,6 @@ public class TowerInteractivity : MonoBehaviour
             if (flyStickInteractionLocal)
             {
                 flyStickInteraction = flyStickInteractionLocal;
-                Debug.Log("flyStickInteraction set");
             }
         }
         else
@@ -390,8 +379,6 @@ public class TowerInteractivity : MonoBehaviour
 
     private void grabBrick()
     {
-        Debug.Log("grabBrick");
-
         // Check if flystick is inside a brick
         GameObject[] bricks = GameObject.FindGameObjectsWithTag("Brick");
         GameObject selectedItem = null;
@@ -413,11 +400,9 @@ public class TowerInteractivity : MonoBehaviour
 
         if (selectedItem)
         {
-            Debug.Log("Name" + selectedItem.name);
             interactingItem = selectedItem.GetComponent<InteractableItem>();
             if (interactingItem)
             {
-                Debug.Log("got Item");
                 GameObject towerObject = GameObject.Find("DynamicTower");
                 if (towerObject)
                 {
@@ -425,7 +410,6 @@ public class TowerInteractivity : MonoBehaviour
 
                     if (interactingItem.name.Contains(TowerInteractivity.MaxRow.ToString()) && interactingItem.GetComponent<Renderer>().material.color != Color.green)
                     {
-                        Debug.Log("return1");
                         return;
                     }
                     if (interactingItem.GetComponent<Renderer>().material.color != Color.green)
@@ -437,7 +421,6 @@ public class TowerInteractivity : MonoBehaviour
                         }
                         else
                         {
-                            Debug.Log("return2");
                             return;
                         }
                     }

@@ -119,13 +119,11 @@ namespace Cave
 
         static void getServerInfosOfNode(XmlNode node)
         {
-            Debug.Log(node.Name);
             if (node.Name == "master")
             {
                 serverIp = node.Attributes["ip"].Value;
                 serverPort = Convert.ToInt32(node.Attributes["port"].Value);
             }
-
         }
 
         static void getScreenplane(XmlNode node)
@@ -166,8 +164,6 @@ namespace Cave
 						if (isOwnIP(node.Attributes["ip"].Value) || node.Attributes["ip"].Value == "localhost")
                         {
                             type = "master";
-                            Debug.Log("Wir sind master");
-
 
                             foreach (XmlNode master_node in node.ChildNodes)
                             {
@@ -212,7 +208,7 @@ namespace Cave
 
             }
 
-
+            Debug.Log("Own nodetype: " + type);
         }
     }
 }
