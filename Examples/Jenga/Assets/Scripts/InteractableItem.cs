@@ -144,10 +144,10 @@ public class InteractableItem : CollisionSynchronization
     {
         if (other.name == "Plane" && !IsBrickInFirstRow())
         {
-            if (TopBlockPlacer.PlayerChangeable && transform.GetComponent<Renderer>().material.color != Color.green)
+            TowerInteractivity tower = FindObjectOfType<TowerInteractivity>();
+            if (tower.state == TowerInteractivity.State.BlockPlacing && transform.GetComponent<Renderer>().material.color != Color.green)
             {
-                TowerInteractivity tower = FindObjectOfType<TowerInteractivity>();
-                TopBlockPlacer.PlayerChangeable = false;
+                tower.state = TowerInteractivity.State.TowerCrashed;
                 tower.Players[Player.ActivePlayer].Score++;
                 Debug.Log("Tower crashed at " + TimeSynchronizer.time);
 

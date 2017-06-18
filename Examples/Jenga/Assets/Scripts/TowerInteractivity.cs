@@ -9,35 +9,29 @@ using UnityEngine.Networking;
 
 public class TowerInteractivity : MonoBehaviour
 {
+    public enum State
+    {
+        BlockPlacing,
+        BlockCorrectlyPlaced,
+        TowerCrashed
+    }
 
-
+    public State state;
     InteractableItem interactingItem;
-
     public float gravity = 10;
-
-    private GameObject selectedObj = null;
-
-    private GameObject firstSelected = null;
-
+    private GameObject selectedObj;
+    private GameObject firstSelected;
     private int rows;
-
     public GameObject brick;
-
     public float diffBetweenBlocks;
-
     public int nrOfRows;
-
     private int nrOfPlayers;
     private List<Player> players = new List<Player>();
-
     private AudioSource destroyAudioSource;
     private AudioSource buttonSelectAudioSource;
     private static int maxRow;
-
     private Vector3 blockSize;
-
     private Camera cam;
-
     private FlyStickInteraction flyStickInteraction;
 
     public static int MaxRow
@@ -124,7 +118,7 @@ public class TowerInteractivity : MonoBehaviour
         //destroyAudioSource = GetComponent<AudioSource>()[0];
         //buttonSelectAudioSource = GetComponent<AudioSource>()[1];
 
-
+        state = State.BlockPlacing;
     }
 
     private void setSizes()
@@ -148,6 +142,18 @@ public class TowerInteractivity : MonoBehaviour
 
             Debug.Log("Tower created");
         }
+    }
+
+    public float GetHeight()
+    {
+        GameObject[] bricks = GameObject.FindGameObjectsWithTag("Brick");
+        float height = 0;
+        foreach (GameObject brick in bricks)
+        {
+            if (height < brick.transform.position.y)
+                height = brick.transform.position.y;
+        }
+        return height;
     }
 
     private void addRow()
@@ -222,7 +228,7 @@ public class TowerInteractivity : MonoBehaviour
 
     public void resetTower()
     {
-        TopBlockPlacer.PlayerChangeable = true;
+        state = State.BlockPlacing;
         destroyTower();
         createTower();
     }
@@ -249,9 +255,9 @@ public class TowerInteractivity : MonoBehaviour
 
 		if (InputSynchronizer.GetKey("o") || InputSynchronizer.GetFlyStickButtonDown(1))
         {
-            if (TopBlockPlacer.PlayerChangeable == true)
+            if (state == State.BlockCorrectlyPlaced)
             {
-                TopBlockPlacer.PlayerChangeable = false;
+                state = State.BlockPlacing;
                 deselect();
                 Player.changeActivePlayer();
                 Debug.Log("Player " + (Player.ActivePlayer + 1) + " is on the move and has " + Players[Player.ActivePlayer].Score + " Points");
