@@ -102,26 +102,19 @@ public class InfoScreenManager : MonoBehaviour
     int FindActivePlayer()
     {
         TowerInteractivity tower = FindObjectOfType<TowerInteractivity>();
-        /*foreach (Player p in tower.Players)
-		{
-			if (p.IsActive){
-				return p.PlayerNumber + 1;
-			}
-		}
 
-		return 0;*/
         return Player.ActivePlayer + 1;
     }
 
     string CreatePlayerText()
     {
-        return "Turn Player " + FindActivePlayer() + "";
+        return "Player " + FindActivePlayer() + " is next";
     }
 
     public void LoserView()
     {
 		int playerNumber = Player.ActivePlayer + 1;
-		loseInfo.text = "Player " + playerNumber + "lost";
+		loseInfo.text = "Player " + playerNumber + " lost";
 		anim.SetBool("LoserView", true);
     }
 
