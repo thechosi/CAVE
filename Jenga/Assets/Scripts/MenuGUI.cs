@@ -57,7 +57,7 @@ public class MenuGUI : MonoBehaviour
 
             RaycastHit hit;
 
-            if (Physics.Raycast(flystickSim.transform.position + flystickSim.transform.up, flystickSim.transform.up, out hit, 10) || Physics.Raycast(flystick.transform.position, flystick.transform.forward, out hit, 10))
+            if (Physics.Raycast(flystickSim.transform.position + flystickSim.transform.up, flystickSim.transform.up, out hit, 10) || Physics.Raycast(flystick.transform.position, flystick.transform.forward, out hit))
             {
                 if (hit.collider.name == "Plane")
                 {

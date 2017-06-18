@@ -391,8 +391,26 @@ public class TowerInteractivity : MonoBehaviour
     private void grabBrick()
     {
         Debug.Log("grabBrick");
-        flyStickInteraction.sendRayForBlocks();
-        GameObject selectedItem = flyStickInteraction.SelectedPart;
+
+        // Check if flystick is inside a brick
+        GameObject[] bricks = GameObject.FindGameObjectsWithTag("Brick");
+        GameObject selectedItem = null;
+        foreach (GameObject brick in bricks)
+        {
+            if (brick.GetComponent<Collider>().bounds.Contains(flyStickInteraction.transform.position))
+            {
+                selectedItem = brick;
+                break;
+            }
+        }
+
+        // Check if flystick points on a brick
+        if (selectedItem == null)
+        {
+            flyStickInteraction.sendRayForBlocks();
+            selectedItem = flyStickInteraction.SelectedPart;
+        }
+
         if (selectedItem)
         {
             Debug.Log("Name" + selectedItem.name);

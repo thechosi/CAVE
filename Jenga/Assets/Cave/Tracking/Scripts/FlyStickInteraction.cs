@@ -42,8 +42,8 @@ public class FlyStickInteraction : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        lineRender = this.GetComponent<LineRenderer>();
-        trackerSettings = this.GetComponent<TrackerSettings>();
+        lineRender = GetComponent<LineRenderer>();
+        trackerSettings = GetComponent<TrackerSettings>();
     }
 
     // Update is called once per frame
@@ -60,7 +60,7 @@ public class FlyStickInteraction : MonoBehaviour
 
     public void sendRay()
     {
-        if (Physics.Raycast(this.transform.position, this.transform.up, out rHit, maxRayDist))
+        if (Physics.Raycast(transform.position, transform.forward, out rHit, maxRayDist))
         {
             selectedPart = rHit.collider.gameObject.transform.parent.gameObject;
         }
@@ -68,17 +68,12 @@ public class FlyStickInteraction : MonoBehaviour
 
     public void sendRayForBlocks()
     {
-        if (Physics.Raycast(this.transform.position, this.transform.up, out rHit, maxRayDist))
+        if (Physics.Raycast(transform.position, transform.forward, out rHit, maxRayDist))
         {
             selectedPart = rHit.collider.gameObject;
         }
     }
-
-    public void TestLog(string Button)
-    {
-        Debug.Log("Button Pressed " + Button);
-    }
-
+    
     private void drawLaser()
     {
         lineRender.SetPosition(0, origin.position);
