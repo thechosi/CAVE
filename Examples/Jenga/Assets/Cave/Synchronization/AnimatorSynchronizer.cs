@@ -1,50 +1,80 @@
-﻿using System.Threading;
+﻿using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 using AwesomeSockets.Domain.Sockets;
 using AwesomeSockets.Buffers;
+using UnityEngine.Networking;
 
 namespace Cave
 {
+    public struct StoredAnimator
+    {
+        public uint networkId;
+        public float animatorTime;
+    }
 
     public class InputAnimatorMessage : ISynchroMessage
     {
-        public float animatorTime;
+        public List<StoredAnimator> animators = new List<StoredAnimator>();
 
         public void Serialize(Buffer buffer)
         {
-            Buffer.Add(buffer, animatorTime);
+            Buffer.Add(buffer, animators.Count);
+            foreach (StoredAnimator animator in animators)
+            {
+                Buffer.Add(buffer, animator.networkId);
+                Buffer.Add(buffer, animator.animatorTime);
+            }
         }
 
         public void Deserialize(Buffer buffer)
         {
-            animatorTime = Buffer.Get<float>(buffer);
+            int length = Buffer.Get<int>(buffer);
+            for (int i = 0; i < length; i++)
+            {
+                StoredAnimator animator = new StoredAnimator();
+                animator.networkId = Buffer.Get<uint>(buffer);
+                animator.animatorTime = Buffer.Get<float>(buffer);
+                animators.Add(animator);
+            }
         }
 
         public int GetLength()
         {
-            return sizeof(float) * 1;
+            return (sizeof(float) + sizeof(uint)) * animators.Count + sizeof(uint);
         }
     }
 
     public class AnimatorSynchronizer
     {
-        private static Animator[] animators = MonoBehaviour.FindObjectsOfType(typeof(Animator)) as Animator[];
-
         public static void ProcessMessage(InputAnimatorMessage message)
         {
-            if (animators.Length > 0)
+            Dictionary<NetworkInstanceId, NetworkIdentity> networkIdentities = ClientScene.objects;
+
+            foreach (StoredAnimator storedAnimator in message.animators)
             {
-                animators[0].Update(message.animatorTime - animators[0].GetCurrentAnimatorStateInfo(0).normalizedTime);
+                NetworkInstanceId networkInstanceId = new NetworkInstanceId(storedAnimator.networkId);
+                if (networkIdentities.ContainsKey(networkInstanceId))
+                {
+                    Animator animator = networkIdentities[networkInstanceId].GetComponent<Animator>();
+                    if (animator != null)
+                        animator.Update(storedAnimator.animatorTime - animator.GetCurrentAnimatorStateInfo(0).normalizedTime);
+                }
             }
         }
 
         public static void BuildMessage(InputAnimatorMessage message)
         {
-            if (animators.Length > 0)
+            foreach (KeyValuePair<NetworkInstanceId, NetworkIdentity> networkIdentity in NetworkServer.objects)
             {
-                message.animatorTime = animators[0].GetCurrentAnimatorStateInfo(0).normalizedTime;
+                if (networkIdentity.Value.gameObject.GetComponent<Animator>() != null)
+                {
+                    StoredAnimator animator = new StoredAnimator();
+                    animator.networkId = networkIdentity.Key.Value;
+                    animator.animatorTime = networkIdentity.Value.gameObject.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime;
+                    message.animators.Add(animator);
+                }
             }
         }
-
     }
 }
