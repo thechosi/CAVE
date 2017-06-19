@@ -8,15 +8,15 @@ namespace Cave
 {
     public abstract class CollisionSynchronization : MonoBehaviour
     {
-        private CollisionType[] relevantTypes;
+        private EventType[] relevantTypes;
         private NetworkInstanceId netId;
 
-        protected CollisionSynchronization(CollisionType[] relevantTypes)
+        protected CollisionSynchronization(EventType[] relevantTypes)
         {
             this.relevantTypes = relevantTypes;
         }
 
-        private void LogCollider(CollisionType type, Collider other)
+        private void LogCollider(EventType type, Collider other)
         {
             if (netId.IsEmpty())
             {
@@ -29,11 +29,11 @@ namespace Cave
             NetworkIdentity networkIdentity = other.gameObject.GetComponent<NetworkIdentity>();
             if (networkIdentity != null)
             {
-                CollisionSynchronizer.LogCollision(type, netId, networkIdentity.netId);
+                EventSynchronizer.LogEvent(type, netId, networkIdentity.netId.Value);
             }
         }
 
-        private void LogCollision(CollisionType type, Collision collisionInfo)
+        private void LogCollision(EventType type, Collision collisionInfo)
         {
             foreach (ContactPoint contact in collisionInfo.contacts)
             {
@@ -43,38 +43,38 @@ namespace Cave
 
         public void OnCollisionEnter(Collision collisionInfo)
         {
-            if (Array.IndexOf(relevantTypes, CollisionType.OnCollisionEnter) > -1)
-                LogCollision(CollisionType.OnCollisionEnter, collisionInfo);
+            if (Array.IndexOf(relevantTypes, EventType.OnCollisionEnter) > -1)
+                LogCollision(EventType.OnCollisionEnter, collisionInfo);
         }
 
         public void OnCollisionStay(Collision collisionInfo)
         {
-            if (Array.IndexOf(relevantTypes, CollisionType.OnCollisionStay) > -1)
-                LogCollision(CollisionType.OnCollisionStay, collisionInfo);
+            if (Array.IndexOf(relevantTypes, EventType.OnCollisionStay) > -1)
+                LogCollision(EventType.OnCollisionStay, collisionInfo);
         }
 
         public void OnCollisionExit(Collision collisionInfo)
         {
-            if (Array.IndexOf(relevantTypes, CollisionType.OnCollisionExit) > -1)
-                LogCollision(CollisionType.OnCollisionExit, collisionInfo);
+            if (Array.IndexOf(relevantTypes, EventType.OnCollisionExit) > -1)
+                LogCollision(EventType.OnCollisionExit, collisionInfo);
         }
 
         public void OnTriggerEnter(Collider other)
         {
-            if (Array.IndexOf(relevantTypes, CollisionType.OnTriggerEnter) > -1)
-                LogCollider(CollisionType.OnTriggerEnter, other);
+            if (Array.IndexOf(relevantTypes, EventType.OnTriggerEnter) > -1)
+                LogCollider(EventType.OnTriggerEnter, other);
         }
 
         public void OnTriggerStay(Collider other)
         {
-            if (Array.IndexOf(relevantTypes, CollisionType.OnTriggerStay) > -1)
-                LogCollider(CollisionType.OnTriggerStay, other);
+            if (Array.IndexOf(relevantTypes, EventType.OnTriggerStay) > -1)
+                LogCollider(EventType.OnTriggerStay, other);
         }
 
         public void OnTriggerExit(Collider other)
         {
-            if (Array.IndexOf(relevantTypes, CollisionType.OnTriggerExit) > -1)
-                LogCollider(CollisionType.OnTriggerExit, other);
+            if (Array.IndexOf(relevantTypes, EventType.OnTriggerExit) > -1)
+                LogCollider(EventType.OnTriggerExit, other);
         }
 
 

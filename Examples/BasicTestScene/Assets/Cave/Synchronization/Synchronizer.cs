@@ -6,7 +6,10 @@ namespace Cave
    
     public class Synchronizer : MonoBehaviour
     {
-        
+        public string[] relevantAxes = { "Vertical", "Horizontal" };
+        public string[] relevantButtons = { };
+        public string[] relevantKeys = { "mouse 0", "mouse 1", "mouse 2", "flystick 0", "flystick 1", "flystick 2", "flystick 3" };
+        public GameObject flyStick = null;
 
         private bool started;
         
@@ -14,7 +17,8 @@ namespace Cave
 
         void Start()
         {
-            RigidBodySynchronizer.Prepare();
+            flyStick = GameObject.Find("Flystick");
+            GUISynchronizer.Prepare();
             started = false;
             
             if (NodeInformation.type.Equals("slave"))
@@ -43,7 +47,7 @@ namespace Cave
 #if UNITY_EDITOR
                     UnityEditor.EditorApplication.isPlaying = false;
 #else
-                        Application.Quit();
+                    Application.Quit();
 #endif
                 }
             }
@@ -59,13 +63,12 @@ namespace Cave
                 InputMessage inputMessage = new InputMessage();
 
                 TimeSynchronizer.BuildMessage(inputMessage.inputTimeMessage);
-                InputSynchronizer.BuildMessage(inputMessage.inputInputMessage);
+                InputSynchronizer.BuildMessage(this, inputMessage.inputInputMessage);
                 ParticleSynchronizer.BuildMessage(inputMessage.inputParticleMessage);
                 AnimatorSynchronizer.BuildMessage(inputMessage.inputAnimatorMessage);
                 TrackingSynchronizer.BuildMessage(inputMessage.inputTrackingMessage);
-                RigidBodySynchronizer.BuildMessage(inputMessage.inputRigidBodyMessage);
                 TransformationSynchronizer.BuildMessage(inputMessage.inputTransformationMessage);
-                CollisionSynchronizer.BuildMessage(inputMessage.inputCollisionMessage);
+                EventSynchronizer.BuildMessage(inputMessage.inputEventsMessage);
 
                 node.BroadcastMessage(inputMessage);
             }
@@ -75,13 +78,12 @@ namespace Cave
                 ((Client)node).WaitForNextMessage(inputMessage);
 
                 TimeSynchronizer.ProcessMessage(inputMessage.inputTimeMessage);
-                InputSynchronizer.ProcessMessage(inputMessage.inputInputMessage);
+                InputSynchronizer.ProcessMessage(this, inputMessage.inputInputMessage);
                 ParticleSynchronizer.ProcessMessage(inputMessage.inputParticleMessage);
                 AnimatorSynchronizer.ProcessMessage(inputMessage.inputAnimatorMessage);
                 TrackingSynchronizer.ProcessMessage(inputMessage.inputTrackingMessage);
-                RigidBodySynchronizer.ProcessMessage(inputMessage.inputRigidBodyMessage);
                 TransformationSynchronizer.ProcessMessage(inputMessage.inputTransformationMessage);
-                CollisionSynchronizer.ProcessMessage(inputMessage.inputCollisionMessage);
+                EventSynchronizer.ProcessMessage(inputMessage.inputEventsMessage);
             }
             
             StartCoroutine(EndOfFrame());
@@ -90,7 +92,6 @@ namespace Cave
         IEnumerator EndOfFrame()
         {
             yield return new WaitForEndOfFrame();
-            //ParticleSynchronizer.Synchronize(node);
             node.FinishFrame();
         }
 

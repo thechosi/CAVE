@@ -40,16 +40,17 @@ public class TrackerHostSettings : MonoBehaviour
                     break;
                 case TrackerPreset.Vicon:
                     position = ViconVRPN.vrpnTrackerPos;
-                    rotation = ViconVRPN.vrpnTrackerQuat;
+					rotation = ViconVRPN.vrpnTrackerQuat;
                     break;
 				case TrackerPreset.LeftHanded:
 					position = LeftHandedVRPN.vrpnTrackerPos;
 					rotation = LeftHandedVRPN.vrpnTrackerQuat;
-							//added by pohl
-					button = LeftHandedVRPN.vrpnTrackerButton;
-					analog = LeftHandedVRPN.vrpnTrackerAnalog;
 					break;
             }
+
+			//added by pohl
+			button = LeftHandedVRPN.vrpnTrackerButton;
+			analog = LeftHandedVRPN.vrpnTrackerAnalog;
         }
     }
 

@@ -54,7 +54,6 @@ public class FlyStickInteraction : MonoBehaviour
             model = GameObject.FindWithTag("InteractiveModel");
         }
         drawLaser();
-        rotateSelectedObject();
     }
 
     public void sendRay()
@@ -83,14 +82,7 @@ public class FlyStickInteraction : MonoBehaviour
     {
         model.GetComponent<interactionTrigger>().trigger();
     }
-
-    private void rotateSelectedObject()
-    {
-        Vector2 vec = trackerSettings.getAnalog();
-        Vector3 rot = new Vector3(0, vec.x, 0);
-        model.transform.Rotate(rot);
-    }
-
+    
 
 }
 

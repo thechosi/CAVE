@@ -21,7 +21,6 @@ namespace Cave
             connections = new List<ISocket>();
         }
 
-
         public void ReceiveNextMessage(bool skipConnectingEvents, ISocket connection, ISynchroMessage targetMessage)
         {
             try
@@ -42,7 +41,7 @@ namespace Cave
 
                 targetMessage.Deserialize(inBuf);
             }
-            catch (SocketException e)
+            catch (SocketException)
             {
                 connections.Remove(connection);
             }
@@ -102,8 +101,7 @@ namespace Cave
                 connections.Remove(connection);
             }
         }
-
-
+        
         public virtual void Disconnect()
         {
             foreach (ISocket connection in connections)

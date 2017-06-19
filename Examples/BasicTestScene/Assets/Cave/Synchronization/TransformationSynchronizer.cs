@@ -11,11 +11,6 @@ namespace Cave
         public Vector3 localPosition;
         public Vector3 localEulerAngles;
         public Vector3 localScale;
-
-        public bool Equals(Transform transform)
-        {
-            return transform.localPosition == localPosition && transform.localEulerAngles == localEulerAngles && transform.localScale == localScale;
-        }
     }
 
     public class InputTransformationMessage : ISynchroMessage
@@ -72,8 +67,6 @@ namespace Cave
 
     class TransformationSynchronizer
     {
-        private static Dictionary<NetworkInstanceId, StoredTransform> lastTransforms = new Dictionary<NetworkInstanceId, StoredTransform>();
-
         public static void ProcessMessage(InputTransformationMessage message)
         {
             Dictionary<NetworkInstanceId, NetworkIdentity> networkIdentities = ClientScene.objects;
@@ -94,7 +87,7 @@ namespace Cave
         {
             foreach (KeyValuePair<NetworkInstanceId, NetworkIdentity> networkIdentity in NetworkServer.objects)
             {
-                if (!lastTransforms.ContainsKey(networkIdentity.Key) || !lastTransforms[networkIdentity.Key].Equals(networkIdentity.Value.gameObject.transform))
+                if (networkIdentity.Value.gameObject.GetComponent<Rigidbody>() != null)
                 {
                     StoredTransform transform = new StoredTransform();
                     transform.networkId = networkIdentity.Key.Value;
@@ -102,7 +95,6 @@ namespace Cave
                     transform.localEulerAngles = networkIdentity.Value.gameObject.transform.localEulerAngles;
                     transform.localScale = networkIdentity.Value.gameObject.transform.localScale;
                     message.transforms.Add(transform);
-                    lastTransforms[networkIdentity.Key] = transform;
                 }
             }
         }

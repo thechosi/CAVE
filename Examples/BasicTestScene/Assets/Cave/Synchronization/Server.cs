@@ -26,20 +26,16 @@ namespace Cave
             }
         }
 
-
         void InitializeClient(ISocket connection)
         {
            ParticleSynchronizer.InitializeFromServer(this, connection);
-           RigidBodySynchronizer.InitializeFromServer(this, connection);
         }
-
 
         public override void Disconnect()
         {
             base.Disconnect();
             listenSocket.Close();
         }
-
 
         public override void FinishFrame()
         {

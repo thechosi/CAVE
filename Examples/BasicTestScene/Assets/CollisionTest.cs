@@ -7,7 +7,7 @@ using UnityEngine.Networking;
 public class CollisionTest : CollisionSynchronization {
     
     public CollisionTest()
-        : base(new[] { CollisionType.OnCollisionEnter })
+        : base(new[] { Cave.EventType.OnCollisionEnter })
     {
 
     }

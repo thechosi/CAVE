@@ -87,6 +87,8 @@
     <Compile Include="Assets\Cave\Synchronization\AwesomeSockets\Sockets\AweSock.cs" />
     <Compile Include="Assets\Cave\Synchronization\Client.cs" />
     <Compile Include="Assets\Cave\Synchronization\CollisionSynchronizer.cs" />
+    <Compile Include="Assets\Cave\Synchronization\EventSynchronizer.cs" />
+    <Compile Include="Assets\Cave\Synchronization\GUISynchronizer.cs" />
     <Compile Include="Assets\Cave\Synchronization\InputSynchronizer.cs" />
     <Compile Include="Assets\Cave\Synchronization\InstantiateNode.cs" />
     <Compile Include="Assets\Cave\Synchronization\NetworkNode.cs" />
@@ -113,6 +115,7 @@
     <Compile Include="Assets\Cave\Tracking\Scripts\FixedRotation.cs" />
     <Compile Include="Assets\Cave\Tracking\Scripts\FlyStickInteraction.cs" />
     <Compile Include="Assets\Cave\Tracking\Scripts\Flystick.cs" />
+    <Compile Include="Assets\Cave\Tracking\Scripts\FlystickSphereInteraction.cs" />
     <Compile Include="Assets\Cave\Tracking\Scripts\InterpupillaryDistance.cs" />
     <Compile Include="Assets\Cave\Tracking\Scripts\VRInteractiveItem.cs" />
     <Compile Include="Assets\Cave\Tracking\Scripts\flystickNavigation.cs" />

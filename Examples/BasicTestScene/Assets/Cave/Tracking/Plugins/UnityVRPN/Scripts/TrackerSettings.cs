@@ -14,17 +14,11 @@ public class TrackerSettings : MonoBehaviour
     private bool trackPosition = true;
     [SerializeField]
     private bool trackRotation = true;
-	//added by pohl 09.12.16
-	[SerializeField]
-	private int nButtons;
-	[SerializeField]
-	public UnityEvent triggerButton;
-	[SerializeField]
-	public UnityEvent leftButton;
-	[SerializeField]
-	public UnityEvent rightButton;
-	[SerializeField]
-	public UnityEvent middleButton;
+    //added by pohl 09.12.16
+    [SerializeField]
+    private int nButtons;
+
+    private bool[] pressedButtons;
 
 
     public TrackerHostSettings HostSettings
@@ -53,14 +47,14 @@ public class TrackerSettings : MonoBehaviour
             channel = value;
         }
     }
-	public int Buttons
-	{
-		get { return nButtons; }
-		set
-		{
-			nButtons = value;
-		}
-	}
+    public int Buttons
+    {
+        get { return nButtons; }
+        set
+        {
+            nButtons = value;
+        }
+    }
     public bool TrackPosition
     {
         get { return trackPosition; }
@@ -96,22 +90,20 @@ public class TrackerSettings : MonoBehaviour
         {
             StartCoroutine("Position");
         }
-		if (trackRotation)
+        if (trackRotation)
         {
             StartCoroutine("Rotation");
         }
-		// StartCoroutine ("GetAnalog");
-		StartCoroutine ("PushButton");
+        // StartCoroutine ("GetAnalog");
+        StartCoroutine("PushButton");
     }
 
     private IEnumerator Position()
     {
         while (true)
         {
-            if (hostSettings.GetPosition(objectName, channel).Equals(new Vector3(-505, -505, -505))){
-                //transform.localPosition = new Vector3(0, 0, 0);
-                //If there is no usable information coming from the tracker then leave the position as it is.
-            } else {
+            if (hostSettings != null && !hostSettings.GetPosition(objectName, channel).Equals(new Vector3(-505, -505, -505)))
+            { 
                 transform.localPosition = hostSettings.GetPosition(objectName, channel);
             }
             yield return null;
@@ -122,54 +114,46 @@ public class TrackerSettings : MonoBehaviour
     {
         while (true)
         {
-            transform.rotation = hostSettings.GetRotation(objectName, channel);
+            if (hostSettings != null)
+                transform.rotation = hostSettings.GetRotation(objectName, channel);
             yield return null;
         }
     }
 
-	//added by pohl
-	//private IEnumerator GetAnalog()
-	public Vector2 getAnalog()
-	{
-		Vector2 analogStick;
-		//while (true) {
-		analogStick.x = (float)hostSettings.GetAnalog (objectName, 0);
-		analogStick.y = (float)hostSettings.GetAnalog (objectName, 1);
-		//	yield return null;
-		//}
-		return analogStick;
-	}
+    //added by pohl
+    //private IEnumerator GetAnalog()
+    public Vector2 getAnalog()
+    {
+        Vector2 analogStick = new Vector2();
+        //while (true) {
+        analogStick.x = (float)hostSettings.GetAnalog(objectName, 0);
+        analogStick.y = (float)hostSettings.GetAnalog(objectName, 1);
+        transform.parent.position = new Vector3(transform.parent.position.x, transform.parent.position.y + analogStick.y / 100, transform.parent.position.z + analogStick.x / 100);
 
-	private IEnumerator PushButton()
-	{
-		while (true)
-		{
-			for (int i = 0; i < nButtons; i += 1) {
-				if (hostSettings.GetButton (objectName, i)) {
-					executeButtonFunctions (i);
-				}
-			}
-			yield return null;
-		}
-	}
+        //	yield return null;
+        //}
+        return analogStick;
+    }
 
-	private void executeButtonFunctions(int buttonChannel){
-		switch (buttonChannel) {
-			case 0:
-				triggerButton.Invoke ();
-				break;
-			case 1:
-				leftButton.Invoke ();
-				break;
-			case 2:
-				rightButton.Invoke ();
-				break;
-			case 3:
-				middleButton.Invoke ();
-				break;
-			default:
-				print ("Button does not exist!");
-				break;
-		}
-	}
+    private IEnumerator PushButton()
+    {
+        pressedButtons = new bool[nButtons];
+        while (true)
+        {
+            if (hostSettings)
+            {
+                for (int i = 0; i < nButtons; i += 1)
+                {
+                    pressedButtons[i] = hostSettings.GetButton(objectName, i);
+                }
+            }
+            yield return null;
+        }
+    }
+
+    // 0 = trigger, 1 = left, 2 = right, 3 = middle
+    public bool IsButtonPressed(int buttonChannel)
+    {
+        return pressedButtons != null && buttonChannel < pressedButtons.Length && pressedButtons[buttonChannel];
+    }
 }

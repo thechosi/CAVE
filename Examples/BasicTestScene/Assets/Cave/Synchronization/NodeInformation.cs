@@ -9,15 +9,14 @@ namespace Cave
     {
         private static XmlDocument xmlDocument;
 
-        public static string name, type, serverIp;
+        public static string type, serverIp;
         public static Vector3 originPosition;
         public static Vector3 cameraRoation;
         public static Vector3 screenplanePosition;
         public static Vector3 screenplaneRotation;
         public static Vector3 screenplaneScale;
         public static string cameraEye;
-        public static int nodes, serverPort;
-        public static bool stereo;
+        public static int serverPort;
         public static int numberOfSlaves;
 
         static NodeInformation()
@@ -119,13 +118,11 @@ namespace Cave
 
         static void getServerInfosOfNode(XmlNode node)
         {
-            Debug.Log(node.Name);
             if (node.Name == "master")
             {
                 serverIp = node.Attributes["ip"].Value;
                 serverPort = Convert.ToInt32(node.Attributes["port"].Value);
             }
-
         }
 
         static void getScreenplane(XmlNode node)
@@ -137,7 +134,10 @@ namespace Cave
 
 		static bool isOwnIP(String ip)
 		{
-			var host = System.Net.Dns.GetHostEntry(System.Net.Dns.GetHostName());
+            string dnsName = System.Net.Dns.GetHostName();
+            if (dnsName == "")
+                dnsName = "localhost";
+            var host = System.Net.Dns.GetHostEntry(dnsName);
 			foreach (var ownIp in host.AddressList)
 			{
 				if (ownIp.ToString().Equals(ip))
@@ -163,8 +163,6 @@ namespace Cave
 						if (isOwnIP(node.Attributes["ip"].Value) || node.Attributes["ip"].Value == "localhost")
                         {
                             type = "master";
-                            Debug.Log("Wir sind master");
-
 
                             foreach (XmlNode master_node in node.ChildNodes)
                             {
@@ -209,7 +207,7 @@ namespace Cave
 
             }
 
-
+            Debug.Log("Own nodetype: " + type);
         }
     }
 }

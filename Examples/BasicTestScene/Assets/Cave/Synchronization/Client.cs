@@ -17,7 +17,7 @@ namespace Cave
             {
                 connections.Add(AweSock.TcpConnect(NodeInformation.serverIp, NodeInformation.serverPort + 1));
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 Debug.Log("Could not connect to server. Trying again.");
 
@@ -40,7 +40,6 @@ namespace Cave
         void InitializeSelf()
         {
             ParticleSynchronizer.InitializeFromClient(this);
-            RigidBodySynchronizer.InitializeFromClient(this);
         }
 
         public override void FinishFrame()
