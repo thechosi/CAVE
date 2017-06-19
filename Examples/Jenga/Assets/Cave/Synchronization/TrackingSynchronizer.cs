@@ -53,7 +53,7 @@ namespace Cave
     {
         public static void ProcessMessage(InputTrackingMessage message)
         {
-            GameObject origin = GameObject.FindGameObjectWithTag("MainCamera");
+            GameObject origin = InstantiateNode.FindOrigin();
             if (origin != null)
 			{
 				origin.transform.Find("CameraHolder").transform.localEulerAngles = message.cameraRotation;
@@ -65,7 +65,7 @@ namespace Cave
 
         public static void BuildMessage(InputTrackingMessage message)
         {
-			GameObject origin = GameObject.FindGameObjectWithTag("MainCamera");
+			GameObject origin = InstantiateNode.FindOrigin();
 			message.cameraRotation = origin.transform.Find("CameraHolder").transform.localEulerAngles;
             message.cameraPosition = origin.transform.Find("CameraHolder").transform.localPosition;
             message.flyStickRotation = origin.transform.Find("Flystick").transform.localEulerAngles;

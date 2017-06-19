@@ -29,7 +29,7 @@ namespace Cave
                 NetworkServer.Spawn(objOrigin);
 
                 //Test Master; if we remove this, then the master won't see anything (same goes for config)
-                originSlave = GameObject.FindGameObjectWithTag("MainCamera");
+                originSlave = FindOrigin();
 
                 Transform ScreenplaneTransform = originSlave.transform.Find("Plane");
                 ScreenplaneTransform.localScale = NodeInformation.screenplaneScale;
@@ -56,6 +56,17 @@ namespace Cave
 
         }
 
+        public static GameObject FindOrigin()
+        {
+            GameObject[] gameObjects = GameObject.FindGameObjectsWithTag("MainCamera");
+            foreach (GameObject gameObject in gameObjects)
+            {
+                if (gameObject.transform.Find("CameraHolder") != null)
+                    return gameObject;
+            }
+            return null;
+        }
+
         public void Update()
         {
             //The slave needs to turn the camera and adjust the screenplane
@@ -65,7 +76,7 @@ namespace Cave
                 if (originSlave == null)
                 {
                     //the origin-GameObject has the tag "MainCamera" to find it easily
-                    originSlave = GameObject.FindGameObjectWithTag("MainCamera");
+                    originSlave = FindOrigin();
                     //Since the client needs some time to get the object from the server, we can only continue if we have the origin
                     if (originSlave != null)
                     {
