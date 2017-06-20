@@ -116,6 +116,8 @@ public class MenuGUI : MonoBehaviour
 
         tower.NrOfPlayers = Int32.Parse(nrOfPlayers.transform.FindChild("Text").GetComponent<Text>().text.Substring(0, 1));
 
+		tower.Players.Clear();
+
         for (int i = 0; i < tower.NrOfPlayers; i++)
         {
             tower.Players.Add(ScriptableObject.CreateInstance<Player>());
@@ -123,6 +125,7 @@ public class MenuGUI : MonoBehaviour
             tower.Players[i].PlayerNumber = i;
         }
         tower.Players[0].IsActive = true;
+		Player.ActivePlayer = 0;
     }
 
     public void startGame()

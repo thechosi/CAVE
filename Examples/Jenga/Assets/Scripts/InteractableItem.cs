@@ -56,7 +56,7 @@ public class InteractableItem : CollisionSynchronization
     // Update is called once per frame
     void Update()
     {
-        if (attachedWand && currentlyInteracting)
+		if (attachedWand && currentlyInteracting)
         {
             posDelta = attachedWand.transform.position - interactionPoint.position;
             this.rigidbody.velocity = posDelta * velocityFactor * Time.fixedDeltaTime; //TODO change to networkTime
@@ -112,6 +112,7 @@ public class InteractableItem : CollisionSynchronization
     public void BeginInteraction(FlyStickInteraction wand)
     {
         attachedWand = wand;
+		Debug.Log ("+++" + interactionPoint + "wand" + wand);
         interactionPoint.position = wand.transform.position;
         interactionPoint.rotation = wand.transform.rotation;
         interactionPoint.SetParent(transform, true);

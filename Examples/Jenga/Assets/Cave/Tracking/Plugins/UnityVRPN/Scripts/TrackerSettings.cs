@@ -98,26 +98,25 @@ public class TrackerSettings : MonoBehaviour
         StartCoroutine("PushButton");
     }
 
-    private IEnumerator Position()
+	private void Update()
+	{
+		Position ();
+		Rotation ();
+		PushButton ();
+	}
+
+    private void Position()
     {
-        while (true)
-        {
-            if (hostSettings != null && !hostSettings.GetPosition(objectName, channel).Equals(new Vector3(-505, -505, -505)))
-            { 
-                transform.localPosition = hostSettings.GetPosition(objectName, channel);
-            }
-            yield return null;
+        if (hostSettings != null && !hostSettings.GetPosition(objectName, channel).Equals(new Vector3(-505, -505, -505)))
+        { 
+            transform.localPosition = hostSettings.GetPosition(objectName, channel);
         }
     }
 
-    private IEnumerator Rotation()
+	private void Rotation()
     {
-        while (true)
-        {
-            if (hostSettings != null)
-                transform.rotation = hostSettings.GetRotation(objectName, channel);
-            yield return null;
-        }
+        if (hostSettings != null)
+            transform.rotation = hostSettings.GetRotation(objectName, channel);
     }
 
     //added by pohl
@@ -135,19 +134,15 @@ public class TrackerSettings : MonoBehaviour
         return analogStick;
     }
 
-    private IEnumerator PushButton()
+    private void PushButton()
     {
         pressedButtons = new bool[nButtons];
-        while (true)
+        if (hostSettings)
         {
-            if (hostSettings)
+            for (int i = 0; i < nButtons; i += 1)
             {
-                for (int i = 0; i < nButtons; i += 1)
-                {
-                    pressedButtons[i] = hostSettings.GetButton(objectName, i);
-                }
+                pressedButtons[i] = hostSettings.GetButton(objectName, i);
             }
-            yield return null;
         }
     }
 

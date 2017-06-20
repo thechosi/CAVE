@@ -142,6 +142,7 @@ public class TowerInteractivity : MonoBehaviour
 
             Debug.Log("Tower created");
         }
+		state = State.BlockPlacing;
     }
 
     public float GetHeight()
@@ -215,6 +216,10 @@ public class TowerInteractivity : MonoBehaviour
         buttonSelectAudioSource = GetComponent<AudioSource>();
         buttonSelectAudioSource.Play();
 
+		GameObject interactionObject = GameObject.Find("InteractionObject");
+		interactionObject.transform.parent = null;
+
+		deselect();
         Debug.Log("Destroying Tower");
         foreach (Transform child in transform)
         {
@@ -384,8 +389,8 @@ public class TowerInteractivity : MonoBehaviour
         {
             if (brick.GetComponent<Collider>().bounds.Contains(flyStickInteraction.transform.position))
             {
-                selectedItem = brick;
-                break;
+                //selectedItem = brick;
+               // break;
             }
         }
 
@@ -408,7 +413,7 @@ public class TowerInteractivity : MonoBehaviour
 
                     if (interactingItem.name.Contains(TowerInteractivity.MaxRow.ToString()) && interactingItem.GetComponent<Renderer>().material.color != Color.green)
                     {
-                        return;
+                        //return;
                     }
                     if (interactingItem.GetComponent<Renderer>().material.color != Color.green)
                     {
