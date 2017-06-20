@@ -18,7 +18,7 @@
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
     <UnityVersion>5.5.2f1</UnityVersion>
     <RootNamespace></RootNamespace>
-    <LangVersion>4</LangVersion>
+    <LangVersion Condition=" '$(VisualStudioVersion)' != '10.0' ">4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -93,9 +93,7 @@
     <Compile Include="Assets\Cave\Synchronization\NetworkNode.cs" />
     <Compile Include="Assets\Cave\Synchronization\NodeInformation.cs" />
     <Compile Include="Assets\Cave\Synchronization\ParticleSynchronizer.cs" />
-    <Compile Include="Assets\Cave\Synchronization\RigidBodySynchronizer.cs" />
     <Compile Include="Assets\Cave\Synchronization\Server.cs" />
-    <Compile Include="Assets\Cave\Synchronization\Statistics.cs" />
     <Compile Include="Assets\Cave\Synchronization\SynchroMessage.cs" />
     <Compile Include="Assets\Cave\Synchronization\Synchronizer.cs" />
     <Compile Include="Assets\Cave\Synchronization\TimeSynchronizer.cs" />
@@ -120,8 +118,8 @@
     <Compile Include="Assets\Cave\Tracking\Scripts\flystickNavigation.cs" />
     <Compile Include="Assets\Cave\Tracking\Scripts\interactionTrigger.cs" />
     <Compile Include="Assets\Cave\Tracking\Scripts\manageTracking.cs" />
-    <Compile Include="Assets\FlyStickTowerInteraction.cs" />
     <Compile Include="Assets\Scripts\FlyStickSim.cs" />
+    <Compile Include="Assets\Scripts\FlyStickSimInvisible.cs" />
     <Compile Include="Assets\Scripts\InfoScreenManager.cs" />
     <Compile Include="Assets\Scripts\Interactable.cs" />
     <Compile Include="Assets\Scripts\InteractableItem.cs" />
@@ -139,7 +137,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\StreamingAssets\node-config.xml" />
-    <None Include="Assets\StreamingAssets\node-config_local.xml" />
+    <None Include="Assets\StreamingAssets\node-config_cave.xml" />
     <None Include="Assets\Textures\Skyboxes\checkered\Note.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
