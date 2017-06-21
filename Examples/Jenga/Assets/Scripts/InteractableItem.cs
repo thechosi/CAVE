@@ -64,11 +64,14 @@ public class InteractableItem : CollisionSynchronization
             rotationDelta = attachedWand.transform.rotation * Quaternion.Inverse(interactionPoint.rotation);
             rotationDelta.ToAngleAxis(out angle, out axis);
 
-            if (angle > 180)
+            if (!float.IsInfinity(axis.x) && !float.IsInfinity(axis.y) && !float.IsInfinity(axis.z))
             {
-                angle -= 360;
+                if (angle > 180)
+                {
+                    angle -= 360;
+                }
+                this.rigidbody.angularVelocity = (Time.fixedDeltaTime * angle * axis) * rotationFactor;
             }
-            this.rigidbody.angularVelocity = (Time.fixedDeltaTime * angle * axis) * rotationFactor;
         }
 
 
