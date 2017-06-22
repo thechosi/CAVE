@@ -62,24 +62,18 @@ public class FlyStickInteraction : MonoBehaviour
         {
             selectedPart = rHit.collider.gameObject.transform.parent.gameObject;
         }
+        else
+            selectedPart = null;
     }
 
     public void sendRayForBlocks()
     {
-		GameObject[] bricks = GameObject.FindGameObjectsWithTag("Brick");
-		foreach (GameObject brick in bricks) 
-		{
-			Debug.Log ("B1 " + brick.transform.position.ToString () + "," + brick.transform.rotation.ToString () + ","  + brick.GetComponent<Collider>().bounds.center.ToString () + "," + brick.GetComponent<Collider>().bounds.extents.ToString ());
-			Debug.Log ("B2 " + brick.transform.position.ToString () + "," + brick.transform.rotation.ToString () + ","  + brick.GetComponent<Collider>().bounds.center.ToString () + "," + brick.GetComponent<Collider>().bounds.extents.ToString ());
-		}
-
-		if (Physics.Raycast (transform.position, transform.forward, out rHit, maxRayDist)) 
+		if (Physics.Raycast(transform.position, transform.forward, out rHit, maxRayDist)) 
 		{
 			selectedPart = rHit.collider.gameObject;
-			Debug.Log ("S " + selectedPart.transform.position.ToString () + "," + selectedPart.transform.rotation.ToString ());
-		} else
+        }
+        else
 			selectedPart = null;
-		Debug.Log (transform.position.x.ToString () + "," + transform.position.y.ToString() +  "," + transform.position.z.ToString() + " - " + transform.forward.x.ToString() + "," + transform.forward.y.ToString() + "," + transform.forward.z.ToString() + " - " + Cave.TimeSynchronizer.time);
     }
     
     private void drawLaser()

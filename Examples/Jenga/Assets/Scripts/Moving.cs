@@ -81,7 +81,7 @@ public class Moving : MonoBehaviour {
         {
             rotationVector.y -= rotationSpeed;
         }
-        gameObject.transform.Translate(moveVector * TimeSynchronizer.deltaTime);
-        gameObject.transform.Rotate(rotationVector * TimeSynchronizer.deltaTime);
+        gameObject.transform.Translate(moveVector * TimeSynchronizer.deltaTime, Space.World);
+        gameObject.transform.Rotate(rotationVector * TimeSynchronizer.deltaTime, Space.World);
     }
 }

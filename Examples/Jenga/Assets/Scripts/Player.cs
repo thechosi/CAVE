@@ -104,18 +104,5 @@ public class Player : ScriptableObject
         }
         return ActivePlayer;
     }
-
-	public static int setActivePlayer(int newActivePlayer)
-	{
-		TowerInteractivity tower = FindObjectOfType<TowerInteractivity>();
-		foreach (Player p in tower.Players)
-		{
-			p.IsActive = false;
-		}
-
-		ActivePlayer = newActivePlayer;
-		tower.Players[newActivePlayer].IsActive = true;
-
-		return ActivePlayer;
-	}
+    
 }

@@ -389,8 +389,8 @@ public class TowerInteractivity : MonoBehaviour
         {
             if (brick.GetComponent<Collider>().bounds.Contains(flyStickInteraction.transform.position))
             {
-                //selectedItem = brick;
-               // break;
+                selectedItem = brick;
+                break;
             }
         }
 

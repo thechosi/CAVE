@@ -76,17 +76,9 @@ namespace Cave
                 NetworkInstanceId networkInstanceId = new NetworkInstanceId(transform.networkId);
                 if (networkIdentities.ContainsKey(networkInstanceId))
                 {
-					if (networkIdentities [networkInstanceId].GetComponent<Rigidbody> () != null)
-						MonoBehaviour.Destroy (networkIdentities [networkInstanceId].GetComponent<Rigidbody> ());
-					if (float.IsNaN (networkIdentities [networkInstanceId].GetComponent<Collider> ().bounds.center.x)) {
-						Debug.Log ("B Is Nan! " + TimeSynchronizer.time + "," + transform.localPosition.ToString() + transform.localEulerAngles.ToString() + transform.localScale.ToString());
-					}
                     networkIdentities[networkInstanceId].transform.localPosition = transform.localPosition;
                     networkIdentities[networkInstanceId].transform.localEulerAngles = transform.localEulerAngles;
                     networkIdentities[networkInstanceId].transform.localScale = transform.localScale;
-					if (float.IsNaN (networkIdentities [networkInstanceId].GetComponent<Collider> ().bounds.center.x)) {
-						Debug.Log ("A Is Nan! " + TimeSynchronizer.time + "," + transform.localPosition.ToString() + transform.localEulerAngles.ToString() + transform.localScale.ToString());
-					}
                 }
             }
         }
