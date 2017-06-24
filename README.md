@@ -10,9 +10,7 @@ To integrate CAVE support into your Unity application there are a few steps to d
 
 ### 1. Integrate our package
 
-Import our unity package into to your project
-
-_TODO: Add path to package_
+Import our unity package into to your project. Just copy the content of the "Package" directory into your assets folder.
 
 ### 2. Add NodeManager
 
@@ -20,7 +18,9 @@ In the directory Assets/Cave/Prefabs you should find a prefab called NodeManager
 
 ### 3. Adjust script execution order
 
-Make sure the script Cave.Synchronizer is executed before all other scripts: In Unity go to Edit -> Project Settings -> Script Execution Order. Now add the script Cave.Synchronizer and set its value to e.q. -100.
+Make sure the script Cave.Synchronizer is executed before all other scripts (In Unity go to Edit -> Project Settings -> Script Execution Order):
+* Add the script Cave.InstantiateNode and set its value to -200.
+* Add the script Cave.Synchronizer and set its value to -100.
 
 ### 4. Adjust your scripts
 
@@ -40,6 +40,9 @@ For getting more information about a specific topic of our package you can find 
 * [ConfigTool](https://github.com/thechosi/CAVE/wiki/ConfigTool)
 * [Jenga (example project)](https://github.com/thechosi/CAVE/wiki/Jenga)
 
-## Additional Information (working environment)
+## Technical details
 
-This project was originally build for Windows, but it might also work on Linux or Mac. 
+* We developed the package using Unity 5.5.2f1, but our package should also work with future versions.
+* This project was originally build for Windows, but it might also work on Linux or Mac.
+* As basis for our project we used the [Unity Cluster Package](https://sourceforge.net/projects/unityclusterpackage/). Nevertheless we don't have much in common with it anymore.
+* For basic socket communication we used a slightly changed version of the [AwesomeSockets Library](https://github.com/nterry/AwesomeSockets) 
