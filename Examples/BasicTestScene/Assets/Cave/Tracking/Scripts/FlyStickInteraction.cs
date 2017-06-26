@@ -62,14 +62,18 @@ public class FlyStickInteraction : MonoBehaviour
         {
             selectedPart = rHit.collider.gameObject.transform.parent.gameObject;
         }
+        else
+            selectedPart = null;
     }
 
     public void sendRayForBlocks()
     {
-        if (Physics.Raycast(transform.position, transform.forward, out rHit, maxRayDist))
-        {
-            selectedPart = rHit.collider.gameObject;
+		if (Physics.Raycast(transform.position, transform.forward, out rHit, maxRayDist)) 
+		{
+			selectedPart = rHit.collider.gameObject;
         }
+        else
+			selectedPart = null;
     }
     
     private void drawLaser()

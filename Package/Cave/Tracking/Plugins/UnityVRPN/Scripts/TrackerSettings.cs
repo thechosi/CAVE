@@ -103,7 +103,7 @@ public class TrackerSettings : MonoBehaviour
         while (true)
         {
             if (hostSettings != null && !hostSettings.GetPosition(objectName, channel).Equals(new Vector3(-505, -505, -505)))
-            { 
+            {
                 transform.localPosition = hostSettings.GetPosition(objectName, channel);
             }
             yield return null;

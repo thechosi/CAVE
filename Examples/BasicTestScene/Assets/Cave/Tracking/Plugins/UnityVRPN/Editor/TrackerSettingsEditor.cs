@@ -21,10 +21,6 @@ public class TrackerSettingsEditor : Editor
             settings.TrackRotation = EditorGUILayout.Toggle("Track Rotation", settings.TrackRotation);
 			//added by pohl 9.12.16
 			settings.Buttons = EditorGUILayout.IntField("Number of buttons", settings.Buttons);
-			EditorGUILayout.PropertyField (this.serializedObject.FindProperty ("triggerButton"));
-			EditorGUILayout.PropertyField (this.serializedObject.FindProperty ("leftButton"));
-			EditorGUILayout.PropertyField (this.serializedObject.FindProperty ("rightButton"));
-			EditorGUILayout.PropertyField (this.serializedObject.FindProperty ("middleButton"));
 			this.serializedObject.ApplyModifiedProperties ();
 			            
 
