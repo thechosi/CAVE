@@ -32,6 +32,10 @@ You can find all necessary steps in the [synchronization](https://github.com/the
 
 After building your project you can configure how your project should look like in the CAVE. See the [config tool documentation](https://github.com/thechosi/CAVE/wiki/ConfigTool) for further details how to do this.
 
+### 6. Optional: VRPN
+
+Before starting your project, you might also need to start the VRPN server (run VRPN_Server/vrpn_server.exe). This is only necessary, if you use vrpn for tracking.
+
 ## More detailed description
 
 For getting more information about a specific topic of our package you can find the documentation on multiple subpages:
