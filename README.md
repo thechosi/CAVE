@@ -2,7 +2,7 @@
 
 ## Short description
 
-We developed a Unity package for making Unity Projects work on a [CAVE](https://github.com/thechosi/CAVE/wiki/CAVE). To make migration as easy as possible we provide a bunch of tools like synchronization on a cluster, configuration, projection etc. out of the box. For getting started with our package read the following Quick start guide:
+We developed a Unity package for making Unity Projects work on a [CAVE](https://github.com/vr-thi/CAVE/wiki/CAVE). To make migration as easy as possible we provide a bunch of tools like synchronization on a cluster, configuration, projection etc. out of the box. For getting started with our package read the following Quick start guide:
 
 ## Quick start
 
@@ -26,11 +26,11 @@ Make sure the script Cave.Synchronizer is executed before all other scripts (In 
 
 It is very likely that you have to adjust the scripts of your projects. This is necessary as you need to make sure you are using synchronized parameters instead of the ones unity provides which are just local.
 
-You can find all necessary steps in the [synchronization](https://github.com/thechosi/CAVE/wiki/Synchronization) chapter.
+You can find all necessary steps in the [synchronization](https://github.com/vr-thi/CAVE/wiki/Synchronization) chapter.
 
 ### 5. Customize CAVE config
 
-After building your project you can configure how your project should look like in the CAVE. See the [config tool documentation](https://github.com/thechosi/CAVE/wiki/ConfigTool) for further details how to do this.
+After building your project you can configure how your project should look like in the CAVE. See the [config tool documentation](https://github.com/vr-thi/CAVE/wiki/ConfigTool) for further details how to do this.
 
 ### 6. Optional: VRPN
 
@@ -40,9 +40,9 @@ Before starting your project, you might also need to start the VRPN server (run 
 
 For getting more information about a specific topic of our package you can find the documentation on multiple subpages:
 
-* [Synchronization](https://github.com/thechosi/CAVE/wiki/Synchronization)
-* [ConfigTool](https://github.com/thechosi/CAVE/wiki/ConfigTool)
-* [Jenga (example project)](https://github.com/thechosi/CAVE/wiki/Jenga)
+* [Synchronization](https://github.com/vr-thi/CAVE/wiki/Synchronization)
+* [ConfigTool](https://github.com/vr-thi/CAVE/wiki/ConfigTool)
+* [Jenga (example project)](https://github.com/vr-thi/CAVE/wiki/Jenga)
 
 ## Technical details
 
