@@ -22,6 +22,7 @@ Partial Class MainForm
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(MainForm))
         Me.ListBox1 = New System.Windows.Forms.ListBox()
         Me.grp_computerList = New System.Windows.Forms.GroupBox()
         Me.btm_removeComputer = New System.Windows.Forms.Button()
@@ -32,6 +33,7 @@ Partial Class MainForm
         Me.BeendenToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.EditToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SlaveConfigToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.PathToVRPNServerToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
         Me.ÜberDasToolToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.grp_computerInfo = New System.Windows.Forms.GroupBox()
@@ -58,6 +60,7 @@ Partial Class MainForm
         Me.grp_depl = New System.Windows.Forms.GroupBox()
         Me.txt_info = New System.Windows.Forms.TextBox()
         Me.chk_master = New System.Windows.Forms.CheckBox()
+        Me.btn_configSave = New System.Windows.Forms.Button()
         Me.Label6 = New System.Windows.Forms.Label()
         Me.grp_splane = New System.Windows.Forms.GroupBox()
         Me.txt_scale = New System.Windows.Forms.TextBox()
@@ -73,7 +76,6 @@ Partial Class MainForm
         Me.txt_port = New System.Windows.Forms.TextBox()
         Me.txt_ipAddress = New System.Windows.Forms.TextBox()
         Me.Label1 = New System.Windows.Forms.Label()
-        Me.btn_configSave = New System.Windows.Forms.Button()
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
         Me.SaveFileDialog1 = New System.Windows.Forms.SaveFileDialog()
         Me.btn_deployProject = New System.Windows.Forms.Button()
@@ -82,6 +84,10 @@ Partial Class MainForm
         Me.txt_projectname = New System.Windows.Forms.TextBox()
         Me.FolderBrowserDialog1 = New System.Windows.Forms.FolderBrowserDialog()
         Me.btn_update = New System.Windows.Forms.Button()
+        Me.StatusStrip1 = New System.Windows.Forms.StatusStrip()
+        Me.ToolStripStatusLabel = New System.Windows.Forms.ToolStripStatusLabel()
+        Me.ToolStripStatusLabel1 = New System.Windows.Forms.ToolStripStatusLabel()
+        Me.ToolStripStatusLabel2 = New System.Windows.Forms.ToolStripStatusLabel()
         Me.grp_computerList.SuspendLayout()
         Me.MenuStrip1.SuspendLayout()
         Me.grp_computerInfo.SuspendLayout()
@@ -89,6 +95,7 @@ Partial Class MainForm
         Me.grp_relation.SuspendLayout()
         Me.grp_depl.SuspendLayout()
         Me.grp_splane.SuspendLayout()
+        Me.StatusStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
         'ListBox1
@@ -96,7 +103,7 @@ Partial Class MainForm
         Me.ListBox1.FormattingEnabled = True
         Me.ListBox1.Location = New System.Drawing.Point(6, 19)
         Me.ListBox1.Name = "ListBox1"
-        Me.ListBox1.Size = New System.Drawing.Size(133, 251)
+        Me.ListBox1.Size = New System.Drawing.Size(132, 225)
         Me.ListBox1.TabIndex = 0
         '
         'grp_computerList
@@ -105,16 +112,16 @@ Partial Class MainForm
         Me.grp_computerList.Controls.Add(Me.btn_addComputer)
         Me.grp_computerList.Controls.Add(Me.ListBox1)
         Me.grp_computerList.Enabled = False
-        Me.grp_computerList.Location = New System.Drawing.Point(12, 61)
+        Me.grp_computerList.Location = New System.Drawing.Point(8, 20)
         Me.grp_computerList.Name = "grp_computerList"
-        Me.grp_computerList.Size = New System.Drawing.Size(145, 305)
+        Me.grp_computerList.Size = New System.Drawing.Size(144, 280)
         Me.grp_computerList.TabIndex = 1
         Me.grp_computerList.TabStop = False
-        Me.grp_computerList.Text = "Which Computer"
+        Me.grp_computerList.Text = "Computers"
         '
         'btm_removeComputer
         '
-        Me.btm_removeComputer.Location = New System.Drawing.Point(115, 276)
+        Me.btm_removeComputer.Location = New System.Drawing.Point(114, 249)
         Me.btm_removeComputer.Name = "btm_removeComputer"
         Me.btm_removeComputer.Size = New System.Drawing.Size(24, 23)
         Me.btm_removeComputer.TabIndex = 2
@@ -123,7 +130,7 @@ Partial Class MainForm
         '
         'btn_addComputer
         '
-        Me.btn_addComputer.Location = New System.Drawing.Point(85, 276)
+        Me.btn_addComputer.Location = New System.Drawing.Point(76, 249)
         Me.btn_addComputer.Name = "btn_addComputer"
         Me.btn_addComputer.Size = New System.Drawing.Size(24, 23)
         Me.btn_addComputer.TabIndex = 1
@@ -150,27 +157,33 @@ Partial Class MainForm
         'ÖffnenToolStripMenuItem
         '
         Me.ÖffnenToolStripMenuItem.Name = "ÖffnenToolStripMenuItem"
-        Me.ÖffnenToolStripMenuItem.Size = New System.Drawing.Size(151, 22)
-        Me.ÖffnenToolStripMenuItem.Text = "&Open Config..."
+        Me.ÖffnenToolStripMenuItem.Size = New System.Drawing.Size(155, 22)
+        Me.ÖffnenToolStripMenuItem.Text = "&Open Project ..."
         '
         'BeendenToolStripMenuItem
         '
         Me.BeendenToolStripMenuItem.Name = "BeendenToolStripMenuItem"
-        Me.BeendenToolStripMenuItem.Size = New System.Drawing.Size(151, 22)
+        Me.BeendenToolStripMenuItem.Size = New System.Drawing.Size(155, 22)
         Me.BeendenToolStripMenuItem.Text = "&Close"
         '
         'EditToolStripMenuItem
         '
-        Me.EditToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SlaveConfigToolStripMenuItem})
+        Me.EditToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SlaveConfigToolStripMenuItem, Me.PathToVRPNServerToolStripMenuItem})
         Me.EditToolStripMenuItem.Name = "EditToolStripMenuItem"
-        Me.EditToolStripMenuItem.Size = New System.Drawing.Size(39, 20)
-        Me.EditToolStripMenuItem.Text = "&Edit"
+        Me.EditToolStripMenuItem.Size = New System.Drawing.Size(56, 20)
+        Me.EditToolStripMenuItem.Text = "&Setting"
         '
         'SlaveConfigToolStripMenuItem
         '
         Me.SlaveConfigToolStripMenuItem.Name = "SlaveConfigToolStripMenuItem"
-        Me.SlaveConfigToolStripMenuItem.Size = New System.Drawing.Size(151, 22)
-        Me.SlaveConfigToolStripMenuItem.Text = "&Path to Slave..."
+        Me.SlaveConfigToolStripMenuItem.Size = New System.Drawing.Size(194, 22)
+        Me.SlaveConfigToolStripMenuItem.Text = "&Path to Slave ..."
+        '
+        'PathToVRPNServerToolStripMenuItem
+        '
+        Me.PathToVRPNServerToolStripMenuItem.Name = "PathToVRPNServerToolStripMenuItem"
+        Me.PathToVRPNServerToolStripMenuItem.Size = New System.Drawing.Size(194, 22)
+        Me.PathToVRPNServerToolStripMenuItem.Text = "Path to &VRPN-Server ..."
         '
         'ToolStripMenuItem1
         '
@@ -182,7 +195,7 @@ Partial Class MainForm
         'ÜberDasToolToolStripMenuItem
         '
         Me.ÜberDasToolToolStripMenuItem.Name = "ÜberDasToolToolStripMenuItem"
-        Me.ÜberDasToolToolStripMenuItem.Size = New System.Drawing.Size(116, 22)
+        Me.ÜberDasToolToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
         Me.ÜberDasToolToolStripMenuItem.Text = "&About..."
         '
         'grp_computerInfo
@@ -193,23 +206,26 @@ Partial Class MainForm
         Me.grp_computerInfo.Controls.Add(Me.grp_relation)
         Me.grp_computerInfo.Controls.Add(Me.grp_depl)
         Me.grp_computerInfo.Controls.Add(Me.chk_master)
+        Me.grp_computerInfo.Controls.Add(Me.btn_configSave)
         Me.grp_computerInfo.Controls.Add(Me.Label6)
         Me.grp_computerInfo.Controls.Add(Me.grp_splane)
+        Me.grp_computerInfo.Controls.Add(Me.grp_computerList)
         Me.grp_computerInfo.Controls.Add(Me.Label2)
         Me.grp_computerInfo.Controls.Add(Me.txt_port)
         Me.grp_computerInfo.Controls.Add(Me.txt_ipAddress)
         Me.grp_computerInfo.Controls.Add(Me.Label1)
         Me.grp_computerInfo.Enabled = False
-        Me.grp_computerInfo.Location = New System.Drawing.Point(163, 61)
+        Me.grp_computerInfo.Location = New System.Drawing.Point(8, 64)
         Me.grp_computerInfo.Name = "grp_computerInfo"
-        Me.grp_computerInfo.Size = New System.Drawing.Size(489, 305)
+        Me.grp_computerInfo.Size = New System.Drawing.Size(648, 332)
         Me.grp_computerInfo.TabIndex = 3
         Me.grp_computerInfo.TabStop = False
+        Me.grp_computerInfo.Text = "Configuration"
         '
         'lbl_computerName
         '
         Me.lbl_computerName.AutoSize = True
-        Me.lbl_computerName.Location = New System.Drawing.Point(250, 23)
+        Me.lbl_computerName.Location = New System.Drawing.Point(407, 23)
         Me.lbl_computerName.Name = "lbl_computerName"
         Me.lbl_computerName.Size = New System.Drawing.Size(38, 13)
         Me.lbl_computerName.TabIndex = 13
@@ -218,7 +234,7 @@ Partial Class MainForm
         'txt_computerName
         '
         Me.txt_computerName.Enabled = False
-        Me.txt_computerName.Location = New System.Drawing.Point(294, 20)
+        Me.txt_computerName.Location = New System.Drawing.Point(451, 20)
         Me.txt_computerName.Name = "txt_computerName"
         Me.txt_computerName.Size = New System.Drawing.Size(114, 20)
         Me.txt_computerName.TabIndex = 12
@@ -235,7 +251,7 @@ Partial Class MainForm
         Me.grp_cam.Controls.Add(Me.Label15)
         Me.grp_cam.Controls.Add(Me.list_cam)
         Me.grp_cam.Enabled = False
-        Me.grp_cam.Location = New System.Drawing.Point(6, 178)
+        Me.grp_cam.Location = New System.Drawing.Point(160, 178)
         Me.grp_cam.Name = "grp_cam"
         Me.grp_cam.Size = New System.Drawing.Size(231, 121)
         Me.grp_cam.TabIndex = 5
@@ -329,7 +345,7 @@ Partial Class MainForm
         Me.grp_relation.Controls.Add(Me.Label12)
         Me.grp_relation.Controls.Add(Me.list_rela)
         Me.grp_relation.Enabled = False
-        Me.grp_relation.Location = New System.Drawing.Point(6, 46)
+        Me.grp_relation.Location = New System.Drawing.Point(160, 46)
         Me.grp_relation.Name = "grp_relation"
         Me.grp_relation.Size = New System.Drawing.Size(231, 126)
         Me.grp_relation.TabIndex = 7
@@ -390,13 +406,13 @@ Partial Class MainForm
         Me.list_rela.Items.AddRange(New Object() {"Position", "Rotation"})
         Me.list_rela.Location = New System.Drawing.Point(7, 20)
         Me.list_rela.Name = "list_rela"
-        Me.list_rela.Size = New System.Drawing.Size(80, 95)
+        Me.list_rela.Size = New System.Drawing.Size(80, 82)
         Me.list_rela.TabIndex = 0
         '
         'grp_depl
         '
         Me.grp_depl.Controls.Add(Me.txt_info)
-        Me.grp_depl.Location = New System.Drawing.Point(243, 178)
+        Me.grp_depl.Location = New System.Drawing.Point(400, 178)
         Me.grp_depl.Name = "grp_depl"
         Me.grp_depl.Size = New System.Drawing.Size(240, 121)
         Me.grp_depl.TabIndex = 11
@@ -416,16 +432,26 @@ Partial Class MainForm
         '
         Me.chk_master.AutoSize = True
         Me.chk_master.Enabled = False
-        Me.chk_master.Location = New System.Drawing.Point(462, 23)
+        Me.chk_master.Location = New System.Drawing.Point(619, 23)
         Me.chk_master.Name = "chk_master"
         Me.chk_master.Size = New System.Drawing.Size(15, 14)
         Me.chk_master.TabIndex = 6
         Me.chk_master.UseVisualStyleBackColor = True
         '
+        'btn_configSave
+        '
+        Me.btn_configSave.Enabled = False
+        Me.btn_configSave.Location = New System.Drawing.Point(500, 304)
+        Me.btn_configSave.Name = "btn_configSave"
+        Me.btn_configSave.Size = New System.Drawing.Size(126, 23)
+        Me.btn_configSave.TabIndex = 4
+        Me.btn_configSave.Text = "&Save Configuration"
+        Me.btn_configSave.UseVisualStyleBackColor = True
+        '
         'Label6
         '
         Me.Label6.AutoSize = True
-        Me.Label6.Location = New System.Drawing.Point(414, 23)
+        Me.Label6.Location = New System.Drawing.Point(571, 23)
         Me.Label6.Name = "Label6"
         Me.Label6.Size = New System.Drawing.Size(42, 13)
         Me.Label6.TabIndex = 5
@@ -443,7 +469,7 @@ Partial Class MainForm
         Me.grp_splane.Controls.Add(Me.Label3)
         Me.grp_splane.Controls.Add(Me.list_splane)
         Me.grp_splane.Enabled = False
-        Me.grp_splane.Location = New System.Drawing.Point(243, 46)
+        Me.grp_splane.Location = New System.Drawing.Point(400, 46)
         Me.grp_splane.Name = "grp_splane"
         Me.grp_splane.Size = New System.Drawing.Size(240, 126)
         Me.grp_splane.TabIndex = 4
@@ -520,13 +546,13 @@ Partial Class MainForm
         Me.list_splane.Items.AddRange(New Object() {"Position", "Rotation", "Scale"})
         Me.list_splane.Location = New System.Drawing.Point(7, 20)
         Me.list_splane.Name = "list_splane"
-        Me.list_splane.Size = New System.Drawing.Size(80, 95)
+        Me.list_splane.Size = New System.Drawing.Size(80, 82)
         Me.list_splane.TabIndex = 0
         '
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(166, 23)
+        Me.Label2.Location = New System.Drawing.Point(323, 23)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(29, 13)
         Me.Label2.TabIndex = 3
@@ -534,14 +560,14 @@ Partial Class MainForm
         '
         'txt_port
         '
-        Me.txt_port.Location = New System.Drawing.Point(201, 20)
+        Me.txt_port.Location = New System.Drawing.Point(358, 20)
         Me.txt_port.Name = "txt_port"
         Me.txt_port.Size = New System.Drawing.Size(43, 20)
         Me.txt_port.TabIndex = 2
         '
         'txt_ipAddress
         '
-        Me.txt_ipAddress.Location = New System.Drawing.Point(67, 20)
+        Me.txt_ipAddress.Location = New System.Drawing.Point(224, 20)
         Me.txt_ipAddress.Name = "txt_ipAddress"
         Me.txt_ipAddress.Size = New System.Drawing.Size(93, 20)
         Me.txt_ipAddress.TabIndex = 1
@@ -549,25 +575,16 @@ Partial Class MainForm
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(6, 23)
+        Me.Label1.Location = New System.Drawing.Point(163, 23)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(55, 13)
         Me.Label1.TabIndex = 0
         Me.Label1.Text = "IP-Adress:"
         '
-        'btn_configSave
-        '
-        Me.btn_configSave.Enabled = False
-        Me.btn_configSave.Location = New System.Drawing.Point(526, 372)
-        Me.btn_configSave.Name = "btn_configSave"
-        Me.btn_configSave.Size = New System.Drawing.Size(126, 23)
-        Me.btn_configSave.TabIndex = 4
-        Me.btn_configSave.Text = "&Save Configuration"
-        Me.btn_configSave.UseVisualStyleBackColor = True
-        '
         'OpenFileDialog1
         '
-        Me.OpenFileDialog1.FileName = "OpenFileDialog1"
+        Me.OpenFileDialog1.DefaultExt = "*.exe"
+        Me.OpenFileDialog1.Filter = "VRPN server executable file|*.exe|All files|*.*"
         '
         'SaveFileDialog1
         '
@@ -621,26 +638,61 @@ Partial Class MainForm
         Me.btn_update.Text = "&Update"
         Me.btn_update.UseVisualStyleBackColor = True
         '
+        'StatusStrip1
+        '
+        Me.StatusStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripStatusLabel, Me.ToolStripStatusLabel1, Me.ToolStripStatusLabel2})
+        Me.StatusStrip1.Location = New System.Drawing.Point(0, 402)
+        Me.StatusStrip1.Name = "StatusStrip1"
+        Me.StatusStrip1.Size = New System.Drawing.Size(664, 24)
+        Me.StatusStrip1.TabIndex = 10
+        Me.StatusStrip1.Text = "StatusStrip1"
+        '
+        'ToolStripStatusLabel
+        '
+        Me.ToolStripStatusLabel.BackColor = System.Drawing.SystemColors.Control
+        Me.ToolStripStatusLabel.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.ToolStripStatusLabel.Name = "ToolStripStatusLabel"
+        Me.ToolStripStatusLabel.Size = New System.Drawing.Size(117, 19)
+        Me.ToolStripStatusLabel.Text = "State of VRPN server:"
+        '
+        'ToolStripStatusLabel1
+        '
+        Me.ToolStripStatusLabel1.AutoSize = False
+        Me.ToolStripStatusLabel1.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.ToolStripStatusLabel1.BorderSides = CType((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left Or System.Windows.Forms.ToolStripStatusLabelBorderSides.Top) _
+            Or System.Windows.Forms.ToolStripStatusLabelBorderSides.Right) _
+            Or System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom), System.Windows.Forms.ToolStripStatusLabelBorderSides)
+        Me.ToolStripStatusLabel1.Name = "ToolStripStatusLabel1"
+        Me.ToolStripStatusLabel1.Size = New System.Drawing.Size(100, 19)
+        Me.ToolStripStatusLabel1.Text = "U N K N O W N"
+        '
+        'ToolStripStatusLabel2
+        '
+        Me.ToolStripStatusLabel2.Name = "ToolStripStatusLabel2"
+        Me.ToolStripStatusLabel2.Size = New System.Drawing.Size(22, 19)
+        Me.ToolStripStatusLabel2.Text = "     "
+        '
         'MainForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(664, 408)
+        Me.ClientSize = New System.Drawing.Size(664, 426)
+        Me.Controls.Add(Me.StatusStrip1)
         Me.Controls.Add(Me.btn_update)
         Me.Controls.Add(Me.txt_projectname)
         Me.Controls.Add(Me.lbl_projectname)
         Me.Controls.Add(Me.btn_startProject)
         Me.Controls.Add(Me.btn_deployProject)
-        Me.Controls.Add(Me.btn_configSave)
         Me.Controls.Add(Me.grp_computerInfo)
-        Me.Controls.Add(Me.grp_computerList)
         Me.Controls.Add(Me.MenuStrip1)
         Me.HelpButton = True
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MainMenuStrip = Me.MenuStrip1
-        Me.MaximumSize = New System.Drawing.Size(680, 446)
-        Me.MinimumSize = New System.Drawing.Size(680, 446)
+        Me.MaximumSize = New System.Drawing.Size(680, 464)
+        Me.MinimumSize = New System.Drawing.Size(680, 464)
         Me.Name = "MainForm"
-        Me.Text = "Config Tool"
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
+        Me.Text = "CAVEUnity Deploy and Config Tool"
         Me.grp_computerList.ResumeLayout(False)
         Me.MenuStrip1.ResumeLayout(False)
         Me.MenuStrip1.PerformLayout()
@@ -654,6 +706,8 @@ Partial Class MainForm
         Me.grp_depl.PerformLayout()
         Me.grp_splane.ResumeLayout(False)
         Me.grp_splane.PerformLayout()
+        Me.StatusStrip1.ResumeLayout(False)
+        Me.StatusStrip1.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -719,4 +773,9 @@ Partial Class MainForm
     Friend WithEvents SlaveConfigToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents btm_removeComputer As Button
     Friend WithEvents btn_addComputer As Button
+    Friend WithEvents PathToVRPNServerToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents StatusStrip1 As StatusStrip
+    Friend WithEvents ToolStripStatusLabel As ToolStripStatusLabel
+    Friend WithEvents ToolStripStatusLabel1 As ToolStripStatusLabel
+    Friend WithEvents ToolStripStatusLabel2 As ToolStripStatusLabel
 End Class

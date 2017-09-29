@@ -21,6 +21,8 @@ Public Class MainForm
     Dim pathToSlave As String = ""
     Dim newPath As String = ""
     Dim CMDThread As Threading.Thread
+    Dim vrpnServerPath As String = Application.StartupPath() & "\..\VRPN_Server\"
+    Dim vrpnServerFile As String = "vrpn_server.exe"
 
     Private Sub clearAllFields()
         txt_ipAddress.Text = ""
@@ -42,7 +44,7 @@ Public Class MainForm
     End Sub
 
     Private Sub ListBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ListBox1.SelectedIndexChanged
-        Me.grp_computerInfo.Text = Me.ListBox1.SelectedItem.ToString
+        Me.grp_computerInfo.Text = "Configuration of " & Me.ListBox1.SelectedItem.ToString
         'clearAllFields()
 
         act_computer = computers.ElementAt(Me.ListBox1.SelectedIndex)
@@ -84,8 +86,11 @@ Public Class MainForm
     Private Sub ÖffnenToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ÖffnenToolStripMenuItem.Click
         If FolderBrowserDialog1.ShowDialog() = System.Windows.Forms.DialogResult.OK Then
             foldername = FolderBrowserDialog1.SelectedPath
-            projectname = FolderBrowserDialog1.SelectedPath.Substring(FolderBrowserDialog1.SelectedPath.LastIndexOf("\") + 1)
-            filename = FolderBrowserDialog1.SelectedPath + "\" + projectname + "_Data\StreamingAssets\node-config.xml"
+            'projectname = FolderBrowserDialog1.SelectedPath.Substring(FolderBrowserDialog1.SelectedPath.LastIndexOf("\") + 1)
+            'filename = FolderBrowserDialog1.SelectedPath + "\" + projectname + "_Data\StreamingAssets\node-config.xml"
+            projectname = foldername.Substring(foldername.LastIndexOf("\") + 1)
+            filename = foldername + "\" + projectname + "_Data\StreamingAssets\node-config.xml"
+
             If File.Exists(filename) Then
                 ListBox1.Items.Clear()
 
@@ -278,7 +283,17 @@ Public Class MainForm
     End Sub
 
     Private Sub opencmd_start()
+        Dim args As String = ""
         Dim Pr As New Process
+        If VRPNstate() = False Then
+            Try
+                Process.Start(vrpnServerPath & vrpnServerFile, "-f " & vrpnServerPath & "vrpn.cfg")
+            Catch ex As Exception
+                MsgBox(ex)
+            Finally
+                Me.VRPNstate()
+            End Try
+        End If
         P = Pr
         Pr.Close()
         P.StartInfo.CreateNoWindow = True
@@ -287,6 +302,12 @@ Public Class MainForm
         P.StartInfo.RedirectStandardOutput = True
         P.StartInfo.RedirectStandardError = True
         P.StartInfo.FileName = ".\MASTER_StartUnity.bat"
+        ' MASTER_StartUnity bekommt als Argumente folgenden Pfad:
+        ' - Unity-Projekt-Exe-Datei
+        ' um die Datei zu starten
+        If File.Exists(foldername + "\" + projectname + ".exe") Then
+            P.StartInfo.Arguments = """" + foldername + "\" + projectname + ".exe"""
+        End If
         P.Start()
     End Sub
 
@@ -359,16 +380,16 @@ Public Class MainForm
             DisableButtons()
             pf = pfd
             pf.txt_projectForm.Text = ""
-                pf.Text = "Start Project"
-                pf.Visible = True
-                pf.ProgressBar1.Maximum = (ListBox1.Items.Count - 1) * 1 * 10
-                opencmd_start()
-                Dim CMDThread2 As New Threading.Thread(AddressOf CMDConfig)
-                CMDThread = CMDThread2
-                'start cmd thread
-                CMDThread.Start()
-            Else
-                MsgBox("MASTER_StartUnity.bat not found", MsgBoxStyle.Critical, "Not Found")
+            pf.Text = "Start Project"
+            pf.Visible = True
+            pf.ProgressBar1.Maximum = (ListBox1.Items.Count - 1) * 1 * 10
+            opencmd_start()
+            Dim CMDThread2 As New Threading.Thread(AddressOf CMDConfig)
+            CMDThread = CMDThread2
+            'start cmd thread
+            CMDThread.Start()
+        Else
+            MsgBox("MASTER_StartUnity.bat not found", MsgBoxStyle.Critical, "Not Found")
         End If
     End Sub
 
@@ -405,7 +426,7 @@ Public Class MainForm
     End Sub
 
     Private Sub ÜberDasToolToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ÜberDasToolToolStripMenuItem.Click
-        MsgBox("ConfigTool Version 0.0.1" + vbNewLine + "GitHub: http://www.github.com/thechosi/CAVE/", MsgBoxStyle.Information, "ConfigTool")
+        MsgBox("CAVEUnity Deploy & Config Tool V1.0.1" + vbNewLine + vbNewLine + "Visit us on GitHub: http://www.github.com/vr-thi/CAVE/", MsgBoxStyle.Information, "CAVEUnity")
     End Sub
 
     Private Sub btn_update_Click(sender As Object, e As EventArgs) Handles btn_update.Click
@@ -510,6 +531,54 @@ Public Class MainForm
             MsgBox("Error: config.xml not found!", MsgBoxStyle.Exclamation)
             Me.Close()
         End If
-
     End Sub
+
+    Private Sub MainForm_Activated(sender As Object, e As EventArgs) Handles Me.Activated
+        Me.VRPNstate()
+    End Sub
+
+    Private Sub PathToVRPNServerToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles PathToVRPNServerToolStripMenuItem.Click
+        'If Not File.Exists(vrpnServerPath) Then
+        Me.OpenFileDialog1.FileName = vrpnServerFile
+        Me.OpenFileDialog1.InitialDirectory = vrpnServerPath
+        If Me.OpenFileDialog1.ShowDialog() = System.Windows.Forms.DialogResult.OK Then
+            Dim fullPath As String = Me.OpenFileDialog1.FileName
+            Dim i As Integer = fullPath.LastIndexOf("\") + 1
+            vrpnServerPath = fullPath.Substring(0, i)
+            vrpnServerFile = fullPath.Substring(i)
+            Me.VRPNstate()
+        End If
+        'End If
+    End Sub
+
+    Private Function VRPNstate() As Boolean
+        Dim res As Boolean
+        Dim txt1, txt2 As String
+        Dim col As Color
+        Dim processName As String = vrpnServerFile.Substring(0, vrpnServerFile.IndexOf("."))
+
+        If Not Process.GetProcessesByName(processName).Length > 0 Then
+            res = False
+            txt1 = "S T O P P E D"
+            If File.Exists(vrpnServerPath & vrpnServerFile) Then
+                txt2 = " [path to start the server is okay]"
+                col = Color.Orange
+            Else
+                txt2 = " [bad or unknown path to the server]"
+                col = Color.Red
+            End If
+        Else
+            res = True
+            txt1 = "R U N N I N G"
+            txt2 = ""
+            col = Color.Lime
+        End If
+
+        Me.ToolStripStatusLabel1.Text = txt1
+        Me.ToolStripStatusLabel1.BackColor = col
+        Me.ToolStripStatusLabel2.Text = txt2
+        Return res
+    End Function
+
+
 End Class
