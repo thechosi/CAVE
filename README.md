@@ -22,6 +22,10 @@ Make sure the script Cave.Synchronizer is executed before all other scripts (In 
 * Add the script Cave.InstantiateNode and set its value to -200.
 * Add the script Cave.Synchronizer and set its value to -100.
 
+### 3a. Adjust build settings
+
+Disable the startup resolution dialog: Build Settings -> Player Settings -> Resolution and Presentation -> Display resolution dialog: enable/disable.
+
 ### 4. Adjust your scripts
 
 It is very likely that you have to adjust the scripts of your projects. This is necessary as you need to make sure you are using synchronized parameters instead of the ones unity provides which are just local.
