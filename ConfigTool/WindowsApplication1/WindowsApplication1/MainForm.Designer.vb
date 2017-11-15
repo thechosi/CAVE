@@ -28,12 +28,14 @@ Partial Class MainForm
         Me.btm_removeComputer = New System.Windows.Forms.Button()
         Me.btn_addComputer = New System.Windows.Forms.Button()
         Me.MenuStrip1 = New System.Windows.Forms.MenuStrip()
-        Me.DateiToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.FileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ÖffnenToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.BeendenToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.EditToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.SettingToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SlaveConfigToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.PathToVRPNServerToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripMenuItem2 = New System.Windows.Forms.ToolStripSeparator()
+        Me.AutostartOfMasterPCToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
         Me.ÜberDasToolToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.grp_computerInfo = New System.Windows.Forms.GroupBox()
@@ -88,6 +90,7 @@ Partial Class MainForm
         Me.ToolStripStatusLabel = New System.Windows.Forms.ToolStripStatusLabel()
         Me.ToolStripStatusLabel1 = New System.Windows.Forms.ToolStripStatusLabel()
         Me.ToolStripStatusLabel2 = New System.Windows.Forms.ToolStripStatusLabel()
+        Me.ToolStripStatusLabel3 = New System.Windows.Forms.ToolStripStatusLabel()
         Me.grp_computerList.SuspendLayout()
         Me.MenuStrip1.SuspendLayout()
         Me.grp_computerInfo.SuspendLayout()
@@ -139,7 +142,7 @@ Partial Class MainForm
         '
         'MenuStrip1
         '
-        Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.DateiToolStripMenuItem, Me.EditToolStripMenuItem, Me.ToolStripMenuItem1})
+        Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FileToolStripMenuItem, Me.SettingToolStripMenuItem, Me.ToolStripMenuItem1})
         Me.MenuStrip1.Location = New System.Drawing.Point(0, 0)
         Me.MenuStrip1.Name = "MenuStrip1"
         Me.MenuStrip1.Size = New System.Drawing.Size(664, 24)
@@ -147,12 +150,12 @@ Partial Class MainForm
         Me.MenuStrip1.TabIndex = 2
         Me.MenuStrip1.Text = "MenuStrip1"
         '
-        'DateiToolStripMenuItem
+        'FileToolStripMenuItem
         '
-        Me.DateiToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ÖffnenToolStripMenuItem, Me.BeendenToolStripMenuItem})
-        Me.DateiToolStripMenuItem.Name = "DateiToolStripMenuItem"
-        Me.DateiToolStripMenuItem.Size = New System.Drawing.Size(37, 20)
-        Me.DateiToolStripMenuItem.Text = "&File"
+        Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ÖffnenToolStripMenuItem, Me.BeendenToolStripMenuItem})
+        Me.FileToolStripMenuItem.Name = "FileToolStripMenuItem"
+        Me.FileToolStripMenuItem.Size = New System.Drawing.Size(37, 20)
+        Me.FileToolStripMenuItem.Text = "&File"
         '
         'ÖffnenToolStripMenuItem
         '
@@ -166,24 +169,37 @@ Partial Class MainForm
         Me.BeendenToolStripMenuItem.Size = New System.Drawing.Size(155, 22)
         Me.BeendenToolStripMenuItem.Text = "&Close"
         '
-        'EditToolStripMenuItem
+        'SettingToolStripMenuItem
         '
-        Me.EditToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SlaveConfigToolStripMenuItem, Me.PathToVRPNServerToolStripMenuItem})
-        Me.EditToolStripMenuItem.Name = "EditToolStripMenuItem"
-        Me.EditToolStripMenuItem.Size = New System.Drawing.Size(56, 20)
-        Me.EditToolStripMenuItem.Text = "&Setting"
+        Me.SettingToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SlaveConfigToolStripMenuItem, Me.PathToVRPNServerToolStripMenuItem, Me.ToolStripMenuItem2, Me.AutostartOfMasterPCToolStripMenuItem})
+        Me.SettingToolStripMenuItem.Name = "SettingToolStripMenuItem"
+        Me.SettingToolStripMenuItem.Size = New System.Drawing.Size(56, 20)
+        Me.SettingToolStripMenuItem.Text = "&Setting"
         '
         'SlaveConfigToolStripMenuItem
         '
         Me.SlaveConfigToolStripMenuItem.Name = "SlaveConfigToolStripMenuItem"
-        Me.SlaveConfigToolStripMenuItem.Size = New System.Drawing.Size(194, 22)
+        Me.SlaveConfigToolStripMenuItem.Size = New System.Drawing.Size(254, 22)
         Me.SlaveConfigToolStripMenuItem.Text = "&Path to Slave ..."
         '
         'PathToVRPNServerToolStripMenuItem
         '
         Me.PathToVRPNServerToolStripMenuItem.Name = "PathToVRPNServerToolStripMenuItem"
-        Me.PathToVRPNServerToolStripMenuItem.Size = New System.Drawing.Size(194, 22)
+        Me.PathToVRPNServerToolStripMenuItem.Size = New System.Drawing.Size(254, 22)
         Me.PathToVRPNServerToolStripMenuItem.Text = "Path to &VRPN-Server ..."
+        '
+        'ToolStripMenuItem2
+        '
+        Me.ToolStripMenuItem2.Name = "ToolStripMenuItem2"
+        Me.ToolStripMenuItem2.Size = New System.Drawing.Size(251, 6)
+        '
+        'AutostartOfMasterPCToolStripMenuItem
+        '
+        Me.AutostartOfMasterPCToolStripMenuItem.Checked = True
+        Me.AutostartOfMasterPCToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.AutostartOfMasterPCToolStripMenuItem.Name = "AutostartOfMasterPCToolStripMenuItem"
+        Me.AutostartOfMasterPCToolStripMenuItem.Size = New System.Drawing.Size(254, 22)
+        Me.AutostartOfMasterPCToolStripMenuItem.Text = "Autostart on the master computer"
         '
         'ToolStripMenuItem1
         '
@@ -195,7 +211,7 @@ Partial Class MainForm
         'ÜberDasToolToolStripMenuItem
         '
         Me.ÜberDasToolToolStripMenuItem.Name = "ÜberDasToolToolStripMenuItem"
-        Me.ÜberDasToolToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.ÜberDasToolToolStripMenuItem.Size = New System.Drawing.Size(116, 22)
         Me.ÜberDasToolToolStripMenuItem.Text = "&About..."
         '
         'grp_computerInfo
@@ -640,7 +656,7 @@ Partial Class MainForm
         '
         'StatusStrip1
         '
-        Me.StatusStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripStatusLabel, Me.ToolStripStatusLabel1, Me.ToolStripStatusLabel2})
+        Me.StatusStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripStatusLabel, Me.ToolStripStatusLabel1, Me.ToolStripStatusLabel2, Me.ToolStripStatusLabel3})
         Me.StatusStrip1.Location = New System.Drawing.Point(0, 402)
         Me.StatusStrip1.Name = "StatusStrip1"
         Me.StatusStrip1.Size = New System.Drawing.Size(664, 24)
@@ -668,9 +684,20 @@ Partial Class MainForm
         '
         'ToolStripStatusLabel2
         '
+        Me.ToolStripStatusLabel2.AutoSize = False
         Me.ToolStripStatusLabel2.Name = "ToolStripStatusLabel2"
-        Me.ToolStripStatusLabel2.Size = New System.Drawing.Size(22, 19)
+        Me.ToolStripStatusLabel2.Size = New System.Drawing.Size(280, 19)
         Me.ToolStripStatusLabel2.Text = "     "
+        Me.ToolStripStatusLabel2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'ToolStripStatusLabel3
+        '
+        Me.ToolStripStatusLabel3.BackColor = System.Drawing.SystemColors.ControlDarkDark
+        Me.ToolStripStatusLabel3.ForeColor = System.Drawing.Color.LimeGreen
+        Me.ToolStripStatusLabel3.Name = "ToolStripStatusLabel3"
+        Me.ToolStripStatusLabel3.Size = New System.Drawing.Size(142, 19)
+        Me.ToolStripStatusLabel3.Text = "  Autostart on master PC  "
+        Me.ToolStripStatusLabel3.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         '
         'MainForm
         '
@@ -716,7 +743,7 @@ Partial Class MainForm
     Friend WithEvents ListBox1 As ListBox
     Friend WithEvents grp_computerList As GroupBox
     Friend WithEvents MenuStrip1 As MenuStrip
-    Friend WithEvents DateiToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents FileToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents BeendenToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ToolStripMenuItem1 As ToolStripMenuItem
     Friend WithEvents ÜberDasToolToolStripMenuItem As ToolStripMenuItem
@@ -769,7 +796,7 @@ Partial Class MainForm
     Friend WithEvents btn_update As Button
     Friend WithEvents txt_scale As TextBox
     Friend WithEvents Label7 As Label
-    Friend WithEvents EditToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents SettingToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents SlaveConfigToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents btm_removeComputer As Button
     Friend WithEvents btn_addComputer As Button
@@ -778,4 +805,7 @@ Partial Class MainForm
     Friend WithEvents ToolStripStatusLabel As ToolStripStatusLabel
     Friend WithEvents ToolStripStatusLabel1 As ToolStripStatusLabel
     Friend WithEvents ToolStripStatusLabel2 As ToolStripStatusLabel
+    Friend WithEvents AutostartOfMasterPCToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ToolStripMenuItem2 As ToolStripSeparator
+    Friend WithEvents ToolStripStatusLabel3 As ToolStripStatusLabel
 End Class

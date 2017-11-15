@@ -8,6 +8,7 @@ Public Class MainForm
     Dim foldername As String
     Dim projectname As String
 
+    Dim progressCount As Integer
     Private Results As String
     Private Delegate Sub delUpdate()
     Private Finished As New delUpdate(AddressOf UpdateText)
@@ -23,6 +24,7 @@ Public Class MainForm
     Dim CMDThread As Threading.Thread
     Dim vrpnServerPath As String = Application.StartupPath() & "\..\VRPN_Server\"
     Dim vrpnServerFile As String = "vrpn_server.exe"
+    Dim AutostartOnMaster As Boolean = True
 
     Private Sub clearAllFields()
         txt_ipAddress.Text = ""
@@ -285,6 +287,8 @@ Public Class MainForm
     Private Sub opencmd_start()
         Dim args As String = ""
         Dim Pr As New Process
+        Dim StartOnMaster As String = " /StartOnMaster:" + IIf(Me.AutostartOnMaster, "auto", "hand")
+
         If VRPNstate() = False Then
             Try
                 Process.Start(vrpnServerPath & vrpnServerFile, "-f " & vrpnServerPath & "vrpn.cfg")
@@ -302,11 +306,13 @@ Public Class MainForm
         P.StartInfo.RedirectStandardOutput = True
         P.StartInfo.RedirectStandardError = True
         P.StartInfo.FileName = ".\MASTER_StartUnity.bat"
+
         ' MASTER_StartUnity bekommt als Argumente folgenden Pfad:
         ' - Unity-Projekt-Exe-Datei
         ' um die Datei zu starten
         If File.Exists(foldername + "\" + projectname + ".exe") Then
-            P.StartInfo.Arguments = """" + foldername + "\" + projectname + ".exe"""
+
+            P.StartInfo.Arguments = """" + foldername + "\" + projectname + ".exe""" + StartOnMaster
         End If
         P.Start()
     End Sub
@@ -322,9 +328,9 @@ Public Class MainForm
         P.StartInfo.RedirectStandardError = True
         P.StartInfo.FileName = ".\ProjektVerteilen.bat"
         If update Then
-            P.StartInfo.Arguments = foldername + " update"
+            P.StartInfo.Arguments = String.Format("""{0}"" ""{1}"" update", foldername, projectname)
         Else
-            P.StartInfo.Arguments = foldername
+            P.StartInfo.Arguments = String.Format("""{0}"" ""{1}""", foldername, projectname)
         End If
         P.Start()
     End Sub
@@ -332,8 +338,10 @@ Public Class MainForm
     Private Sub UpdateText()
         Try
             pf.txt_projectForm.AppendText(System.Environment.NewLine() & Results)
-            If Results.Contains(">xcopy") Or Results.Contains(">RMDIR") Or Results.Contains(">copy") Or Results.Contains(">perl") Then
+            If Results.Contains("XCOPY ") Or Results.Contains("RMDIR ") Or Results.Contains("COPY ") Or Results.Contains("perl ") Then
                 pf.ProgressBar1.PerformStep()
+                'progressCount = progressCount + 1
+                'pf.Text = progressCount.ToString
             End If
             pf.txt_projectForm.ScrollToCaret()
         Catch ex As Exception
@@ -370,7 +378,6 @@ Public Class MainForm
 
     Private Sub btn_startProject_Click(sender As Object, e As EventArgs) Handles btn_startProject.Click
         If File.Exists(".\MASTER_StartUnity.bat") Then
-
             Dim pfd As New ProjectForm
 
             If Application.OpenForms().OfType(Of ProjectForm).Any Then
@@ -382,7 +389,9 @@ Public Class MainForm
             pf.txt_projectForm.Text = ""
             pf.Text = "Start Project"
             pf.Visible = True
-            pf.ProgressBar1.Maximum = (ListBox1.Items.Count - 1) * 1 * 10
+            progressCount = 0
+            pf.ProgressBar1.Value = 0
+            pf.ProgressBar1.Maximum = (ListBox1.Items.Count)
             opencmd_start()
             Dim CMDThread2 As New Threading.Thread(AddressOf CMDConfig)
             CMDThread = CMDThread2
@@ -414,7 +423,9 @@ Public Class MainForm
             pf.txt_projectForm.Text = ""
             pf.Text = "Deploy Project"
             pf.Visible = True
-            pf.ProgressBar1.Maximum = (ListBox1.Items.Count - 1) * 3 * 10
+            progressCount = 0
+            pf.ProgressBar1.Value = 0
+            pf.ProgressBar1.Maximum = (ListBox1.Items.Count) * 4
             opencmd_deployupdate(False)
             Dim CMDThread2 As New Threading.Thread(AddressOf CMDConfig)
             CMDThread = CMDThread2
@@ -426,7 +437,7 @@ Public Class MainForm
     End Sub
 
     Private Sub ÜberDasToolToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ÜberDasToolToolStripMenuItem.Click
-        MsgBox("CAVEUnity Deploy & Config Tool V1.0.1" + vbNewLine + vbNewLine + "Visit us on GitHub: http://www.github.com/vr-thi/CAVE/", MsgBoxStyle.Information, "CAVEUnity")
+        MsgBox("CAVEUnity Deploy & Config Tool V1.0.2" + vbNewLine + vbNewLine + "Visit us on GitHub: http://www.github.com/vr-thi/CAVE/", MsgBoxStyle.Information, "CAVEUnity")
     End Sub
 
     Private Sub btn_update_Click(sender As Object, e As EventArgs) Handles btn_update.Click
@@ -443,7 +454,9 @@ Public Class MainForm
             pf.txt_projectForm.Text = ""
             pf.Text = "Update Project"
             pf.Visible = True
-            pf.ProgressBar1.Maximum = (ListBox1.Items.Count - 1) * 2 * 10
+            progressCount = 0
+            pf.ProgressBar1.Value = 0
+            pf.ProgressBar1.Maximum = (ListBox1.Items.Count) * 3
             opencmd_deployupdate(True)
             Dim CMDThread2 As New Threading.Thread(AddressOf CMDConfig)
             CMDThread = CMDThread2
@@ -580,5 +593,25 @@ Public Class MainForm
         Return res
     End Function
 
+    Private Sub MenuStrip1_ItemClicked(sender As Object, e As ToolStripItemClickedEventArgs) Handles MenuStrip1.ItemClicked
 
+    End Sub
+
+    Private Sub AutostartOfMasterPCToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AutostartOfMasterPCToolStripMenuItem.Click
+        Me.AutostartOfMasterPCToolStripMenuItem.Checked = Not Me.AutostartOfMasterPCToolStripMenuItem.Checked
+        Me.AutostartOnMaster = Me.AutostartOfMasterPCToolStripMenuItem.Checked
+        Debug.WriteLine("Autostart: {0}", Me.AutostartOnMaster)
+
+        If Me.AutostartOnMaster Then
+            Me.ToolStripStatusLabel3.BackColor = Color.Gray
+            Me.ToolStripStatusLabel3.ForeColor = Color.LimeGreen
+        Else
+            Me.ToolStripStatusLabel3.BackColor = Color.FromKnownColor(KnownColor.Control)
+            Me.ToolStripStatusLabel3.ForeColor = Color.FromKnownColor(KnownColor.Control)
+        End If
+
+    End Sub
+
+    Private Sub ToolStripStatusLabel4_Click(sender As Object, e As EventArgs)
+    End Sub
 End Class
