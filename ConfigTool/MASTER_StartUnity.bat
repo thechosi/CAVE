@@ -1,4 +1,4 @@
-@echo off & setlocal
+@echo off
 
 echo ##### Start unity clients
 cd c:\IMSYS\control
@@ -21,5 +21,3 @@ if /i "%2" == "/StartOnMaster:auto" (
 ) else (
 	echo ##### The user should start the unity project on Master-PC manual !!
 )
-
-endlocal
