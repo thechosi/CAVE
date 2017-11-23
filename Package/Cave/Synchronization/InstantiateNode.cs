@@ -8,34 +8,33 @@ namespace Cave
 
     public class InstantiateNode : MonoBehaviour
     {
-        
         public GameObject origin;
         private GameObject originSlave;
         private TrackerSettings trackerSettings;
         public Transform originParent;
+        public bool developmentMode;
 
         void Start()
         {
+            NodeInformation.developmentMode = developmentMode;
+            NodeInformation.Load();
+
             NetworkManager networkManager = GetComponent<NetworkManager>();
-            networkManager.networkAddress = NodeInformation.serverIp;
-            networkManager.networkPort = NodeInformation.serverPort;
-            if (NodeInformation.type.Equals("master"))
+            networkManager.networkAddress = NodeInformation.master.ip;
+            networkManager.networkPort = NodeInformation.master.port;
+            if (NodeInformation.isMaster())
             {
                 networkManager.StartServer();
                 //Instantiate the origin-GameObject
                 GameObject objOrigin = Instantiate(origin, originParent);
-                objOrigin.transform.localPosition = NodeInformation.originPosition;
+                objOrigin.transform.localPosition = NodeInformation.own.originPosition;
                 //Spawn the object for the clients
                 NetworkServer.Spawn(objOrigin);
 
                 //Test Master; if we remove this, then the master won't see anything (same goes for config)
                 originSlave = FindOrigin();
 
-                Transform ScreenplaneTransform = originSlave.transform.Find("Plane");
-                ScreenplaneTransform.localScale = NodeInformation.screenplaneScale;
-                //ScreenplaneTransform.eulerAngles = NodeInformation.screenplaneRotation;
-                ScreenplaneTransform.localPosition = NodeInformation.screenplanePosition;
-
+                NodeInformation.SpawnScreenplanes(originSlave.transform.Find("ScreenPlanes"));
 
                 trackerSettings = (TrackerSettings) originSlave.transform.Find("CameraHolder").GetComponent("TrackerSettings");
                 trackerSettings.HostSettings = (TrackerHostSettings) GameObject.Find("NodeManager/TrackerHostSettings").GetComponent("TrackerHostSettings");
@@ -44,16 +43,14 @@ namespace Cave
                 trackerSettings.HostSettings = (TrackerHostSettings)GameObject.Find("NodeManager/TrackerHostSettings").GetComponent("TrackerHostSettings");
 
             }
-            else if (NodeInformation.type.Equals("slave"))
+            else
             {
                 networkManager.StartClient();
                 //The camera manipulation happens in Update()
 
 				// deactivate music and sound for clients
 				AudioListener.volume = 0f;
-
             }
-
         }
 
         public static GameObject FindOrigin()
@@ -70,7 +67,7 @@ namespace Cave
         public void Update()
         {
             //The slave needs to turn the camera and adjust the screenplane
-            if (NodeInformation.type.Equals("slave"))
+            if (!NodeInformation.isMaster())
             {
                 //Only do it once!
                 if (originSlave == null)
@@ -81,23 +78,17 @@ namespace Cave
                     if (originSlave != null)
                     {
                         originSlave.transform.parent = originParent;
-                        //The plane is a child from origin
-                        Transform ScreenplaneTransform = originSlave.transform.Find("Plane");
-                        //Adjust the scale
-                        ScreenplaneTransform.localScale = NodeInformation.screenplaneScale;
-                        //Adjust the rotation
-                        ScreenplaneTransform.eulerAngles = NodeInformation.screenplaneRotation;
-                        //Adjust the position
-                        ScreenplaneTransform.localPosition = NodeInformation.screenplanePosition;
+
+                        NodeInformation.SpawnScreenplanes(originSlave.transform.Find("ScreenPlanes"));
 
                         //Find the camera to turn it to the right direction
                         Transform CameraTransform = originSlave.transform.Find("CameraHolder/Camera");
-                        CameraTransform.eulerAngles = NodeInformation.cameraRoation;
+                        CameraTransform.eulerAngles = NodeInformation.own.cameraRoation;
 
                         //Apply the interpupillary distance
                         //Maybe we need to change this a bit, so that the distance is calculated by considering the direction the User looks.
                         //We see that when we test it.   
-                        if(NodeInformation.cameraEye == "left")
+                        if(NodeInformation.own.cameraEye == "left")
                         {
                             CameraTransform.localPosition += new Vector3(-0.03f, 0, 0);
                         }

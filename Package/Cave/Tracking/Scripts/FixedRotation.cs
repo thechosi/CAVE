@@ -7,6 +7,6 @@ public class FixedRotation : MonoBehaviour {
 
 	//void OnPreCull(){
 	void LateUpdate(){
-		transform.eulerAngles = parent.transform.rotation.eulerAngles + Cave.NodeInformation.cameraRoation;
+		transform.eulerAngles = parent.transform.rotation.eulerAngles + Cave.NodeInformation.own.cameraRoation;
 	}
 }

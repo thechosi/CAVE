@@ -18,7 +18,7 @@ namespace Cave
 
         public override void Connect()
         {
-            listenSocket = AweSock.TcpListen(NodeInformation.serverPort + 1);
+            listenSocket = AweSock.TcpListen(NodeInformation.own.port + 1);
             while (connections.Count < targetClientNumber)
             {
                 connections.Add(AweSock.TcpAccept(listenSocket));

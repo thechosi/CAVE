@@ -92,7 +92,7 @@ namespace Cave
 
         private static void CallScripts(List<StoredEvent> events)
         {
-            Dictionary<NetworkInstanceId, NetworkIdentity> networkIdentities = NodeInformation.type.Equals("master") ? NetworkServer.objects : ClientScene.objects;
+            Dictionary<NetworkInstanceId, NetworkIdentity> networkIdentities = NodeInformation.isMaster() ? NetworkServer.objects : ClientScene.objects;
 
             foreach (StoredEvent storedEvent in events)
             {

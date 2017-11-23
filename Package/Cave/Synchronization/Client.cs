@@ -15,7 +15,7 @@ namespace Cave
             nextTry:
             try
             {
-                connections.Add(AweSock.TcpConnect(NodeInformation.serverIp, NodeInformation.serverPort + 1));
+                connections.Add(AweSock.TcpConnect(NodeInformation.master.ip, NodeInformation.master.port + 1));
             }
             catch (Exception)
             {
