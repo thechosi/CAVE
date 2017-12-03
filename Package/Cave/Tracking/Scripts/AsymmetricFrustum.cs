@@ -61,6 +61,7 @@ public class AsymmetricFrustum : MonoBehaviour
                 // create new projection matrix
                 Matrix4x4 m = OffCenter(left, right, bottom, top, GetComponent<Camera>().nearClipPlane, GetComponent<Camera>().farClipPlane);
                 GetComponent<Camera>().projectionMatrix = m;
+                GetComponent<Camera> ().fieldOfView = Mathf.Atan (1.0f / m.m11) * 2.0f * 180 / Mathf.PI;
             }
             else
                 Debug.Log("OffCenterPerspective: Behavior must be attached to a camera");
