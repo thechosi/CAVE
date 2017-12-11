@@ -106,7 +106,6 @@
      <Compile Include="Assets\Scripts\TowerInteractivity.cs" />
      <None Include="Assets\StreamingAssets\node-config.xml" />
      <None Include="Assets\Textures\Skyboxes\checkered\Note.txt" />
-     <None Include="Assets\StreamingAssets\node-config_cave.xml" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>

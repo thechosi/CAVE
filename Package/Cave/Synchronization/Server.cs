@@ -28,7 +28,8 @@ namespace Cave
 
         void InitializeClient(ISocket connection)
         {
-           ParticleSynchronizer.InitializeFromServer(this, connection);
+           	ParticleSynchronizer.InitializeFromServer(this, connection);
+			RandomSynchronizer.InitializeFromServer(this, connection);
         }
 
         public override void Disconnect()

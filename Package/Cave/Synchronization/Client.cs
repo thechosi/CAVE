@@ -40,6 +40,7 @@ namespace Cave
         void InitializeSelf()
         {
             ParticleSynchronizer.InitializeFromClient(this);
+			RandomSynchronizer.InitializeFromClient(this);
         }
 
         public override void FinishFrame()

@@ -126,7 +126,12 @@ namespace Cave
             {
                 StoredAxis storedAxis = new StoredAxis();
                 storedAxis.id = i;
-                storedAxis.value = Input.GetAxis(synchronizer.relevantAxes[i]);
+				if (synchronizer.relevantAxes [i] == "flystick horizontal")
+					storedAxis.value = synchronizer.flyStick.GetComponent<TrackerSettings> ().getAnalog ().x;
+				else if (synchronizer.relevantAxes[i] == "flystick vertical")
+					storedAxis.value = synchronizer.flyStick.GetComponent<TrackerSettings> ().getAnalog ().y;
+				else
+                	storedAxis.value = Input.GetAxis(synchronizer.relevantAxes[i]);
                 message.axes.Add(storedAxis);
             }
 

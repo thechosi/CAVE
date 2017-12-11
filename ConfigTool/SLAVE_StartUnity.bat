@@ -1,2 +1,2 @@
 echo Startet Unityprojekt auf dem Slave-Rechner %computername% 
-start C:\StudentenprojektCAVE\AktuellesProjekt\Jenga.exe
+start C:\StudentenprojektCAVE\AktuellesProjekt\GalaxyExplorerCAVE.exe

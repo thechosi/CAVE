@@ -87,7 +87,7 @@ namespace Cave
         {
             foreach (KeyValuePair<NetworkInstanceId, NetworkIdentity> networkIdentity in NetworkServer.objects)
             {
-                if (networkIdentity.Value.gameObject.GetComponent<Rigidbody>() != null)
+				if (networkIdentity.Value.gameObject.GetComponent<Rigidbody>() != null || networkIdentity.Value.gameObject.GetComponent<ForceSynchronization>() != null)
                 {
                     StoredTransform transform = new StoredTransform();
                     transform.networkId = networkIdentity.Key.Value;

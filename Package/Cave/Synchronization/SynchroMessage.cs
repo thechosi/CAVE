@@ -72,7 +72,8 @@ namespace Cave
 
     public enum SynchroMessageType
     {
-        SetParticleSeed
+        SetParticleSeed,
+		SetRandomSeed
     }
 
     public class EventMessage : ISynchroMessage
