@@ -8,6 +8,7 @@ Public Class MainForm
     Dim foldername As String
     Dim projectname As String
 
+    Dim progressCount As Integer
     Private Results As String
     Private Delegate Sub delUpdate()
     Private Finished As New delUpdate(AddressOf UpdateText)
@@ -21,6 +22,9 @@ Public Class MainForm
     Dim pathToSlave As String = ""
     Dim newPath As String = ""
     Dim CMDThread As Threading.Thread
+    Dim vrpnServerPath As String = Application.StartupPath() & "\..\VRPN_Server\"
+    Dim vrpnServerFile As String = "vrpn_server.exe"
+    Dim AutostartOnMaster As Boolean = True
 
     Private Sub clearAllFields()
         txt_ipAddress.Text = ""
@@ -42,7 +46,7 @@ Public Class MainForm
     End Sub
 
     Private Sub ListBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ListBox1.SelectedIndexChanged
-        Me.grp_computerInfo.Text = Me.ListBox1.SelectedItem.ToString
+        Me.grp_computerInfo.Text = "Configuration of " & Me.ListBox1.SelectedItem.ToString
         'clearAllFields()
 
         act_computer = computers.ElementAt(Me.ListBox1.SelectedIndex)
@@ -84,8 +88,11 @@ Public Class MainForm
     Private Sub ÖffnenToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ÖffnenToolStripMenuItem.Click
         If FolderBrowserDialog1.ShowDialog() = System.Windows.Forms.DialogResult.OK Then
             foldername = FolderBrowserDialog1.SelectedPath
-            projectname = FolderBrowserDialog1.SelectedPath.Substring(FolderBrowserDialog1.SelectedPath.LastIndexOf("\") + 1)
-            filename = FolderBrowserDialog1.SelectedPath + "\" + projectname + "_Data\StreamingAssets\node-config.xml"
+            'projectname = FolderBrowserDialog1.SelectedPath.Substring(FolderBrowserDialog1.SelectedPath.LastIndexOf("\") + 1)
+            'filename = FolderBrowserDialog1.SelectedPath + "\" + projectname + "_Data\StreamingAssets\node-config.xml"
+            projectname = foldername.Substring(foldername.LastIndexOf("\") + 1)
+            filename = foldername + "\" + projectname + "_Data\StreamingAssets\node-config.xml"
+
             If File.Exists(filename) Then
                 ListBox1.Items.Clear()
 
@@ -278,7 +285,19 @@ Public Class MainForm
     End Sub
 
     Private Sub opencmd_start()
+        Dim args As String = ""
         Dim Pr As New Process
+        Dim StartOnMaster As String = " /StartOnMaster:" + IIf(Me.AutostartOnMaster, "auto", "hand")
+
+        If VRPNstate() = False Then
+            Try
+                Process.Start(vrpnServerPath & vrpnServerFile, "-f " & vrpnServerPath & "vrpn.cfg")
+            Catch ex As Exception
+                MsgBox(ex)
+            Finally
+                Me.VRPNstate()
+            End Try
+        End If
         P = Pr
         Pr.Close()
         P.StartInfo.CreateNoWindow = True
@@ -287,6 +306,14 @@ Public Class MainForm
         P.StartInfo.RedirectStandardOutput = True
         P.StartInfo.RedirectStandardError = True
         P.StartInfo.FileName = ".\MASTER_StartUnity.bat"
+
+        ' MASTER_StartUnity bekommt als Argumente folgenden Pfad:
+        ' - Unity-Projekt-Exe-Datei
+        ' um die Datei zu starten
+        If File.Exists(foldername + "\" + projectname + ".exe") Then
+
+            P.StartInfo.Arguments = """" + foldername + "\" + projectname + ".exe""" + StartOnMaster
+        End If
         P.Start()
     End Sub
 
@@ -301,9 +328,9 @@ Public Class MainForm
         P.StartInfo.RedirectStandardError = True
         P.StartInfo.FileName = ".\ProjektVerteilen.bat"
         If update Then
-            P.StartInfo.Arguments = foldername + " update"
+            P.StartInfo.Arguments = String.Format("""{0}"" ""{1}"" update", foldername, projectname)
         Else
-            P.StartInfo.Arguments = foldername
+            P.StartInfo.Arguments = String.Format("""{0}"" ""{1}""", foldername, projectname)
         End If
         P.Start()
     End Sub
@@ -311,8 +338,10 @@ Public Class MainForm
     Private Sub UpdateText()
         Try
             pf.txt_projectForm.AppendText(System.Environment.NewLine() & Results)
-            If Results.Contains(">xcopy") Or Results.Contains(">RMDIR") Or Results.Contains(">copy") Or Results.Contains(">perl") Then
+            If Results.Contains("XCOPY ") Or Results.Contains("RMDIR ") Or Results.Contains("COPY ") Or Results.Contains("perl ") Then
                 pf.ProgressBar1.PerformStep()
+                'progressCount = progressCount + 1
+                'pf.Text = progressCount.ToString
             End If
             pf.txt_projectForm.ScrollToCaret()
         Catch ex As Exception
@@ -349,7 +378,6 @@ Public Class MainForm
 
     Private Sub btn_startProject_Click(sender As Object, e As EventArgs) Handles btn_startProject.Click
         If File.Exists(".\MASTER_StartUnity.bat") Then
-
             Dim pfd As New ProjectForm
 
             If Application.OpenForms().OfType(Of ProjectForm).Any Then
@@ -359,16 +387,18 @@ Public Class MainForm
             DisableButtons()
             pf = pfd
             pf.txt_projectForm.Text = ""
-                pf.Text = "Start Project"
-                pf.Visible = True
-                pf.ProgressBar1.Maximum = (ListBox1.Items.Count - 1) * 1 * 10
-                opencmd_start()
-                Dim CMDThread2 As New Threading.Thread(AddressOf CMDConfig)
-                CMDThread = CMDThread2
-                'start cmd thread
-                CMDThread.Start()
-            Else
-                MsgBox("MASTER_StartUnity.bat not found", MsgBoxStyle.Critical, "Not Found")
+            pf.Text = "Start Project"
+            pf.Visible = True
+            progressCount = 0
+            pf.ProgressBar1.Value = 0
+            pf.ProgressBar1.Maximum = (ListBox1.Items.Count)
+            opencmd_start()
+            Dim CMDThread2 As New Threading.Thread(AddressOf CMDConfig)
+            CMDThread = CMDThread2
+            'start cmd thread
+            CMDThread.Start()
+        Else
+            MsgBox("MASTER_StartUnity.bat not found", MsgBoxStyle.Critical, "Not Found")
         End If
     End Sub
 
@@ -393,7 +423,9 @@ Public Class MainForm
             pf.txt_projectForm.Text = ""
             pf.Text = "Deploy Project"
             pf.Visible = True
-            pf.ProgressBar1.Maximum = (ListBox1.Items.Count - 1) * 3 * 10
+            progressCount = 0
+            pf.ProgressBar1.Value = 0
+            pf.ProgressBar1.Maximum = (ListBox1.Items.Count) * 4
             opencmd_deployupdate(False)
             Dim CMDThread2 As New Threading.Thread(AddressOf CMDConfig)
             CMDThread = CMDThread2
@@ -405,7 +437,7 @@ Public Class MainForm
     End Sub
 
     Private Sub ÜberDasToolToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ÜberDasToolToolStripMenuItem.Click
-        MsgBox("ConfigTool Version 0.0.1" + vbNewLine + "GitHub: http://www.github.com/thechosi/CAVE/", MsgBoxStyle.Information, "ConfigTool")
+        MsgBox("CAVEUnity Deploy & Config Tool V1.0.2" + vbNewLine + vbNewLine + "Visit us on GitHub: http://www.github.com/vr-thi/CAVE/", MsgBoxStyle.Information, "CAVEUnity")
     End Sub
 
     Private Sub btn_update_Click(sender As Object, e As EventArgs) Handles btn_update.Click
@@ -422,7 +454,9 @@ Public Class MainForm
             pf.txt_projectForm.Text = ""
             pf.Text = "Update Project"
             pf.Visible = True
-            pf.ProgressBar1.Maximum = (ListBox1.Items.Count - 1) * 2 * 10
+            progressCount = 0
+            pf.ProgressBar1.Value = 0
+            pf.ProgressBar1.Maximum = (ListBox1.Items.Count) * 3
             opencmd_deployupdate(True)
             Dim CMDThread2 As New Threading.Thread(AddressOf CMDConfig)
             CMDThread = CMDThread2
@@ -510,6 +544,74 @@ Public Class MainForm
             MsgBox("Error: config.xml not found!", MsgBoxStyle.Exclamation)
             Me.Close()
         End If
+    End Sub
 
+    Private Sub MainForm_Activated(sender As Object, e As EventArgs) Handles Me.Activated
+        Me.VRPNstate()
+    End Sub
+
+    Private Sub PathToVRPNServerToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles PathToVRPNServerToolStripMenuItem.Click
+        'If Not File.Exists(vrpnServerPath) Then
+        Me.OpenFileDialog1.FileName = vrpnServerFile
+        Me.OpenFileDialog1.InitialDirectory = vrpnServerPath
+        If Me.OpenFileDialog1.ShowDialog() = System.Windows.Forms.DialogResult.OK Then
+            Dim fullPath As String = Me.OpenFileDialog1.FileName
+            Dim i As Integer = fullPath.LastIndexOf("\") + 1
+            vrpnServerPath = fullPath.Substring(0, i)
+            vrpnServerFile = fullPath.Substring(i)
+            Me.VRPNstate()
+        End If
+        'End If
+    End Sub
+
+    Private Function VRPNstate() As Boolean
+        Dim res As Boolean
+        Dim txt1, txt2 As String
+        Dim col As Color
+        Dim processName As String = vrpnServerFile.Substring(0, vrpnServerFile.IndexOf("."))
+
+        If Not Process.GetProcessesByName(processName).Length > 0 Then
+            res = False
+            txt1 = "S T O P P E D"
+            If File.Exists(vrpnServerPath & vrpnServerFile) Then
+                txt2 = " [path to start the server is okay]"
+                col = Color.Orange
+            Else
+                txt2 = " [bad or unknown path to the server]"
+                col = Color.Red
+            End If
+        Else
+            res = True
+            txt1 = "R U N N I N G"
+            txt2 = ""
+            col = Color.Lime
+        End If
+
+        Me.ToolStripStatusLabel1.Text = txt1
+        Me.ToolStripStatusLabel1.BackColor = col
+        Me.ToolStripStatusLabel2.Text = txt2
+        Return res
+    End Function
+
+    Private Sub MenuStrip1_ItemClicked(sender As Object, e As ToolStripItemClickedEventArgs) Handles MenuStrip1.ItemClicked
+
+    End Sub
+
+    Private Sub AutostartOfMasterPCToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AutostartOfMasterPCToolStripMenuItem.Click
+        Me.AutostartOfMasterPCToolStripMenuItem.Checked = Not Me.AutostartOfMasterPCToolStripMenuItem.Checked
+        Me.AutostartOnMaster = Me.AutostartOfMasterPCToolStripMenuItem.Checked
+        Debug.WriteLine("Autostart: {0}", Me.AutostartOnMaster)
+
+        If Me.AutostartOnMaster Then
+            Me.ToolStripStatusLabel3.BackColor = Color.Gray
+            Me.ToolStripStatusLabel3.ForeColor = Color.LimeGreen
+        Else
+            Me.ToolStripStatusLabel3.BackColor = Color.FromKnownColor(KnownColor.Control)
+            Me.ToolStripStatusLabel3.ForeColor = Color.FromKnownColor(KnownColor.Control)
+        End If
+
+    End Sub
+
+    Private Sub ToolStripStatusLabel4_Click(sender As Object, e As EventArgs)
     End Sub
 End Class

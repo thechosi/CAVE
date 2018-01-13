@@ -21,14 +21,14 @@ namespace Cave
             GUISynchronizer.Prepare();
             started = false;
             
-            if (NodeInformation.type.Equals("slave"))
+            if (!NodeInformation.isMaster())
             {
                 QualitySettings.vSyncCount = 0;
                 node = new Client();
             }
             else
             {
-                node = new Server(NodeInformation.numberOfSlaves);
+                node = new Server(NodeInformation.developmentMode ? 0 : NodeInformation.slaves.Count);
             }
         }
 
@@ -42,7 +42,7 @@ namespace Cave
             }
             else
             {
-                if (NodeInformation.type.Equals("master") && node.connections.Count != NodeInformation.numberOfSlaves || NodeInformation.type.Equals("slave") && node.connections.Count == 0)
+                if (NodeInformation.isMaster() && node.connections.Count != ((Server)node).targetClientNumber || !NodeInformation.isMaster() && node.connections.Count == 0)
                 {
 #if UNITY_EDITOR
                     UnityEditor.EditorApplication.isPlaying = false;
@@ -58,7 +58,7 @@ namespace Cave
         {
             CheckConnection();
 
-            if (NodeInformation.type.Equals("master"))
+            if (NodeInformation.isMaster())
             {
                 InputMessage inputMessage = new InputMessage();
 

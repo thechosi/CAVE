@@ -18,7 +18,7 @@ namespace Cave
 
         public override void Connect()
         {
-            listenSocket = AweSock.TcpListen(NodeInformation.serverPort + 1);
+            listenSocket = AweSock.TcpListen(NodeInformation.own.port + 1);
             while (connections.Count < targetClientNumber)
             {
                 connections.Add(AweSock.TcpAccept(listenSocket));
@@ -28,7 +28,8 @@ namespace Cave
 
         void InitializeClient(ISocket connection)
         {
-           ParticleSynchronizer.InitializeFromServer(this, connection);
+           	ParticleSynchronizer.InitializeFromServer(this, connection);
+			RandomSynchronizer.InitializeFromServer(this, connection);
         }
 
         public override void Disconnect()

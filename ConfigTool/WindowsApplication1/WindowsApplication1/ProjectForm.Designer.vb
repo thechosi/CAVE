@@ -32,10 +32,12 @@ Partial Class ProjectForm
         'ProgressBar1
         '
         Me.ProgressBar1.Location = New System.Drawing.Point(12, 331)
-        Me.ProgressBar1.Maximum = 160
+        Me.ProgressBar1.Maximum = 320
         Me.ProgressBar1.Name = "ProgressBar1"
         Me.ProgressBar1.Size = New System.Drawing.Size(581, 23)
+        Me.ProgressBar1.Step = 1
         Me.ProgressBar1.TabIndex = 0
+        Me.ProgressBar1.Value = 320
         '
         'btn_OK
         '
@@ -62,11 +64,12 @@ Partial Class ProjectForm
         '
         'txt_projectForm
         '
-        Me.txt_projectForm.Location = New System.Drawing.Point(12, 12)
+        Me.txt_projectForm.Dock = System.Windows.Forms.DockStyle.Top
+        Me.txt_projectForm.Location = New System.Drawing.Point(0, 0)
         Me.txt_projectForm.Name = "txt_projectForm"
         Me.txt_projectForm.ReadOnly = True
         Me.txt_projectForm.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical
-        Me.txt_projectForm.Size = New System.Drawing.Size(642, 313)
+        Me.txt_projectForm.Size = New System.Drawing.Size(666, 325)
         Me.txt_projectForm.TabIndex = 3
         Me.txt_projectForm.Text = ""
         '

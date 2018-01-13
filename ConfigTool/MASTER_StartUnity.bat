@@ -1,15 +1,23 @@
-echo "MASTER: Start unity"
+@echo off
 
+echo ##### Start unity clients
 cd c:\IMSYS\control
+for /l %%i in (1, 1, 8) do (
+	perl perl\IC-X_StartUnity.pl ic-%%i
+	echo. - on Client: IC-%%i
+)
 
-perl perl\IC-X_StartUnity.pl ic-1
-perl perl\IC-X_StartUnity.pl ic-2
-perl perl\IC-X_StartUnity.pl ic-3
-perl perl\IC-X_StartUnity.pl ic-4
-perl perl\IC-X_StartUnity.pl ic-5
-perl perl\IC-X_StartUnity.pl ic-6
-perl perl\IC-X_StartUnity.pl ic-7
-perl perl\IC-X_StartUnity.pl ic-8
-::timeout 10
+echo.
+timeout 1
 
 
+if /i "%2" == "/StartOnMaster:auto" (
+	echo ##### Start Unity project on Master-PC
+	if exist %1 (
+		call %1
+	) else (
+		echo   ... #ERROR# bad path: %1!
+	)
+) else (
+	echo ##### The user should start the unity project on Master-PC manual !!
+)

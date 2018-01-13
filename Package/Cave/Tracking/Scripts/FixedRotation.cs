@@ -7,6 +7,6 @@ public class FixedRotation : MonoBehaviour {
 
 	//void OnPreCull(){
 	void LateUpdate(){
-		transform.eulerAngles = parent.transform.rotation.eulerAngles + Cave.NodeInformation.cameraRoation;
+		transform.rotation = parent.transform.rotation * Quaternion.Euler(Cave.NodeInformation.own.cameraRoation);
 	}
 }
